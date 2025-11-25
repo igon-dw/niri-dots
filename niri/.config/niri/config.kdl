@@ -44,7 +44,7 @@ gestures {
 window-rule {
     match app-id=r#"^dev\.zed\.Zed$"# is-focused=true
     match app-id=r#"^dev\.zed\.Zed$"# is-focused=false
-    opacity 0.9
+    opacity 0.95
     // default-column-width { proportion 1.0; }
 }
 
@@ -63,6 +63,12 @@ window-rule {
 window-rule {
     match app-id=r#"^code$"# is-focused=true
     match app-id=r#"^code$"# is-focused=false
+    opacity 0.9
+}
+
+window-rule {
+    match app-id=r#"^kitty$"# is-focused=true
+    match app-id=r#"^kitty$"# is-focused=false
     opacity 0.9
 }
 
@@ -267,7 +273,7 @@ binds {
     Mod+A hotkey-overlay-title="Open Fast Fuzzy Launcher" { spawn-sh "~/niri-dots/niri/.config/niri/scripts_for_niri/f2_launcher.sh"; }
 
 
-    Mod+T hotkey-overlay-title="Change the Waybar Color Scheme" { spawn-sh "~/niri-dots/waybar/.config/waybar/switch-theme.sh"; }
+    Mod+T hotkey-overlay-title="Change the Waybar Color Scheme" { spawn-sh "~/niri-dots/waybar/.config/waybar/scripts_for_waybar/switch-theme.sh"; }
     Mod+Alt+T hotkey-overlay-title="Change the Kitty Color Scheme" { spawn-sh "~/niri-dots/kitty/.config/kitty/scripts/switch-theme.sh"; }
     Mod+Ctrl+Alt+T hotkey-overlay-title="Change the All Color Scheme" { spawn-sh "~/.config/niri/scripts_for_niri/change-all-themes.sh"; }
 

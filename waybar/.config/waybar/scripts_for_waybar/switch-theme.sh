@@ -9,7 +9,7 @@ set -e
 
 STYLE_CSS="style.css"
 STYLE_TEMPLATE="style.css.template"
-DIR="$(dirname "$0")"
+DIR="$(dirname "$0")/.."
 TARGET="$DIR/$STYLE_CSS"
 TEMPLATE="$DIR/$STYLE_TEMPLATE"
 THEMES_DIR="$DIR/themes"

@@ -10,8 +10,21 @@
     /* font-family alternatives left as comments for quick swaps */
     font-size: 16px;
     font-weight: 700;
-    background: @global_bg;
+    background: transparent; /* Make entire bar transparent */
     color: @global_fg;
+}
+
+/* Create separated sections for left, center, and right modules */
+window#waybar {
+    background: transparent;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+    background: transparent;
+    padding: 0 8px;
+    margin: 4px;
 }
 
 tooltip {
@@ -34,26 +47,66 @@ tooltip {
 #cpu {
     color: @cpu_fg;
     margin-left: 12px;
+    padding: 0 10px;
+    background: @cpu_bg;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+#cpu:hover {
+    background: @cpu_hover_bg;
 }
 
 #temperature {
     color: @temperature_fg;
-    margin-left: 6px;
+    margin-left: 12px;
+    padding: 0 10px;
+    background: @temperature_bg;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+#temperature:hover {
+    background: @temperature_hover_bg;
 }
 
 #disk {
     color: @disk_fg;
     margin-left: 12px;
+    padding: 0 10px;
+    background: @disk_bg;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+#disk:hover {
+    background: @disk_hover_bg;
 }
 
 #custom-gpu {
     color: @gpu_fg;
     margin-left: 12px;
+    padding: 0 10px;
+    background: @gpu_bg;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+#custom-gpu:hover {
+    background: @gpu_hover_bg;
 }
 
 #memory {
     color: @memory_fg;
     margin-left: 12px;
+    padding: 0 10px;
+    background: @memory_bg;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+#memory:hover {
+    background: @memory_hover_bg;
 }
 
 #taskbar {
@@ -81,36 +134,107 @@ tooltip {
 
 #workspaces {
     margin-left: 32px;
+    padding: 0 10px;
+    background: @workspaces_bg;
+    border: 2px solid @workspaces_border;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+/* Without this setting, the theme set by nwg-look will affect it. */
+#workspaces button {
+    padding: 0 4px;
+    margin: 0 2px;
+    background: transparent;
 }
 
 #clock {
     color: @clock_fg;
+    padding: 0 10px;
+    background: @clock_bg;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+#clock:hover {
+    background: @clock_hover_bg;
+}
+
+#custom-mpris {
+    color: @mpris_fg;
+    margin-left: 12px;
+    padding: 0 10px;
+    background: @mpris_bg;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+#custom-mpris:hover {
+    background: @mpris_hover_bg;
 }
 
 #custom-makoDismiss {
     margin-left: 20px;
     margin-right: 12px;
+    padding: 0 15px 0 10px;
+    background: @makodismiss_bg;
+    border: 2px solid @makodismiss_border;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+#custom-theme {
+    color: @theme_fg;
+    margin-right: 12px;
+    padding: 0 10px;
+    background: @theme_bg;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+#custom-theme:hover {
+    background: @theme_hover_bg;
 }
 
 #language {
     margin-right: 12px;
-    margin-left: 12px;
+    padding: 0 10px;
     font-size: 12px;
+    background: @language_bg;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+#language:hover {
+    background: @language_hover_bg;
+}
+
+#pulseaudio {
+    margin-right: 12px;
+    padding: 0 10px;
+    background: @pulseaudio_bg;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+#pulseaudio:hover {
+    background: @pulseaudio_hover_bg;
 }
 
 #tray {
     margin-right: 12px;
+    padding: 0 10px;
+    background: @tray_bg;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+#tray:hover {
+    background: @tray_hover_bg;
 }
 
 #tray > * {
-    transition: all 0.2s;
     padding: 0 4px;
-    border-radius: 4px;
-}
-
-#tray > *:hover {
-    background: @tray_hover_bg;
-    color: @tray_hover_fg;
 }
 
 #custom-wlogout {

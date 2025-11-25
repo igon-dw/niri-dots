@@ -25,7 +25,7 @@ else
 fi
 
 # Apply to waybar
-if ~/niri-dots/waybar/.config/waybar/switch-theme.sh "$SELECTED_THEME"; then
+if ~/niri-dots/waybar/.config/waybar/scripts_for_waybar/switch-theme.sh "$SELECTED_THEME"; then
   WAYBAR_SUCCESS=true
 else
   WAYBAR_SUCCESS=false

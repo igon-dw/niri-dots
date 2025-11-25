@@ -417,7 +417,7 @@ binds {
     Alt+Space { spawn "fuzzel"; }                    # Application launcher
     Mod+Q { close-window; }                          # Close window
     Mod+W { spawn-sh "~/.config/niri/scripts_for_niri/wallpaper_selector.sh"; }
-    Mod+T { spawn-sh "~/niri-dots/waybar/.config/waybar/switch-theme.sh"; }
+    Mod+T { spawn-sh "~/niri-dots/waybar/.config/waybar/scripts_for_waybar/switch-theme.sh"; }
     Mod+Alt+T { spawn-sh "~/niri-dots/kitty/.config/kitty/scripts/switch-theme.sh"; }
 }
 ```
