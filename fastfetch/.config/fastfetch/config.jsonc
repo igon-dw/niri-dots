@@ -19,7 +19,7 @@
     },
     {
       "type": "os",
-      "key": "  Distro   {#keys}",
+      "key": "  Distro   {#keys}",
       "keyColor": "red"
     },
     {
@@ -39,7 +39,7 @@
     },
     {
       "type": "shell",
-      "key": "  Shell    {#keys}",
+      "key": "  Shell    {#keys}",
       "keyColor": "red"
     },
     {
@@ -70,7 +70,7 @@
     },
     {
       "type": "font",
-      "key": "  Font     {#keys}",
+      "key": "  Font     {#keys}",
       "keyColor": "yellow"
     },
     {
@@ -80,7 +80,7 @@
     },
     {
       "type": "terminalfont",
-      "key": "  TermFont {#keys}",
+      "key": " 󰒋 TermFont {#keys}",
       "keyColor": "yellow"
     },
     {

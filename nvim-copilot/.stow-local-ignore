@@ -1,0 +1,3 @@
+# Stow ignore file for nvim-copilot addon
+.git
+README.md

@@ -98,6 +98,19 @@ niri-dots/
 │   └── .config/fuzzel/
 │       └── fuzzel.toml
 │
+├── nvim/                          # Neovim configuration (OSS core)
+│   └── .config/nvim/
+│       ├── init.lua               # Entry point
+│       └── lua/
+│           ├── config/            # Core settings
+│           └── plugins/           # Plugin configurations
+│
+├── nvim-copilot/                  # Neovim AI addon (optional, requires GitHub Copilot subscription)
+│   └── .config/nvim/
+│       └── lua/plugins/
+│           ├── copilot.lua        # GitHub Copilot integration
+│           └── copilotchat.lua    # CopilotChat integration
+│
 └── misc/                          # Additional configuration and utilities
     ├── .config/
     │   └── (other configuration files)
@@ -281,6 +294,38 @@ Fuzzel is a modern application launcher.
 **Configuration File**: `~/.config/fuzzel/fuzzel.toml`
 
 **Documentation**: [Fuzzel Codeberg](https://codeberg.org/dnkl/fuzzel)
+
+### Neovim
+
+Modern Neovim configuration with lazy.nvim plugin manager, LSP support, and modular architecture.
+
+**Configuration File**: `~/.config/nvim/init.lua`
+
+**Key Features**:
+
+- Modular plugin architecture with lazy.nvim
+- LSP support with auto-installation (Mason)
+- Telescope for fuzzy finding
+- Treesitter for syntax highlighting
+- Which-key for discoverable keybindings
+
+**Deployment**:
+
+```bash
+# Deploy OSS core only
+stow nvim
+
+# Deploy with GitHub Copilot support (requires subscription)
+stow nvim nvim-copilot
+```
+
+**AI Addon (Optional)**:
+
+The `nvim-copilot` addon provides GitHub Copilot integration. Requirements:
+- GitHub Copilot subscription
+- GitHub CLI authentication (see [GitHub CLI documentation](https://cli.github.com/manual/gh_auth_login))
+
+**Documentation**: [Neovim Design Philosophy](./nvim/docs/DESIGN_PHILOSOPHY.md)
 
 ---
 

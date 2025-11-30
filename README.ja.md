@@ -105,6 +105,19 @@ niri-dots/
 │   └── .config/fuzzel/
 │       └── fuzzel.toml
 │
+├── nvim/                          # Neovim設定（OSSコア）
+│   └── .config/nvim/
+│       ├── init.lua               # エントリーポイント
+│       └── lua/
+│           ├── config/            # コア設定
+│           └── plugins/           # プラグイン設定
+│
+├── nvim-copilot/                  # Neovim AIアドオン（オプション、GitHub Copilotサブスクリプション必要）
+│   └── .config/nvim/
+│       └── lua/plugins/
+│           ├── copilot.lua        # GitHub Copilot連携
+│           └── copilotchat.lua    # CopilotChat連携
+│
 └── misc/                          # その他の設定とユーティリティ
     ├── .config/
     │   └── (その他の設定ファイル)
@@ -289,6 +302,38 @@ Fuzzelはモダンなアプリケーションランチャーです。
 **設定ファイル**: `~/.config/fuzzel/fuzzel.toml`
 
 **詳細**: [Fuzzel GitHub](https://codeberg.org/dnkl/fuzzel)
+
+### Neovim
+
+lazy.nvimプラグインマネージャー、LSPサポート、モジュラーアーキテクチャを備えたモダンなNeovim設定です。
+
+**設定ファイル**: `~/.config/nvim/init.lua`
+
+**主な機能**:
+
+- lazy.nvimによるモジュラープラグインアーキテクチャ
+- 自動インストール対応のLSPサポート（Mason）
+- ファジー検索のためのTelescope
+- シンタックスハイライトのためのTreesitter
+- キーバインド発見のためのWhich-key
+
+**デプロイ方法**:
+
+```bash
+# OSSコアのみをデプロイ
+stow nvim
+
+# GitHub Copilotサポート付きでデプロイ（サブスクリプション必要）
+stow nvim nvim-copilot
+```
+
+**AIアドオン（オプション）**:
+
+`nvim-copilot`アドオンはGitHub Copilot連携を提供します。必要条件：
+- GitHub Copilotサブスクリプション
+- GitHub CLI認証（[GitHub CLIドキュメント](https://cli.github.com/manual/gh_auth_login)を参照）
+
+**詳細ドキュメント**: [Neovim設計思想](./nvim/docs/DESIGN_PHILOSOPHY_ja.md)
 
 ---
 
