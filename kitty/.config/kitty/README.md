@@ -1,52 +1,130 @@
-# Kitty Configuration
+# Kitty Terminal Configuration
 
 This directory contains the Kitty terminal emulator configuration with dynamic theme switching support.
 
-## 📁 Structure
+## 📁 Directory Structure
 
 ```
 kitty/.config/kitty/
-├── kitty.conf              # Main configuration file
-├── current-theme.conf      # Symlink to active theme (auto-generated, not in Git)
-├── themes/                 # Available color schemes
+├── README.md                      # English documentation (this file)
+├── README.ja.md                   # Japanese documentation
+├── THEMES.md                      # Theme information and attribution
+├── kitty.conf                     # Main Kitty configuration file
+├── current-theme.conf             # Symlink to active theme (auto-generated, not in Git)
+├── themes/                        # Available color schemes (12 themes)
 │   ├── ayu.conf
-│   ├── catppuccin-mocha.conf
-│   ├── Earthsong.conf
+│   ├── catppuccin.conf
+│   ├── earthsong.conf
 │   ├── everforest.conf
-│   ├── Flatland.conf
-│   ├── gruvbox-dark.conf
+│   ├── flatland.conf
+│   ├── gruvbox.conf
 │   ├── night-owl.conf
 │   ├── nord.conf
 │   ├── palenight.conf
 │   ├── shades-of-purple.conf
-│   ├── Solarized_Dark_Higher_Contrast.conf
+│   ├── solarized.conf
 │   └── tokyo-night.conf
-└── scripts/                # Theme management utilities
-    ├── switch-theme.sh     # Switch themes (auto-initializes on first run)
-    └── list-themes.sh      # List available themes
+└── scripts/                       # Theme management utilities
+    ├── switch-theme.sh            # Theme switching script (auto-initializes on first run)
+    └── list-themes.sh             # List available themes
 ```
 
-## 🚀 Quick Start
+## 🎨 Available Themes
 
-### Switching Themes (Auto-initializes on first run)
+Unified with Waybar theme collection, **file names match exactly (excluding extensions)**:
 
-```sh
-# Interactive mode with fuzzel (recommended)
+- **Ayu** - Orange and blue accents with high contrast. Excellent visibility for coding work (Default: Earthsong)
+- **Catppuccin** - Lavender and pink pastels. Easy on the eyes with a soft impression, ideal for long sessions
+- **Earthsong** - Beige and brown natural tones. Calming warm colors perfect for focused work (Default)
+- **Everforest** - Forest-inspired green palette. Low contrast design reduces eye strain during extended terminal use
+- **Flatland** - Gray-based minimalist design. Clean and professional look suitable for business environments
+- **Gruvbox** - Yellow, orange, and green warm retro colors. High contrast and popular among programmers
+- **Night Owl** - Deep blue-purple background with bright accents. Designed for night work with reduced blue light
+- **Nord** - Blue and gray cool color palette. Cool, calm impression inspired by Nordic winter
+- **Palenight** - Purple and pink Material Design style. Modern and polished, suitable for design work
+- **Shades of Purple** - Bold use of vivid purple. Distinctive and impressive, perfect for creative environments
+- **Solarized** - Scientifically designed 16-color palette. Optimized contrast ratios reduce eye fatigue
+- **Tokyo Night** - Deep navy with neon colors. Modern and stylish theme capturing Tokyo's nighttime atmosphere
+
+> **Note**: Waybar has an additional `original` theme, but Kitty does not have a corresponding theme.
+
+## 🚀 Usage
+
+### Method 1: Interactive Mode (fuzzel)
+
+Run the script without arguments to select a theme with fuzzel:
+
+```bash
 ~/.config/kitty/scripts/switch-theme.sh
+```
 
-# Switch to a specific theme
-~/.config/kitty/scripts/switch-theme.sh Flantland
+This displays all themes from the `themes/` directory in fuzzel's dmenu. Desktop notifications confirm the theme change.
 
-# List all available themes (shows current theme marked with *)
+**Note**: On first run, `switch-theme.sh` automatically initializes `current-theme.conf` with the default theme (Earthsong).
+
+### Method 2: Command Line Arguments
+
+Specify the theme name directly:
+
+```bash
+~/.config/kitty/scripts/switch-theme.sh catppuccin
+~/.config/kitty/scripts/switch-theme.sh tokyo-night
+~/.config/kitty/scripts/switch-theme.sh nord
+~/.config/kitty/scripts/switch-theme.sh gruvbox
+~/.config/kitty/scripts/switch-theme.sh everforest
+~/.config/kitty/scripts/switch-theme.sh ayu
+```
+
+### Method 3: Unified Theme Switcher (Recommended)
+
+**Switch themes for Waybar, Kitty, and Niri all at once** using the unified script:
+
+```bash
+~/.config/niri/scripts_for_niri/change-all-themes.sh
+```
+
+This script:
+
+1. Shows Waybar theme list in fuzzel
+2. Automatically applies the selected theme to Waybar
+3. Automatically applies to Kitty if a matching theme exists
+4. Prompts for manual selection if Kitty theme doesn't exist
+5. Shows notification when complete
+
+> **Tip**: Theme names are unified between Waybar and Kitty, so most themes apply to both automatically.
+
+### Method 4: List Available Themes
+
+To view available themes:
+
+```bash
+# Formatted output (current theme marked with *)
 ~/.config/kitty/scripts/list-themes.sh
 
-# Simple list for scripting
+# Simple output (for scripts)
 ~/.config/kitty/scripts/list-themes.sh --simple
 ```
 
-**Note:** On first run, `switch-theme.sh` automatically initializes with the default theme (Earthsong).
+Example formatted output:
 
-## 🎨 How It Works
+```
+Available themes:
+
+  * earthsong (current)
+    flatland
+    solarized
+    gruvbox
+    nord
+    tokyo-night
+    catppuccin
+    ayu
+    everforest
+    night-owl
+    palenight
+    shades-of-purple
+```
+
+## 🔧 How Theme Switching Works
 
 ### Hybrid Approach with Stow
 
@@ -71,14 +149,16 @@ This configuration uses a **hybrid approach** combining symlinks and Kitty's rem
    - Applies to running Kitty instances via remote control API
    - New Kitty windows/tabs automatically use the new theme
 
+5. **Notifications**: Shows change confirmation via `notify-send` (requires mako or dunst)
+
 ### Why Symlink Chain Works
 
 ```
 ~/.config/kitty/current-theme.conf (script-generated symlink)
     ↓
-~/.config/kitty/themes/Earthsong.conf (stow symlink)
+~/.config/kitty/themes/earthsong.conf (stow symlink)
     ↓
-~/niri-dots/kitty/.config/kitty/themes/Earthsong.conf (actual file)
+~/niri-dots/kitty/.config/kitty/themes/earthsong.conf (actual file)
 ```
 
 Linux handles this transparently. Kitty reads through the chain to get the final file content.
@@ -96,159 +176,123 @@ The `kitty.conf` includes:
   - `Shift+Ctrl+L`: Next tab
 - **Remote Control**: Enabled for live theme switching
 
-## 🎨 Available Themes
+## ➕ Adding New Themes
 
-The following themes are included, matching the waybar theme collection:
-
-- **Ayu** - A simple theme with bright colors on a dark background
-- **Catppuccin Mocha** - Soothing pastel theme for the high-spirited
-- **Earthsong** - Warm earth-toned color scheme (default)
-- **Everforest** - A green based color scheme designed to be warm and soft
-- **Flatland** - Minimalist flat design inspired theme
-- **Gruvbox Dark** - Retro groove color scheme with warm colors
-- **Night Owl** - A theme for night owls with carefully chosen colors
-- **Nord** - Arctic, north-bluish color palette
-- **Palenight** - A soothing purple themed Material Design inspired scheme
-- **Shades of Purple** - Professional theme with bold shades of purple
-- **Solarized Dark** - Precision colors for machines and people
-- **Tokyo Night** - A clean dark theme inspired by the Tokyo night
-
-## 🎯 Adding New Themes
-
-1. Add a new `.conf` file to the `themes/` directory:
+1. Create a new `.conf` file in the `themes/` directory:
 
    ```sh
    # Example theme file format
-   cat > themes/MyTheme.conf << EOF
+   cat > themes/myTheme.conf << EOF
    background            #282420
    foreground            #e5c6a8
    cursor                #f6f6ec
    selection_background  #111417
    color0                #111417
-   # ... (16 colors total: color0-color15)
+   color1                #f22c40
+   color2                #5ab738
+   color3                #d5911a
+   color4                #407ee7
+   color5                #6666ea
+   color6                #00ad9c
+   color7                #a8a19f
+   color8                #766e6b
+   color9                #f22c40
+   color10               #5ab738
+   color11               #d5911a
+   color12               #407ee7
+   color13               #6666ea
+   color14               #00ad9c
+   color15               #f1efee
    EOF
    ```
 
-2. Commit to Git:
+2. **Waybar Integration (Recommended)**: If using unified theme switching, also add a Waybar theme with the same name:
 
-   ```sh
-   git add themes/MyTheme.conf
-   git commit -m "Add MyTheme color scheme"
+   ```bash
+   # Create Waybar theme (different format for color variables)
+   nano ~/niri-dots/waybar/.config/waybar/themes/myTheme.css
    ```
 
-3. Switch to the new theme:
+3. Commit to Git:
 
    ```sh
-   ~/.config/kitty/scripts/switch-theme.sh MyTheme
+   git add themes/myTheme.conf
+   git commit -m "Add myTheme color scheme"
    ```
 
-### Quick Theme Switching Examples
+4. Switch to the new theme:
 
-```sh
-# Try different themes
-~/.config/kitty/scripts/switch-theme.sh catppuccin-mocha
-~/.config/kitty/scripts/switch-theme.sh tokyo-night
-~/.config/kitty/scripts/switch-theme.sh nord
-~/.config/kitty/scripts/switch-theme.sh gruvbox-dark
-~/.config/kitty/scripts/switch-theme.sh palenight
+   ```sh
+   ~/.config/kitty/scripts/switch-theme.sh myTheme
+   ```
+
+### Required Color Settings
+
+New themes require the following settings:
+
+- `background` - Background color
+- `foreground` - Foreground color (text)
+- `cursor` - Cursor color
+- `selection_background` - Selection background color
+- `color0` ~ `color15` - 16-color palette (ANSI colors)
+
+## 🔧 Dependencies
+
+### Required
+
+- `kitty` - Terminal emulator itself
+- `ln` - Symlink creation (standard Unix tool)
+
+### Recommended
+
+- `fuzzel` - For interactive theme selection
+- `mako` or `dunst` - For desktop notifications (notify-send)
+- `pgrep` - Process checking (standard Unix tool)
+
+Even without fuzzel or mako, you can switch themes via command line arguments.
+
+## 💡 Tips
+
+### Niri Keybinding Configuration
+
+You can bind theme switching to a key in the Niri configuration file (`~/.config/niri/config.kdl`):
+
+```kdl
+binds {
+    // Kitty theme switching only
+    Mod+Shift+T { spawn "sh" "-c" "~/.config/kitty/scripts/switch-theme.sh"; }
+
+    // Unified theme switching (Waybar + Kitty + Niri)
+    Mod+T { spawn "sh" "-c" "~/.config/niri/scripts_for_niri/change-all-themes.sh"; }
+}
 ```
 
-## 🔧 Script Details
+### Check Current Theme
 
-### `switch-theme.sh`
-
-Switches the active theme and applies it to running instances. Supports both interactive and direct modes.
-
-**Interactive mode (with fuzzel):**
-
-```sh
-./scripts/switch-theme.sh
+```bash
+readlink ~/.config/kitty/current-theme.conf
+# Output: ./themes/earthsong.conf
 ```
 
-**Direct mode:**
+Or:
 
-```sh
-./scripts/switch-theme.sh <theme-name>
+```bash
+~/.config/kitty/scripts/list-themes.sh
 ```
 
-Features:
+### Using rofi Instead
 
-- Auto-initializes on first run (no manual setup needed)
-- Updates `current-theme.conf` symlink
-- Applies to all running Kitty instances via `kitty @` commands
-- Shows error if theme doesn't exist
-- Fuzzel integration for interactive selection
+If you prefer rofi over fuzzel, change `fuzzel --dmenu` to `rofi -dmenu` in the `switch-theme.sh` script.
 
-### `list-themes.sh`
+### Manual Config Reload
 
-Lists all available themes with current selection marked.
+If theme doesn't apply immediately:
 
-**Formatted output (default):**
-
-```sh
-./scripts/list-themes.sh
-```
-
-Output:
-
-```
-Available themes:
-
-  * Earthsong (current)
-    Flantland
-    Solarized_Dark_Higher_Contrast
-```
-
-**Simple output (for fuzzel/dmenu):**
-
-```sh
-./scripts/list-themes.sh --simple
-```
-
-Output:
-
-```
-ayu
-catppuccin-mocha
-Earthsong
-everforest
-Flatland
-gruvbox-dark
-night-owl
-nord
-palenight
-shades-of-purple
-Solarized_Dark_Higher_Contrast
-tokyo-night
-```
-
-## 🔍 Troubleshooting
-
-### Theme not applying to running instances
-
-If the theme doesn't apply immediately:
-
-```sh
+```bash
 # Reload config manually
 kitty @ load-config
 
 # Or restart Kitty
-```
-
-### "current-theme.conf: No such file or directory"
-
-Simply run the switch script (it auto-initializes):
-
-```sh
-cd ~/.config/kitty
-./scripts/switch-theme.sh
-```
-
-### Checking current theme
-
-```sh
-readlink ~/.config/kitty/current-theme.conf
-# Output: ./themes/Earthsong.conf
 ```
 
 ## 🔗 Stow Integration
@@ -261,7 +305,7 @@ This configuration is designed to work seamlessly with GNU Stow:
 
 ### Stow Commands
 
-```sh
+```bash
 # Apply configuration
 cd ~/niri-dots
 stow kitty
@@ -283,11 +327,79 @@ waybar/.config/waybar/style.css
 kitty/.config/kitty/current-theme.conf
 ```
 
+## 🐛 Troubleshooting
+
+### "current-theme.conf: No such file or directory"
+
+Simply run the switch script (it auto-initializes):
+
+```bash
+~/.config/kitty/scripts/switch-theme.sh
+```
+
+### Theme Not Applying to Running Instances
+
+Check if Kitty's remote control is enabled:
+
+```bash
+kitty @ ls
+```
+
+If you get an error, add the following to `kitty.conf`:
+
+```conf
+allow_remote_control yes
+listen_on unix:/tmp/kitty
+```
+
+Then restart Kitty.
+
+### Theme Files Not Found
+
+Check theme directory contents:
+
+```bash
+ls -la ~/.config/kitty/themes/
+```
+
+Verify stow symlinks are created correctly:
+
+```bash
+ls -la ~/.config/kitty/
+```
+
+### Notifications Not Appearing
+
+Check if notification daemon is running:
+
+```bash
+pgrep -x mako  # or pgrep -x dunst
+```
+
+**Understanding the output:**
+
+- **Number displayed** (e.g., 1234) → Notification daemon is running ✓
+- **No output** → Notification daemon is not running ✗
+
+How to start the notification daemon (mako or dunst) varies by distribution and setup. Please refer to the following resources for your environment:
+
+- [Mako Official Documentation](https://github.com/emersion/mako)
+- [Dunst Official Documentation](https://dunst-project.org/)
+
+### Script Not Executable
+
+Check if scripts are executable and grant permissions if needed:
+
+```bash
+chmod +x ~/.config/kitty/scripts/*.sh
+```
+
 ## 📚 Resources
 
-- [Kitty Documentation](https://sw.kovidgoyal.net/kitty/)
+- [Kitty Official Documentation](https://sw.kovidgoyal.net/kitty/)
 - [Kitty Remote Control](https://sw.kovidgoyal.net/kitty/remote-control/)
-- [Kitty Color Themes](https://github.com/dexpota/kitty-themes)
+- [Kitty Color Themes](https://github.com/kovidgoyal/kitty-themes)
+- [Niri Compositor](https://github.com/YaLTeR/niri)
 
 ## 🎓 Theme Attribution
 
@@ -300,6 +412,38 @@ Key points:
 - Two themes (Palenight, Shades of Purple) are custom adaptations based on waybar theme colors
 - All themes are licensed under MIT or compatible open-source licenses
 
+## 🔗 Unified Theme System
+
+This Kitty configuration is part of the niri-dots repository's unified theme system.
+
+### Theme Consistency
+
+- **Waybar**: 13 themes (ayu, catppuccin, earthsong, everforest, flatland, gruvbox, night-owl, nord, **original**, palenight, shades-of-purple, solarized, tokyo-night)
+- **Kitty**: 12 themes (same as above except `original`)
+- **File Name Consistency**: Names match exactly excluding extensions
+
+### Unified Script Operation
+
+`change-all-themes.sh` works as follows:
+
+1. Uses Waybar theme list as reference (13 themes)
+2. Applies selected theme to Waybar via fuzzel
+3. Auto-applies to Kitty if matching theme exists
+4. Prompts for manual selection if Kitty theme doesn't exist (`original` case)
+5. Shows success notification when both apply successfully
+
+### Adding New Themes to Unified System
+
+To add a new theme to the unified theme system:
+
+1. **Create Waybar theme**: `waybar/.config/waybar/themes/newtheme.css`
+2. **Create Kitty theme**: `kitty/.config/kitty/themes/newtheme.conf`
+3. **Unify file names**: Use the same name excluding extension
+4. **Commit to Git**: Commit both files
+5. **Test with unified script**: Verify with `change-all-themes.sh`
+
+This maintains consistent color themes across your entire desktop environment.
+
 ## 📄 License
 
-This configuration is part of the niri-dots repository.
+This configuration is part of the [niri-dots](https://github.com/igon-dev/niri-dots) repository.

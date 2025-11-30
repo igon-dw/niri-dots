@@ -51,7 +51,7 @@ if [ -z "$1" ]; then
     fi
 
     # 選択されたテーマで再帰呼び出し
-    exec "$0" "$SELECTED_THEME"
+    exec "$SCRIPT_DIR/$(basename "$0")" "$SELECTED_THEME"
   else
     echo "Error: No theme specified and fuzzel is not installed." >&2
     echo "Please install fuzzel or specify a theme manually." >&2

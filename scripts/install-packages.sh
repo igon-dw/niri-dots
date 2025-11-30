@@ -12,6 +12,7 @@ PKGS_OFFICIAL=(
   waybar             # Status bar
   fuzzel             # Alternative launcher
   wlogout            # Logout screen for Wayland (provides UI for logout, reboot, shutdown, etc.)
+  swayidle           # Idle management daemon for Wayland
   wl-clipboard       # Clipboard manager for Wayland
   networkmanager     # Network management
   nemo               # File manager
@@ -21,10 +22,12 @@ PKGS_OFFICIAL=(
   starship           # Prompt
   zoxide             # Fast directory jumper
 
-  # === Editors & Development ===
+  # === Editors ===
   neovim             # Advanced terminal-based text/code editor
-  zed                # Modern GUI code editor (fast, collaborative)
   mousepad           # Lightweight graphical text editor (XFCE)
+
+  # === Development & Languages ===
+  zed                # Modern GUI code editor (fast, collaborative)
   go                 # Go language
 
   # === CLI Tools ===
@@ -32,7 +35,7 @@ PKGS_OFFICIAL=(
   fd                 # Fast file search
   fzf                # Command-line fuzzy finder
   ripgrep            # Fast grep
-  delta              # git diff viewer
+  git-delta          # git diff viewer
   lazygit            # Terminal git client
   go-yq              # YAML processor
   chafa              # Terminal image viewer
@@ -47,12 +50,12 @@ PKGS_OFFICIAL=(
   # === System & File Management ===
   xdg-user-dirs      # User directory management
   xdg-utils          # XDG utilities
-  docker             # Container management
   snapper            # btrfs snapshot management
   clamav             # Virus scanner
   rclone             # Cloud storage integration
   flatpak            # Universal package manager
   gnome-keyring      # GNOME keyring (credentials manager)
+  blueman            # Bluetooth manager
   kvantum            # Kvantum manager (official, recommended for theme configuration)
   kvantum-qt5        # Qt theme engine (Kvantum, official)
   qt5ct              # Qt5 configuration tool
@@ -65,25 +68,35 @@ PKGS_OFFICIAL=(
   gdu                # Disk usage analyzer
 
   # === Multimedia & Applications ===
+  pavucontrol        # Audio volume control
   mpv                # Media player
   totem              # Media player (GNOME)
   loupe              # Image viewer
   kdenlive           # Video editing
   obs-studio         # Streaming/recording
+  mako               # Notification daemon
   scrcpy             # Android screen mirroring
   steam              # Game platform
   protonup-qt        # Proton/Wine management for gaming
   vivaldi            # Vivaldi browser
+  mpv-mpris          # MPRIS plugin for MPV
 
-  # === Localization & Fonts ===
-  fcitx5-mozc        # Japanese input (Mozc)
+  # === Communication ===
+  geary              # Email client
+
+  # === Fonts ===
   ttf-jetbrains-mono-nerd # JetBrains Mono Nerd Font
   ttf-firacode-nerd  # FiraCode Nerd Font
   ttf-moralerspace   # MoralerSpace Font
   ttf-rounded-mplus  # Rounded M+ Font
 
-  # === DevOps & Cloud ===
+  # === Development Tools ===
   github-copilot-cli # GitHub Copilot CLI
+
+  # === Virtualization ===
+  docker             # Container management
+  virt-manger        # Virtual machine manager
+  qemu-desktop       # QEMU virtualization (desktop)
 )
 
 # AUR packages
@@ -91,12 +104,28 @@ PKGS_AUR=(
   google-chrome      # Google Chrome browser (AUR)
   swww               # Image switching / wallpaper (AUR)
   nwg-look           # GTK theme settings (AUR)
+  obs-vkcapture      # OBS Vulkan capture plugin (AUR)
   visual-studio-code-bin # Visual Studio Code (AUR)
+  losslesscut-bin    # Video editing tool (AUR)
 )
 
 # Flatpak packages
 FLATPAK_PKGS=(
     org.upscayl.Upscayl # AI image upscaler
+)
+
+# AMD GPU additional packages
+PKGS_AMD_GPU=(
+  libva-utils        # VA-API utilities
+  bc                 # Calculator (required for some scripts)
+)
+
+# Additional packages for Japanese language environment
+PKGS_JAPANESE=(
+  fcitx5-configtool  # Fcitx5 configuration tool
+  fcitx5-gtk         # Fcitx5 GTK integration
+  fcitx5-qt          # Fcitx5 Qt integration
+  fcitx5-mozc        # Mozc engine for Fcitx5
 )
 
 echo "Official packages to be installed:"
@@ -111,51 +140,26 @@ for pkg in "${PKGS_AUR[@]}"; do
 done
 echo "--------------------------------"
 
+echo "================================"
+echo "Installing official and AUR packages..."
+echo "================================"
+
 # Install both official and AUR packages using paru
 paru -Syu --needed "${PKGS_OFFICIAL[@]}" "${PKGS_AUR[@]}"
 
+echo "✓ Official and AUR packages installed"
+
 echo "================================"
-echo "Setting up Docker service..."
+echo "Installing Flatpak packages..."
 echo "================================"
 
-# Enable and start Docker service
-if command -v systemctl &> /dev/null; then
-  if systemctl is-active --quiet docker; then
-    echo "✓ Docker service is already running"
-  else
-    echo "Enabling and starting Docker service..."
-    if sudo systemctl enable docker; then
-      echo "✓ Docker service enabled"
-      if sudo systemctl start docker; then
-        echo "✓ Docker service started successfully"
-      else
-        echo "✗ Failed to start Docker service"
-        exit 1
-      fi
-    else
-      echo "✗ Failed to enable Docker service"
-      exit 1
-    fi
-  fi
-
-  # Check if user is already in docker group
-  if [ -n "$SUDO_USER" ]; then
-    if groups "$SUDO_USER" 2>/dev/null | grep -q docker; then
-      echo "✓ User $SUDO_USER is already in docker group"
-    else
-      echo "Adding user $SUDO_USER to docker group..."
-      if sudo usermod -aG docker "$SUDO_USER" 2>/dev/null; then
-        echo "✓ User added to docker group"
-        echo "⚠ Note: You need to log out and log back in for group changes to take effect"
-      else
-        echo "⚠ Could not add user to docker group (may require manual setup)"
-      fi
-    fi
-  fi
+if command -v flatpak &> /dev/null; then
+  flatpak install flathub -y "${FLATPAK_PKGS[@]}"
+  echo "✓ Flatpak packages installed"
 else
-  echo "⚠ systemctl not found - skipping Docker service setup"
+  echo "⚠ Flatpak not found - skipping Flatpak package installation"
 fi
 
 echo "================================"
-echo "Installation complete!"
+echo "Package installation complete!"
 echo "================================"

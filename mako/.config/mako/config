@@ -1,0 +1,25 @@
+max-visible=10
+layer=overlay
+font=JetBrains Mono Nerd Font 10
+background-color=#4a4a4acc
+text-color=#ffffffff
+border-color=#4a4a4acc
+border-radius=7
+max-icon-size=48
+width=400
+height=150
+padding=10
+default-timeout=20000
+anchor=top-right
+margin=20
+sort=-time
+
+[urgency=high]
+background-color=#ff2d2dcc
+border-color=#ff2d2dcc
+text-color=#ffffffff
+
+[urgency=low]
+background-color=#003d3dcc
+border-color=#003d3dcc
+text-color=#e0ffffcc

@@ -1,0 +1,204 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](bg:none fg:color_dp)\
+$os\
+[](bg:color_orange fg:color_dp)\
+$username\
+[](bg:color_red fg:color_orange)\
+$hostname\
+[](bg:color_yellow fg:color_red)\
+$directory\
+[](bg:color_aqua fg:color_yellow)\
+$git_branch\
+$git_status\
+$git_commit\
+$git_state\
+[](bg:color_blue fg:color_aqua)\
+$c\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+[](bg:color_bg3 fg:color_blue)\
+$docker_context\
+$conda\
+[](bg:color_bg1 fg:color_bg3)\
+$cmd_duration\
+$time\
+[](bg:none fg:color_bg1)\
+$line_break$character
+"""
+
+palette = 'gruvbox_dark'
+
+[palettes.gruvbox_dark]
+color_fg0 = '#fbf1c7'
+color_bg1 = '#3c3836'
+color_bg3 = '#665c54'
+color_blue = '#458588'
+color_aqua = '#689d6a'
+color_green = '#98971a'
+color_orange = '#d65d0e'
+color_purple = '#b16286'
+color_red = '#cc241d'
+color_yellow = '#d79921'
+color_dp = '#6c3483'
+
+# OS
+[os]
+disabled = false
+style = "bg:color_dp fg:color_fg0"
+
+[os.symbols]
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+EndeavourOS = ""
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+
+# User / Host
+[username]
+show_always = true
+style_user = "bg:color_orange fg:color_fg0"
+style_root = "bg:color_orange fg:color_fg0"
+format = '[ $user ]($style)'
+
+[hostname]
+ssh_only = false
+style = "bg:color_red fg:color_fg0"
+format = '[ @$hostname ]($style)'
+
+# Directory
+[directory]
+style = "bg:color_yellow fg:color_fg0"
+format = "[ $path ]($style)"
+truncation_length = 5
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+
+# Git — consolidate styles for git-related modules
+[git_branch]
+symbol = ""
+style = "bg:color_aqua fg:color_fg0"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = "bg:color_aqua fg:color_fg0"
+format = '[($all_status$ahead_behind )]($style)'
+
+[git_commit]
+style = "bg:color_aqua fg:color_fg0"
+format = '[ $hash ]($style)'
+
+[git_state]
+style = "bg:color_aqua fg:color_fg0"
+format = '[ $state( $progress_current/$progress_total) ]($style)'
+
+# Programming language / runtime modules
+# Most language modules share the same visual treatment, so move common
+# fg into the module 'style' and simplify the inner format markup.
+[nodejs]
+symbol = ""
+style = "bg:color_blue fg:color_fg0"
+format = '[ $symbol( $version) ]($style)'
+
+[c]
+symbol = " "
+style = "bg:color_blue fg:color_fg0"
+format = '[ $symbol( $version) ]($style)'
+
+[rust]
+symbol = ""
+style = "bg:color_blue fg:color_fg0"
+format = '[ $symbol( $version) ]($style)'
+
+[golang]
+symbol = ""
+style = "bg:color_blue fg:color_fg0"
+format = '[ $symbol( $version) ]($style)'
+
+[php]
+symbol = ""
+style = "bg:color_blue fg:color_fg0"
+format = '[ $symbol( $version) ]($style)'
+
+[java]
+symbol = " "
+style = "bg:color_blue fg:color_fg0"
+format = '[ $symbol( $version) ]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:color_blue fg:color_fg0"
+format = '[ $symbol( $version) ]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:color_blue fg:color_fg0"
+format = '[ $symbol( $version) ]($style)'
+
+[python]
+symbol = ""
+style = "bg:color_blue fg:color_fg0"
+# preserve virtualenv display but avoid nested fg/bg in format
+format = '[${virtualenv} $symbol( $version) ]($style)'
+
+# Container / env modules — consolidated background + foreground where possible
+[docker_context]
+symbol = ""
+style = "bg:color_bg3 fg:#83a598"
+format = '[ $symbol( $context) ]($style)'
+
+[conda]
+style = "bg:color_bg3 fg:#83a598"
+format = '[ $symbol( $environment) ]($style)'
+
+# Misc
+[cmd_duration]
+disabled = false
+style = "bg:color_bg1 fg:color_fg0"
+format = '[took $duration]($style)'
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:color_bg1 fg:color_fg0"
+format = '[  $time ]($style)'
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+success_symbol = '[](bold fg:color_green)'
+error_symbol = '[](bold fg:color_red)'
+vimcmd_symbol = '[](bold fg:color_green)'
+vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
+vimcmd_replace_symbol = '[](bold fg:color_purple)'
+vimcmd_visual_symbol = '[](bold fg:color_yellow)'

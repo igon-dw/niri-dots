@@ -33,14 +33,14 @@ fi
 
 # Check if theme exists in kitty
 if [ -f "$KITTY_THEMES_DIR/$SELECTED_THEME.conf" ]; then
-  if ~/niri-dots/kitty/.config/kitty/scripts/switch-theme.sh "$SELECTED_THEME"; then
+  if "$HOME/niri-dots/kitty/.config/kitty/scripts_for_kitty/switch-theme.sh" "$SELECTED_THEME"; then
     KITTY_SUCCESS=true
   else
     KITTY_SUCCESS=false
   fi
 else
   notify-send "Theme '$SELECTED_THEME' not found in Kitty" "Please select a Kitty theme manually" -u normal
-  if ~/niri-dots/kitty/.config/kitty/scripts/switch-theme.sh; then
+  if "$HOME/niri-dots/kitty/.config/kitty/scripts_for_kitty/switch-theme.sh"; then
     KITTY_SUCCESS=true
   else
     KITTY_SUCCESS=false

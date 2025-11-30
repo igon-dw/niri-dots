@@ -8,8 +8,8 @@
 * {
     font-family: "Moralerspace Neon JPDOC";
     /* font-family alternatives left as comments for quick swaps */
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 600;
     background: transparent; /* Make entire bar transparent */
     color: @global_fg;
 }
@@ -19,12 +19,11 @@ window#waybar {
     background: transparent;
 }
 
+/* Empty rule set prevents unintended style cascade from parent/GTK themes.
+   Removing the braces would cause the following rule to merge with these selectors. */
 .modules-left,
 .modules-center,
 .modules-right {
-    background: transparent;
-    padding: 0 8px;
-    margin: 4px;
 }
 
 tooltip {
@@ -162,8 +161,9 @@ tooltip {
 
 #custom-mpris {
     color: @mpris_fg;
-    margin-left: 12px;
+    margin-right: 12px;
     padding: 0 10px;
+    font-size: 14px;
     background: @mpris_bg;
     border-radius: 6px;
     transition: all 0.2s;
@@ -176,17 +176,22 @@ tooltip {
 #custom-makoDismiss {
     margin-left: 20px;
     margin-right: 12px;
-    padding: 0 15px 0 10px;
+    padding: 0 16px 0 10px;
     background: @makodismiss_bg;
     border: 2px solid @makodismiss_border;
     border-radius: 6px;
     transition: all 0.2s;
 }
 
+#custom-makoDismiss:hover {
+    background: @makodismiss_hover_bg;
+}
+
 #custom-theme {
     color: @theme_fg;
     margin-right: 12px;
     padding: 0 10px;
+    font-size: 12px;
     background: @theme_bg;
     border-radius: 6px;
     transition: all 0.2s;
@@ -237,9 +242,14 @@ tooltip {
     padding: 0 4px;
 }
 
+#tray > *:hover {
+    background: @tray_hover_bg;
+    color: @tray_hover_fg;
+}
+
 #custom-wlogout {
     padding: 0 18px;
-    font-size: 20px;
+    font-size: 14px;
     color: @logout_fg;
     background: @logout_bg;
     border-radius: 6px;
@@ -255,9 +265,26 @@ menuitem {
     padding: 5px 10px;
     color: @menuitem_fg;
     background-color: @menuitem_bg;
+    border: none;
+    margin: 0;
 }
 
 menuitem:hover {
     background-color: @menuitem_hover_bg;
     color: @menuitem_hover_fg;
+    border: none;
+}
+
+menu {
+    background-color: @menuitem_bg;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+separator {
+    background-color: transparent;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
 }

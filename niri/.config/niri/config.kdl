@@ -267,14 +267,17 @@ binds {
     Ctrl+Alt+Delete { quit; }
 
     // Wallpaper binding
-    Mod+W hotkey-overlay-title="Change the Wallpaper" { spawn-sh "~/.config/niri/scripts_for_niri/wallpaper_selector.sh"; }
+    Mod+Shift+W hotkey-overlay-title="Change the Wallpaper" { spawn-sh "~/.config/niri/scripts_for_niri/wallpaper_selector.sh"; }
+
+    // Fuzzy Window Switcher binding
+    Mod+W hotkey-overlay-title="Open Fast Fuzzy Window Switcher" { spawn-sh "~/niri-dots/niri/.config/niri/scripts_for_niri/niri-window-picker.sh"; }
 
     // Fuzzy launcher binding
     Mod+A hotkey-overlay-title="Open Fast Fuzzy Launcher" { spawn-sh "~/niri-dots/niri/.config/niri/scripts_for_niri/f2_launcher.sh"; }
 
-
+    // Color scheme changers bindings
     Mod+T hotkey-overlay-title="Change the Waybar Color Scheme" { spawn-sh "~/niri-dots/waybar/.config/waybar/scripts_for_waybar/switch-theme.sh"; }
-    Mod+Alt+T hotkey-overlay-title="Change the Kitty Color Scheme" { spawn-sh "~/niri-dots/kitty/.config/kitty/scripts/switch-theme.sh"; }
+    Mod+Alt+T hotkey-overlay-title="Change the Kitty Color Scheme" { spawn-sh "~/niri-dots/kitty/.config/kitty/scripts_for_kitty/switch-theme.sh"; }
     Mod+Ctrl+Alt+T hotkey-overlay-title="Change the All Color Scheme" { spawn-sh "~/.config/niri/scripts_for_niri/change-all-themes.sh"; }
 
     // Screenshot bindings
