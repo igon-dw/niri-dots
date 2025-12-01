@@ -311,19 +311,96 @@ Modern Neovim configuration with lazy.nvim plugin manager, LSP support, and modu
 
 **Deployment**:
 
-```bash
-# Deploy OSS core only
-stow nvim
+#### Pattern 1: OSS Core Only (Recommended - Simple)
 
-# Deploy with GitHub Copilot support (requires subscription)
-stow nvim nvim-copilot
+```bash
+cd niri-dots
+stow nvim
 ```
+
+#### Pattern 2: OSS Core + GitHub Copilot (Recommended - Safe Method)
+
+```bash
+cd niri-dots
+stow nvim nvim-copilot  # Deploy both simultaneously
+```
+
+⚠️ **Note**: If you run `stow nvim` first and then `stow nvim-copilot` later, stow will automatically adjust the symlink structure when detecting existing directories. This is normal behavior, but for certainty, simultaneous deployment (Pattern 2) is recommended.
 
 **AI Addon (Optional)**:
 
-The `nvim-copilot` addon provides GitHub Copilot integration. Requirements:
+The `nvim-copilot` addon provides GitHub Copilot integration.
+
+**Requirements**:
 - GitHub Copilot subscription
-- GitHub CLI authentication (see [GitHub CLI documentation](https://cli.github.com/manual/gh_auth_login))
+- GitHub CLI tool (`github-cli` package)
+- GitHub CLI authentication
+
+**Setup Steps**:
+
+1. **Authenticate with GitHub CLI (first time only)**:
+
+```bash
+gh auth login
+# Follow the prompts to complete authentication
+```
+
+2. **Deploy nvim-copilot**:
+
+```bash
+cd niri-dots
+stow nvim nvim-copilot  # Deploy both OSS core and Copilot addon
+```
+
+3. **Verify authentication in Neovim**:
+
+```bash
+nvim
+# :checkhealth copilot
+```
+
+**Usage**:
+
+| Keymap | Function |
+|--------|----------|
+| `Ctrl+y` | Accept full Copilot suggestion |
+| `Ctrl+i` | Accept next word of Copilot suggestion |
+| `<leader>ai` | Open CopilotChat |
+
+**Troubleshooting**:
+
+```bash
+# Check authentication status
+gh auth status
+
+# Re-authenticate if needed
+gh auth logout
+gh auth login
+```
+
+**Managing Symlinks**:
+
+```bash
+# Check deployment status
+stow -d niri-dots --list-only nvim
+stow -d niri-dots --list-only nvim-copilot
+
+# Add nvim-copilot after initial deployment
+cd niri-dots
+stow nvim-copilot
+
+# Remove nvim-copilot only (keep OSS core)
+stow -D nvim-copilot
+
+# Remove entire nvim setup
+stow -D nvim nvim-copilot
+
+# Complete reset
+stow -D nvim
+stow -D nvim-copilot
+# Then redeploy if needed
+stow nvim
+```
 
 **Documentation**: [Neovim Design Philosophy](./nvim/docs/DESIGN_PHILOSOPHY.md)
 
@@ -462,8 +539,8 @@ binds {
     Alt+Space { spawn "fuzzel"; }                    # Application launcher
     Mod+Q { close-window; }                          # Close window
     Mod+W { spawn-sh "~/.config/niri/scripts_for_niri/wallpaper_selector.sh"; }
-    Mod+T { spawn-sh "~/niri-dots/waybar/.config/waybar/scripts_for_waybar/switch-theme.sh"; }
-    Mod+Alt+T { spawn-sh "~/niri-dots/kitty/.config/kitty/scripts/switch-theme.sh"; }
+    Mod+T { spawn-sh "~/.config/waybar/switch-theme.sh"; }
+    Mod+Alt+T { spawn-sh "~/.config/kitty/scripts/switch-theme.sh"; }
 }
 ```
 
