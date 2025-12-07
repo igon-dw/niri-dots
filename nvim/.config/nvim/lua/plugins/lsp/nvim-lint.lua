@@ -5,6 +5,8 @@ return {
     require('lint').linters_by_ft = {
       fish = { 'fish' },
       markdown = { 'markdownlint' },
+      yaml = { 'yamllint' },
+      dockerfile = { 'hadolint' },
     }
     -- "LintInfo" command was Copied from https://github.com/mfussenegger/nvim-lint/issues/559#issuecomment-2263995711 on 2024/10/08
     -- Copyright (c) 2020-present mfussenegger

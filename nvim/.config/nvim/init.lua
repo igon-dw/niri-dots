@@ -1,9 +1,13 @@
 -- init.lua
--- leaderキーはlazy.luaで設定されます
+-- Neovim configuration entry point
+-- The leader key is configured in lazy.lua
+-- 'leader key' is a special key in Neovim that acts as a prefix for custom shortcuts
 
--- 各種設定ファイルを読み込む
--- require()は、指定されたLuaモジュールを読み込むための関数
-require 'config.options' -- 基本的なエディタオプション
--- leaderキーの設定はlazy.nvimで行うため、keymapsより前にlazyを読み込む必要があります
-require 'config.lazy' -- プラグインマネージャー(lazy.nvim)
-require 'config.keymaps' -- キーマッピング
+-- Load configuration modules in the correct order
+-- require() is a Lua function that loads modules from the config directory
+require 'config.options' -- Core editor options and settings
+
+-- The leader key configuration is handled by lazy.nvim plugin manager,
+-- so lazy must be loaded before keymaps to ensure proper key binding setup
+require 'config.lazy' -- Plugin manager (lazy.nvim)
+require 'config.keymaps' -- Key mappings and bindings

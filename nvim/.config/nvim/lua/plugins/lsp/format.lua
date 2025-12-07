@@ -41,6 +41,8 @@ return {
       python = { 'black', stop_after_first = true }, -- Python用
       json = { 'prettierd', stop_after_first = true }, -- JSON用
       jsonc = { 'prettierd', stop_after_first = true }, -- JSONC用
+      dockerfile = { 'docker-language-server', stop_after_first = true }, -- Dockerfile用
+      yml = { 'yamllint', stop_after_first = true }, -- YAML用
     },
     formatters = {
       prettierd = {

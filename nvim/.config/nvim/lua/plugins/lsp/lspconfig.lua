@@ -142,6 +142,15 @@ return {
       bashls = {},
       ts_ls = {},
       dockerls = {},
+      yamlls = {
+        settings = {
+          yaml = {
+            schemas = {
+              ['https://json.schemastore.org/docker-compose.json'] = 'docker-compose*.{yml,yaml}',
+            },
+          },
+        },
+      },
     }
 
     require('mason').setup()
@@ -152,6 +161,7 @@ return {
       'black',
       'shfmt',
       'markdownlint',
+      'yamllint',
     })
 
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }

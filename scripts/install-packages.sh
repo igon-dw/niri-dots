@@ -50,6 +50,7 @@ PKGS_OFFICIAL=(
   # === System & File Management ===
   xdg-user-dirs      # User directory management
   xdg-utils          # XDG utilities
+  xdg-desktop-portal-gnome # XDG desktop portal for GNOME
   snapper            # btrfs snapshot management
   clamav             # Virus scanner
   rclone             # Cloud storage integration

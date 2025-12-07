@@ -40,6 +40,9 @@ run_script "${SCRIPT_DIR}/scripts/install-packages.sh"
 # Step 2: Set up Docker
 run_script "${SCRIPT_DIR}/scripts/setup-docker.sh"
 
+# Step 3: Configure GNOME settings (for nwg-look-independent settings)
+run_script "${SCRIPT_DIR}/scripts/setup_gnome_settings.sh"
+
 # Add more setup scripts here as needed
 # run_script "${SCRIPT_DIR}/scripts/setup-fonts.sh"
 # run_script "${SCRIPT_DIR}/scripts/setup-something.sh"
