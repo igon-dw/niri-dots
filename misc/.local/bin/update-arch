@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+
+# Arch Linux System Update Script
+# UNIX philosophy: simple, explicit, readable
+
+# --- Safety Settings ---
+set -euo pipefail
+
+# --- Constants ---
+readonly LOG_FILE="${HOME}/.local/state/update-arch/log.txt"
+readonly BLUE='\033[1;34m'
+readonly BOLD='\033[1m'
+readonly NC='\033[0m'
+
+# --- Helper Functions ---
+
+# Display last run from log
+log_init() {
+    mkdir -p "$(dirname "$LOG_FILE")"
+    if [[ -f "$LOG_FILE" ]]; then
+        echo "[Last run] $(tail -n 1 "$LOG_FILE")"
+    fi
+}
+
+# Print section header with visual separator
+header() {
+    echo -e "\n${BLUE}${BOLD}:: $1${NC}"
+    echo -e "${BLUE}$(printf '%.0s-' {1..60})${NC}"
+}
+
+# Get free disk space in GB with one decimal place
+get_free_gb() {
+    df -BG / | awk 'NR==2 {gsub(/G/, "", $4); printf "%.1f", $4}'
+}
+
+# Prompt for cache cleanup
+prompt_cache_cleanup() {
+    local tool=$1
+    read -p "Clear cache for ${tool}? (y/N): " -r
+    [[ $REPLY =~ ^[yY]$ ]] && "$tool" -Sc || true
+}
+
+# --- Main Flow ---
+
+log_init
+
+# Confirm before starting
+read -p "Start system update? (y/N): " -r
+if [[ ! $REPLY =~ ^[yY]$ ]]; then
+    echo "Update cancelled."
+    exit 0
+fi
+
+status="success"
+trap 'status="fail"' ERR
+
+# System update: priority order yay > paru > pacman
+if command -v yay &>/dev/null; then
+    header "yay System Update"
+    yay -Syu
+    prompt_cache_cleanup yay
+elif command -v paru &>/dev/null; then
+    header "paru System Update"
+    paru -Syu
+    prompt_cache_cleanup paru
+else
+    header "pacman System Update"
+    sudo pacman -Syu
+fi
+
+# npm: update global packages and audit
+if command -v npm &>/dev/null; then
+    header "npm Global Package Update & Audit"
+    npm update -g
+    npx --yes npm-global-audit
+fi
+
+# ClamAV: update virus definitions
+if command -v freshclam &>/dev/null; then
+    header "ClamAV Virus Definitions Update"
+    sudo freshclam
+fi
+
+# Flatpak: update and cleanup
+if command -v flatpak &>/dev/null; then
+    header "Flatpak Update & Cleanup"
+    flatpak update -y
+    flatpak uninstall --unused -y
+fi
+
+# Neovim: sync plugins with Lazy.nvim
+if command -v nvim &>/dev/null; then
+    header "Neovim Plugin Sync"
+    nvim --headless "+Lazy! sync" +qa
+fi
+
+echo -e "\n${BLUE}:: All updates are complete${NC}"
+
+# Record to log
+free_gb=$(get_free_gb)
+echo "$(date '+%Y-%m-%d %H:%M:%S') JST | status: $status | free: ${free_gb}GB" >> "$LOG_FILE"

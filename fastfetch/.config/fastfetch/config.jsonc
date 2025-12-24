@@ -1,0 +1,129 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+  "logo": {
+    "type": "auto",
+    "position": "left"
+  },
+  "display": {
+    "separator": " ",
+    "brightColor": true
+  },
+  "general": {
+    "thread": true
+  },
+  "modules": [
+    {
+      "type": "custom",
+      "key": "━━System━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+      "keyColor": "red"
+    },
+    {
+      "type": "os",
+      "key": "  Distro   {#keys}",
+      "keyColor": "red"
+    },
+    {
+      "type": "host",
+      "key": " 󰌢 Host     {#keys}",
+      "keyColor": "red"
+    },
+    {
+      "type": "kernel",
+      "key": " 󰒋 Kernel   {#keys}",
+      "keyColor": "red"
+    },
+    {
+      "type": "packages",
+      "key": " 󰏖 Packages {#keys}",
+      "keyColor": "red"
+    },
+    {
+      "type": "shell",
+      "key": "  Shell    {#keys}",
+      "keyColor": "red"
+    },
+    {
+      "type": "custom",
+      "key": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+      "keyColor": "red"
+    },
+    "break",
+    {
+      "type": "custom",
+      "key": "━━Desktop━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+      "keyColor": "yellow"
+    },
+    {
+      "type": "wm",
+      "key": " 󰕮 DE/WM    {#keys}",
+      "keyColor": "yellow"
+    },
+    {
+      "type": "theme",
+      "key": " 󰏘 Theme    {#keys}",
+      "keyColor": "yellow"
+    },
+    {
+      "type": "icons",
+      "key": " 󰏘 Icons    {#keys}",
+      "keyColor": "yellow"
+    },
+    {
+      "type": "font",
+      "key": "  Font     {#keys}",
+      "keyColor": "yellow"
+    },
+    {
+      "type": "terminal",
+      "key": " 󰒋 Term     {#keys}",
+      "keyColor": "yellow"
+    },
+    {
+      "type": "terminalfont",
+      "key": " 󰒋 TermFont {#keys}",
+      "keyColor": "yellow"
+    },
+    {
+      "type": "custom",
+      "key": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+      "keyColor": "yellow"
+    },
+    "break",
+    {
+      "type": "custom",
+      "key": "━━Hardware━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+      "keyColor": "cyan"
+    },
+    {
+      "type": "cpu",
+      "key": " 󰍛 CPU      {#keys}",
+      "keyColor": "cyan"
+    },
+    {
+      "type": "gpu",
+      "key": " 󰢮 GPU      {#keys}",
+      "keyColor": "cyan"
+    },
+    {
+      "type": "memory",
+      "key": " 󰍛 RAM      {#keys}",
+      "keyColor": "cyan"
+    },
+    {
+      "type": "disk",
+      "key": " 󰋊 Disk     {#keys}",
+      "keyColor": "cyan"
+    },
+    {
+      "type": "disk",
+      "key": " 󰋊 DiskAge  {#keys}",
+      "format": "{create-time:10} [{days} days ago]",
+      "keyColor": "cyan"
+    },
+    {
+      "type": "custom",
+      "key": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+      "keyColor": "cyan"
+    }
+  ]
+}

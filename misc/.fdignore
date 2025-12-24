@@ -1,0 +1,5 @@
+# Ignore VCS metadata and node modules for fd searches
+.git
+node_modules
+**/node_modules
+**/.git

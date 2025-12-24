@@ -1,0 +1,250 @@
+/******************************************************************************
+ Base styling (theme-agnostic)
+
+ This file contains all style rules that don't depend on color themes.
+ Color variables are defined in individual theme files under themes/
+******************************************************************************/
+
+* {
+    font-family: "Moralerspace Neon JPDOC";
+    /* font-family alternatives left as comments for quick swaps */
+    font-size: 14px;
+    font-weight: 600;
+    background: transparent; /* Make entire bar transparent */
+    color: @global_fg;
+}
+
+/* Create separated sections for left, center, and right modules */
+window#waybar {
+    background: @bar_bg;
+    border-radius: 12px;
+    margin: 8px 8px 8px 8px;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+}
+
+tooltip {
+    background: @tooltip_bg;
+    border: 1px solid @tooltip_border;
+}
+
+#custom-appmenu {
+    color: @appmenu_fg;
+    margin-left: 5px;
+    font-size: 24px;
+    padding: 0 6px;
+}
+
+#custom-appmenu:hover {
+    color: @appmenu_hover_fg;
+}
+
+#cpu {
+    color: @cpu_fg;
+    margin-left: 12px;
+    padding: 0 10px;
+    border-radius: 8px;
+    background: @module_bg;
+    border: 1px solid @module_border;
+    transition: all 0.2s;
+}
+
+#temperature {
+    color: @temperature_fg;
+    margin-left: 12px;
+    padding: 0 10px;
+    border-radius: 8px;
+    background: @module_bg;
+    border: 1px solid @module_border;
+    transition: all 0.2s;
+}
+
+#disk {
+    color: @disk_fg;
+    margin-left: 12px;
+    padding: 0 10px;
+    border-radius: 8px;
+    background: @module_bg;
+    border: 1px solid @module_border;
+    transition: all 0.2s;
+}
+
+#custom-gpu {
+    color: @gpu_fg;
+    margin-left: 12px;
+    padding: 0 10px;
+    border-radius: 8px;
+    background: @module_bg;
+    border: 1px solid @module_border;
+    transition: all 0.2s;
+}
+
+#memory {
+    color: @memory_fg;
+    margin-left: 12px;
+    padding: 0 10px;
+    border-radius: 8px;
+    background: @module_bg;
+    border: 1px solid @module_border;
+    transition: all 0.2s;
+}
+
+#taskbar {
+    margin-left: 24px;
+}
+
+#taskbar button {
+    background-color: @taskbar_btn_bg;
+    border: 2px solid @taskbar_btn_border;
+    border-radius: 8px;
+    padding: 0 8px;
+    margin: 0 4px;
+    transition: all 0.3s;
+}
+
+#taskbar button:hover {
+    background-color: @taskbar_btn_hover_bg;
+    border-color: @taskbar_btn_hover_border;
+}
+
+#taskbar button.active {
+    background-color: @taskbar_btn_active_bg;
+    border-color: @taskbar_btn_active_border;
+}
+
+#workspaces {
+    margin-left: 32px;
+    padding: 0 10px;
+    border-radius: 8px;
+    background: @module_bg;
+    border: 1px solid @module_border;
+    transition: all 0.2s;
+}
+
+/* Without this setting, the theme set by nwg-look will affect it. */
+#workspaces button {
+    padding: 0 4px;
+    margin: 0 2px;
+    background: transparent;
+}
+
+#clock {
+    color: @clock_fg;
+    padding: 0 10px;
+    border-radius: 8px;
+    background: @module_bg;
+    border: 1px solid @module_border;
+    transition: all 0.2s;
+}
+
+#custom-mpris {
+    color: @mpris_fg;
+    margin-right: 12px;
+    padding: 0 10px;
+    font-size: 14px;
+    border-radius: 8px;
+    background: @module_bg;
+    border: 1px solid @module_border;
+    transition: all 0.2s;
+}
+
+#custom-makoDismiss {
+    margin-left: 20px;
+    margin-right: 12px;
+    padding: 0 16px 0 10px;
+    border-radius: 8px;
+    background: @module_bg;
+    border: 1px solid @module_border;
+    transition: all 0.2s;
+}
+
+#custom-theme {
+    color: @theme_fg;
+    margin-right: 12px;
+    padding: 0 10px;
+    font-size: 12px;
+    border-radius: 8px;
+    background: @module_bg;
+    border: 1px solid @module_border;
+    transition: all 0.2s;
+}
+
+#language {
+    margin-right: 12px;
+    padding: 0 10px;
+    font-size: 12px;
+    border-radius: 8px;
+    background: @module_bg;
+    border: 1px solid @module_border;
+    transition: all 0.2s;
+}
+
+#pulseaudio {
+    margin-right: 12px;
+    padding: 0 10px;
+    border-radius: 8px;
+    background: @module_bg;
+    border: 1px solid @module_border;
+    transition: all 0.2s;
+}
+
+#tray {
+    margin-right: 12px;
+    padding: 0 10px;
+    border-radius: 8px;
+    background: @module_bg;
+    border: 1px solid @module_border;
+    transition: all 0.2s;
+}
+
+#tray > * {
+    padding: 0 4px;
+}
+
+#tray > *:hover {
+    color: @tray_hover_fg;
+}
+
+#custom-wlogout {
+    padding: 0 18px;
+    font-size: 14px;
+    color: @logout_fg;
+    border-radius: 8px;
+    margin-right: 8px;
+    transition: color 0.2s;
+}
+
+#custom-wlogout:hover {
+    color: @logout_hover_fg;
+}
+
+menuitem {
+    padding: 5px 10px;
+    color: @menuitem_fg;
+    background-color: @menuitem_bg;
+    border: none;
+    margin: 0;
+}
+
+menuitem:hover {
+    background-color: @menuitem_hover_bg;
+    color: @menuitem_hover_fg;
+    border: none;
+}
+
+menu {
+    background-color: @menuitem_bg;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+separator {
+    background-color: transparent;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+}
