@@ -1,0 +1,7 @@
+[Default Applications]
+image/jpg=org.gnome.Loupe.desktop;
+image/jpeg=org.gnome.Loupe.desktop;
+image/png=org.gnome.Loupe.desktop;
+text/csv=org.xfce.mousepad.desktop
+video/x-matroska=org.gnome.Totem.desktop;
+application/pdf=vivaldi-stable.desktop;

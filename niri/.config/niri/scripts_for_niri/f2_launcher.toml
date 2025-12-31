@@ -1,0 +1,114 @@
+# f2_launcher2 Configuration File
+# ================================
+# Advanced Fuzzy File Launcher with MIME-type support
+
+# ============================================================================
+# LAUNCHER CONFIGURATION
+# ============================================================================
+[launcher]
+# Specify the active launcher (currently supports: fuzzel)
+active = "fuzzel"
+
+# Fuzzel-specific configuration
+[launcher.fuzzel]
+# Fuzzel dmenu arguments
+dmenu_args = "-w 120 -l 20"
+# Patterns to exclude from file search
+exclude = [".git", "node_modules", ".cache", ".local", "__pycache__", ".venv"]
+
+# Future launcher configurations (commented out)
+# [launcher.rofi]
+# dmenu_args = "-dmenu -i"
+# exclude = [".git", "node_modules", ".cache", ".local"]
+
+# [launcher.wofi]
+# dmenu_args = "--dmenu"
+# exclude = [".git", "node_modules", ".cache", ".local"]
+
+# ============================================================================
+# DEFAULT APPLICATION SETTINGS
+# ============================================================================
+# Default application for unmatched MIME types
+default_app = "xdg-open"
+
+# Default terminal for error messages (leave empty for auto-detection)
+default_terminal = ""
+
+# ============================================================================
+# APPLICATION METADATA
+# ============================================================================
+# Specify whether each application is CLI or GUI
+# CLI applications will automatically be launched in a terminal window
+# Format: "app_name" = "cli" or "gui"
+
+[app_metadata]
+
+# CLI Applications (require terminal)
+nvim = "cli"
+vim = "cli"
+vi = "cli"
+nano = "cli"
+emacs = "cli"
+
+# GUI Applications
+zeditor = "gui"
+code = "gui"
+vivaldi = "gui"
+mousepad = "gui"
+gedit = "gui"
+pluma = "gui"
+leafpad = "gui"
+kwrite = "gui"
+kate = "gui"
+zathura = "gui"
+evince = "gui"
+okular = "gui"
+feh = "gui"
+eog = "gui"
+geeqie = "gui"
+inkscape = "gui"
+mpv = "gui"
+vlc = "gui"
+file-roller = "gui"
+ark = "gui"
+nautilus = "gui"
+nemo = "gui"
+thunar = "gui"
+pcmanfm = "gui"
+xdg-open = "gui"
+
+# ============================================================================
+# MIME TYPE MAPPINGS
+# ============================================================================
+# Format: "mime/type" = ["app1", "app2", "app3"]
+# Apps will be shown in selection dialog.
+# Note: CLI apps will launch in terminal, GUI apps will launch directly.
+
+[mime_types]
+
+# Text files
+"text/plain" = ["zeditor", "code", "mousepad", "nvim"]
+"text/x-shellscript" = ["zeditor", "code", "mousepad", "nvim"]
+"text/x-python" = ["zeditor", "code", "mousepad", "nvim"]
+"application/json" = ["zeditor", "code", "mousepad", "nvim"]
+"application/x-yaml" = ["zeditor", "code", "mousepad", "nvim"]
+"text/markdown" = ["zeditor", "code", "mousepad", "nvim"]
+
+# Uncomment to enable PDF support
+# "application/pdf" = ["zathura", "evince"]
+
+# Uncomment to enable image support
+"image/png" = ["loupe"]
+"image/jpeg" = ["loupe"]
+
+# Uncomment to enable archive support
+# "application/zip" = ["file-roller", "ark"]
+
+# Uncomment to enable audio support
+"audio/mpeg" = ["mpv", "totem"]
+
+# Uncomment to enable video support
+"video/mp4" = ["mpv", "totem"]
+
+# Directories
+"inode/directory" = ["zeditor", "code", "nemo", "kitty"]

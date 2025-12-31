@@ -1,0 +1,11 @@
+/******************************************************************************
+ Waybar Style Configuration
+ -----------------------------------------------------------------------------
+ Theme switcher: Change the theme by modifying the @import line below.
+ Available themes: catppuccin, original, nord, gruvbox, tokyo-night, solarized
+
+ Or use the switch-theme.sh script to change themes automatically.
+******************************************************************************/
+
+@import "themes/ayu.css";
+@import "base.css";
