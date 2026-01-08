@@ -126,7 +126,7 @@ PKGS_JAPANESE=(
   fcitx5-configtool  # Fcitx5 configuration tool
   fcitx5-gtk         # Fcitx5 GTK integration
   fcitx5-qt          # Fcitx5 Qt integration
-  fcitx5-mozc        # Mozc engine for Fcitx5
+  fcitx5-mozc-ut     # Mozc engine for Fcitx5
 )
 
 echo "Official packages to be installed:"

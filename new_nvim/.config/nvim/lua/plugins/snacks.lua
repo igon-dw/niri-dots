@@ -38,8 +38,16 @@ return {
     input = { enabled = true },
     -- Enable notifier (replaces vim.notify)
     notifier = { enabled = true },
+    -- Disable diagnostics (use trouble.nvim instead)
+    diagnostics = { enabled = false },
     -- Enable picker (replaces Telescope)
-    picker = { enabled = true },
+    picker = {
+      enabled = true,
+      sources = {
+        files = { hidden = true, ignored = true },
+        grep = { hidden = true, ignored = true },
+      },
+    },
     -- Enable quickfix improvements
     quickfix = { enabled = true },
     -- Enable smooth scrolling
@@ -192,13 +200,6 @@ return {
     },
 
     -- Search
-    {
-      '<leader>sd',
-      function()
-        Snacks.picker.diagnostics()
-      end,
-      desc = 'Diagnostics',
-    },
     {
       '<leader>sh',
       function()

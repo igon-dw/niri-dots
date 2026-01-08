@@ -119,6 +119,7 @@ return {
         },
       },
       gopls = {},
+      marksman = {},
     }
 
     -- Setup Mason for LSP server installation
@@ -132,6 +133,7 @@ return {
       'black',
       'shfmt',
       'markdownlint',
+      'prettier',
       'yamllint',
     })
 

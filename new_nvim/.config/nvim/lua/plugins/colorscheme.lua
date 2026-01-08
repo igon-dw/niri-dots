@@ -47,6 +47,7 @@ return {
   { 'rebelot/kanagawa.nvim', lazy = false, priority = 1000 },
   { 'folke/tokyonight.nvim', lazy = false, priority = 1000 },
   { 'navarasu/onedark.nvim', lazy = false, priority = 1000 },
+  { 'maxmx03/fluoromachine.nvim', lazy = false, priority = 1000 },
   {
     'neanias/everforest-nvim',
     lazy = false,
@@ -56,6 +57,7 @@ return {
       require('kanagawa').setup { transparent = false }
       require('tokyonight').setup { transparent = false }
       require('onedark').setup {}
+      require('fluoromachine').setup { glow = true, theme = 'delta', transparent = false }
       require('everforest').setup { background = 'hard', transparent_background_level = 0 }
       apply_saved_colorscheme()
     end,

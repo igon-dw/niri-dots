@@ -2,7 +2,7 @@ spawn-at-startup "waybar"
 spawn-at-startup "fcitx5" "-d"
 spawn-at-startup "swww-daemon"
 spawn-at-startup "swww" "restore"
-spawn-at-startup "swayidle" "-w" "timeout" "3600" "swaylock -f" "timeout" "7200" "systemctl suspend" "before-sleep" "swaylock -f"
+spawn-at-startup "swayidle" "-w" "timeout" "3600" "swaylock -f" "timeout" "10800" "systemctl suspend" "before-sleep" "swaylock -f"
 
 input {
     keyboard {

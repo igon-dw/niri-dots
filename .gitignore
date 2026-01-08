@@ -1,4 +1,4 @@
 waybar/.config/waybar/style.css
 kitty/.config/kitty/current-theme.conf
-nvim/.config/nvim/lazy-lock.json
-cvim/.config/cvim/lazy-lock.json
+legacy_nvim/.config/nvim/lazy-lock.json
+new_nvim/.config/nvim/lazy-lock.json

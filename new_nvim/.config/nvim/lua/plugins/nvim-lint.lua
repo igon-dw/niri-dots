@@ -17,5 +17,18 @@ return {
         end
       end,
     })
+
+    -- Integrate linter diagnostics with Neovim's diagnostic system
+    vim.api.nvim_create_autocmd({ 'BufWritePost', 'InsertLeave' }, {
+      group = lint_augroup,
+      callback = function()
+        -- Run linter and update diagnostics
+        if vim.opt_local.modifiable:get() then
+          lint.try_lint()
+          -- Force diagnostic refresh
+          vim.diagnostic.show()
+        end
+      end,
+    })
   end,
 }
