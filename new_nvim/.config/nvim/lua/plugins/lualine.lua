@@ -5,28 +5,26 @@ return {
     options = {
       theme = 'auto',
       globalstatus = true,
-      component_separators = { left = '', right = '' },
-      section_separators = { left = '', right = '' },
+      component_separators = { left = '', right = '' },
+      section_separators = { left = '', right = '' },
     },
     sections = {
       lualine_a = { 'mode' },
       lualine_b = { 'branch', 'diff', 'diagnostics' },
       lualine_c = {
         {
-          'lsp_status',
-          icon = '', -- f013
-          symbols = {
-            -- Standard unicode symbols to cycle through for LSP progress:
-            spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
-            -- Standard unicode symbol for when LSP is done:
-            done = '✓',
-            -- Delimiter inserted between LSP names:
-            separator = ' ',
-          },
-          -- List of LSP names to ignore (e.g., `null-ls`):
-          ignore_lsp = {},
-          -- Display the LSP name
-          show_name = true,
+          function()
+            local clients = vim.lsp.get_clients { bufnr = 0 }
+            if #clients == 0 then
+              return ''
+            end
+            local names = {}
+            for _, client in ipairs(clients) do
+              table.insert(names, '[' .. client.name .. ']')
+            end
+            return ' ' .. table.concat(names, ' ') .. ' running'
+          end,
+          icon = '',
         },
       },
       lualine_x = { 'encoding', 'fileformat', 'filetype' },

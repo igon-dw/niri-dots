@@ -5,3 +5,4 @@ image/png=org.gnome.Loupe.desktop;
 text/csv=org.xfce.mousepad.desktop
 video/x-matroska=org.gnome.Totem.desktop;
 application/pdf=vivaldi-stable.desktop;
+inode/directory=nemo.desktop
