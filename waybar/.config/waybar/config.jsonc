@@ -14,7 +14,11 @@
     "custom/gpu",
     "wlr/taskbar",
   ],
-  "modules-center": ["clock", "niri/workspaces", "custom/makoDismiss"],
+  "modules-center": [
+    "clock",
+    "niri/workspaces",
+    "custom/makoDismiss"
+  ],
   "modules-right": [
     "custom/mpris",
     "custom/theme",
@@ -42,7 +46,8 @@
     "tooltip": true,
     "tooltip-format": "CPU Usage: {usage:02}%",
     "interval": 2,
-    "on-click": "kitty -e btop",
+    // "on-click": "kitty -e btop",
+    "on-click": "ghostty -e btop",
   },
   "temperature": {
     "interval": 2,
@@ -52,10 +57,12 @@
     ],
     "critical-threshold": 82,
     "format": "{icon} {temperatureC}°C",
-    "format-icons": ["󰈸"],
+    "format-icons": [
+      "󰈸"
+    ],
     "tooltip": true,
     "tooltip-format": "CPU Temperature: {temperatureC}°C",
-    "on-click": "kitty -e btop",
+    "on-click": "ghostty -e btop",
   },
   "memory": {
     "interval": 2,
@@ -63,7 +70,7 @@
     // "format": "󰍛 {used}/{total} GB",
     "tooltip": true,
     "tooltip-format": "Memory Usage: {used} / {total} GB",
-    "on-click": "kitty -e btop",
+    "on-click": "ghostty -e btop",
   },
   "custom/gpu": {
     "format": "󰢮 {}",
@@ -71,7 +78,7 @@
     "tooltip-format": "GPU Temperature: {}",
     "interval": 2,
     "exec": "sensors | grep -i 'edge' | awk '{gsub(/\\+/, \"\", $2); split($2, a, \".\"); print a[1] \"°C\"}'",
-    "on-click": "kitty -e nvtop",
+    "on-click": "ghostty -e nvtop",
   },
   "disk": {
     "interval": 30,
@@ -133,8 +140,15 @@
       "phone": "",
       "portable": "",
       "car": "",
-      "default": ["", "", "󰕾", ""],
-      "ignored-sinks": ["Easy Effects Sink"],
+      "default": [
+        "",
+        "",
+        "󰕾",
+        ""
+      ],
+      "ignored-sinks": [
+        "Easy Effects Sink"
+      ],
     },
     "scroll-step": 5.0,
     "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",

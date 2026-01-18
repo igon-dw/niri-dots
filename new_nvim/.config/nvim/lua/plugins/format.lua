@@ -1,6 +1,7 @@
 return {
   'stevearc/conform.nvim',
-  event = { 'BufWritePre' },
+  -- event = { 'BufWritePre' },
+  event = { 'BufReadPost', 'BufNewFile' },
   cmd = { 'ConformInfo' },
   keys = {
     {
@@ -35,6 +36,7 @@ return {
       typescript = { 'prettierd', 'prettier', stop_after_first = true },
       yaml = { 'prettier' },
       markdown = { 'prettier', 'markdownlint', stop_after_first = true },
+      kdl = { 'kdlfmt' },
     },
   },
 }

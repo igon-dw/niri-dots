@@ -14,6 +14,8 @@ PKGS_OFFICIAL=(
   wlogout            # Logout screen for Wayland (provides UI for logout, reboot, shutdown, etc.)
   swayidle           # Idle management daemon for Wayland
   wl-clipboard       # Clipboard manager for Wayland
+  cliphist           # Clipboard history manager for Wayland (stores/recalls with dmenu/rofi/wofi/fuzzel)
+  clipse             # Configurable TUI clipboard manager with multi-select, pinning, and auto-paste
   networkmanager     # Network management
   nemo               # File manager
 
