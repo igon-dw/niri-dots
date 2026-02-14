@@ -1,0 +1,80 @@
+- description: "cal: Show 3 months (Monday start)"
+  details: "Display a 3-month calendar (previous, current, and next month) starting from Monday."
+  command: "cal -m -3"
+
+- description: "docker: Stop all containers"
+  details: "Stop all containers regardless of their running state."
+  command: "docker stop (docker ps -aq)"
+
+- description: "docker: Show all containers"
+  details: "List all containers (both running and stopped)."
+
+- description: "docker: Show all images"
+  details: "List all Docker images stored locally."
+  command: "docker images"
+
+- description: "ffmpeg: Cut video with VAAPI"
+  details: |
+    Cut a specific section of video using hardware acceleration (VAAPI).
+    -ss: Start time
+    -to: End time
+    -c:v: Video codec (av1_vaapi)
+    -c:a: Audio codec (aac)
+  command: |
+    ffmpeg \
+      -hwaccel vaapi \
+      -hwaccel_device /dev/dri/renderD128 \
+      -ss 00:05:00 -to 00:06:00 \
+      -i input.mp4 \
+      -vf 'format=nv12,hwupload' \
+      -c:v av1_vaapi -b:v 2M \
+      -c:a aac -b:a 128k \
+      output_clip.mp4
+
+- description: "ffmpeg: Record and trim desktop audio (PulseAudio)"
+  details: |
+    Record desktop audio from PulseAudio monitor source and automatically remove silence.
+  command: |
+    ffmpeg -f pulse -i "alsa_output.pci-0000_10_00.6.analog-stereo.monitor" -af "silenceremove=start_periods=1:start_duration=0.3:start_threshold=-55dB:stop_periods=-1:stop_duration=0.4:stop_threshold=-55dB" -c:a aac -b:a 192k -ar 48000 -ac 2 temp_title.m4a
+
+- description: "fish: Reload configuration"
+  details: "Reload fish shell configuration file to apply changes immediately."
+  command: "source ~/.config/fish/config.fish"
+
+- description: "mkdir: Create directory (with parents)"
+  details: "Create specified directory and any necessary parent directories. No error if directory exists."
+  command: "mkdir -p <directory>"
+
+- description: "nvim: Measure startup time"
+  details: "Measure Neovim startup time in detail to identify performance bottlenecks."
+  command: "nvim --startuptime nvim_startup.log"
+
+- description: "rclone: Mirror source to destination (dry-run)"
+  details:
+    "Fully synchronize source directory to destination using rclone (reflect deletions, additions, updates). Dry-run mode does not apply actual changes.
+    Use quotes around <source_dir> or <remote:destination_dir> if they contain spaces or special characters."
+  command: "rclone sync <source_dir> <destination_dir> --dry-run -v"
+
+- description: "rsync: Mirror source to destination (dry-run)"
+  details: "Fully synchronize source directory to destination (reflect deletions, additions, updates). Dry-run mode does not apply actual changes."
+  command: "rsync -av --delete --dry-run <source_dir>/ <remote:destination_dir>/"
+
+- description: "simple timer"
+  details: "Send notification after 3 minutes."
+  command: "sleep 3m && notify-send time!"
+
+- description: "tar: Compress a directory (zstd)"
+  details: "Compress specified directory using zstd format. Fast with high compression ratio."
+  command: "tar --zstd -cvf archive.tar.zst [directory_to_compress]"
+
+- description: "gemini-cli: Start Gemini CLI"
+  details: "Launch Gemini CLI via npx. Downloads if necessary."
+  command: "npx https://github.com/google-gemini/gemini-cli"
+
+- description: "7z: Compress with password (interactive)"
+  details: "Compress directory or files with password encryption using 7z. Password is set interactively after execution. Use `-mhe=on` to encrypt file names."
+  command: "7z a -p -mhe=on archive.7z <target>"
+
+- description: "7z: Compress without encryption"
+  details: "Compress directory or files using 7z without encryption."
+  command: "7z a archive.7z <target>"

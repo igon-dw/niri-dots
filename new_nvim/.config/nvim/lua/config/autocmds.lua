@@ -58,7 +58,6 @@ vim.api.nvim_create_user_command('DeltaLive', function()
 
   vim.fn.jobstart(cmd, {
     term = true,
-    env = { SKIP_FLG = '1' },
     on_exit = function()
       os.remove(temp_old)
     end,

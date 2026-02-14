@@ -1,3 +1,10 @@
+local section_sep_left = ''
+local section_sep_right = ''
+local section_sep_left_alt = ''
+local section_sep_right_alt = ''
+local component_sep_left = ''
+local component_sep_right = ''
+
 return {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -5,8 +12,8 @@ return {
     options = {
       theme = 'auto',
       globalstatus = true,
-      component_separators = { left = '', right = '' },
-      section_separators = { left = '', right = '' },
+      component_separators = { left = component_sep_left, right = component_sep_left },
+      section_separators = { left = section_sep_left, right = section_sep_left_alt },
     },
     sections = {
       lualine_a = { 'mode' },
@@ -31,17 +38,17 @@ return {
                 for _, f in ipairs(formatters) do
                   table.insert(names, f.name)
                 end
-                table.insert(parts, '󰉼 FMT  ' .. table.concat(names, '  '))
+                table.insert(parts, '󰉼 FMT  ' .. table.concat(names, ' ' .. component_sep_left .. ' '))
               end
             end
             local lint = package.loaded['lint']
             if lint then
               local linters = lint.linters_by_ft[vim.bo.filetype] or {}
               if #linters > 0 then
-                table.insert(parts, '󱉶 LINT  ' .. table.concat(linters, '  '))
+                table.insert(parts, '󱉶 LINT  ' .. table.concat(linters, ' ' .. component_sep_left .. ' '))
               end
             end
-            return table.concat(parts, '    ')
+            return table.concat(parts, ' ' .. component_sep_left .. ' ')
           end,
         },
       },
@@ -50,8 +57,16 @@ return {
       lualine_z = { 'location' },
     },
     tabline = {
-      lualine_a = { 'buffers' },
-      lualine_z = { 'tabs' },
+      lualine_a = {
+        {
+          'buffers',
+        },
+      },
+      lualine_z = {
+        {
+          'tabs',
+        },
+      },
     },
   },
 }

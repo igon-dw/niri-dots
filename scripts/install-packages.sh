@@ -18,6 +18,7 @@ PKGS_OFFICIAL=(
   clipse             # Configurable TUI clipboard manager with multi-select, pinning, and auto-paste
   networkmanager     # Network management
   nemo               # File manager
+  superfile          # TUI file manager
 
   # === Terminal & Shell ===
   kitty              # Terminal emulator
@@ -41,6 +42,7 @@ PKGS_OFFICIAL=(
   lazygit            # Terminal git client
   go-yq              # YAML processor
   chafa              # Terminal image viewer
+  trash-cli          # rm alternative (moves files to trash)
 
   # === Version Control & APIs ===
   git                # Version control
@@ -110,6 +112,8 @@ PKGS_AUR=(
   obs-vkcapture      # OBS Vulkan capture plugin (AUR)
   visual-studio-code-bin # Visual Studio Code (AUR)
   losslesscut-bin    # Video editing tool (AUR)
+  tty-clock          # Terminal clock (AUR)
+  frogmouth          # Markdown Browser (AUR)
 )
 
 # Flatpak packages

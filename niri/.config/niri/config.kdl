@@ -36,9 +36,7 @@ position x=2560 y=0
 }
 gestures {
     hot-corners {
- // This function is disable now because next release will support this setting.
-        // bottom-right
-
+        off
     }
 }
 window-rule {
@@ -71,10 +69,10 @@ window-rule {
     match app-id="kitty-floating"
     open-floating true
     default-column-width {
-        fixed 1440
+        fixed 1920
     }
     default-window-height {
-        fixed 960
+        fixed 1280
     }
 }
 window-rule {
@@ -148,17 +146,20 @@ binds {
         show-hotkey-overlay
     }
     // Launchers
-    // Mod+Return hotkey-overlay-title="Open a Terminal: kitty" {
-    //     spawn "kitty"
-    // }
-    Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" {
-        spawn "ghostty"
+    Mod+Return hotkey-overlay-title="Open a Terminal: kitty" {
+        spawn "kitty"
     }
+    // Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" {
+    //     spawn "ghostty"
+    // }
     Alt+Space hotkey-overlay-title="Run an Application: fuzzel" {
         spawn "fuzzel"
     }
     Mod+Shift+C hotkey-overlay-title="Clear All Notifications (mako)" {
         spawn "makoctl" "dismiss" "-a"
+    }
+    Mod+Alt+C hotkey-overlay-title="Clear All Clipboard History (clipse)" {
+        spawn-sh "clipse -clear && notify-send '✓ Clipboard History Cleared!'"
     }
     // Media keys
     XF86AudioRaiseVolume allow-when-locked=true {
@@ -451,7 +452,8 @@ binds {
     }
     // Wallpaper binding
     Mod+Shift+W hotkey-overlay-title="Change the Wallpaper" {
-        spawn-sh "~/.config/niri/scripts_for_niri/wallpaper_selector.sh"
+        // spawn-sh "~/.config/niri/scripts_for_niri/wallpaper_selector.sh"
+        spawn "kitty" "--class" "kitty-floating" "-e" "bash" "-c" "$HOME/.config/niri/scripts_for_niri/wallpaper_selector_tui.sh"
     }
     // Fuzzy Window Switcher binding
     Mod+W hotkey-overlay-title="Open Fast Fuzzy Window Switcher" {
@@ -466,15 +468,15 @@ binds {
         spawn-sh "~/niri-dots/waybar/.config/waybar/scripts_for_waybar/switch-theme.sh"
     }
     Mod+Alt+T hotkey-overlay-title="Change the Kitty Color Scheme" {
-        // spawn-sh "~/niri-dots/kitty/.config/kitty/scripts_for_kitty/switch-theme.sh"
-        spawn-sh "~/niri-dots/ghostty/.config/ghostty/scripts_for_ghostty/switch-theme.sh"
+        spawn-sh "~/niri-dots/kitty/.config/kitty/scripts_for_kitty/switch-theme.sh"
+ // spawn-sh "~/niri-dots/ghostty/.config/ghostty/scripts_for_ghostty/switch-theme.sh"
     }
     Mod+Ctrl+Alt+T hotkey-overlay-title="Change the All Color Scheme" {
         spawn-sh "~/.config/niri/scripts_for_niri/change-all-themes.sh"
     }
     Mod+Semicolon {
-        // spawn "ghostty" "--class" "ghostty-floating" "-e" "clipse"
-        spawn "ghostty" "--title=ghostty-floating" "-e" "clipse"
+        spawn "kitty" "--class" "kitty-floating" "-e" "clipse"
+ // spawn "ghostty" "--title=ghostty-floating" "-e" "clipse"
     }
     // Screenshot bindings
     Print {

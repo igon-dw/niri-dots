@@ -1,3 +1,32 @@
+local header = [[
+      ____                        _                    _ 
+     |  _ \  ___   __ _      __ _| |__   ___  __ _  __| |
+     | | | |/ _ \ / _` |    / _` | '_ \ / _ \/ _` |/ _` |
+     | |_| | (_) | (_| |_  | (_| | | | |  __/ (_| | (_| |
+     |____/ \___/ \__, ( )  \__,_|_| |_|\___|\__,_|\__,_|
+                  |___/|/
+
+                                  __
+                       .,-;-;-,. /'_\
+                     _/_/_/_|_\_\) /
+                   '-<_><_><_><_>=/\
+                     `/_/====/_/-'\_\
+                      ""     ""    ""
+      ]]
+
+-- make all lines the same width so center alignment doesn't shift shorter lines
+header = (function(s)
+  local lines = vim.split(s, '\n', { plain = true })
+  local max = 0
+  for _, l in ipairs(lines) do
+    max = math.max(max, #l)
+  end
+  for i, l in ipairs(lines) do
+    lines[i] = l .. string.rep(' ', max - #l)
+  end
+  return table.concat(lines, '\n')
+end)(header)
+
 return {
   'folke/snacks.nvim',
   priority = 1000,
@@ -10,21 +39,17 @@ return {
     dashboard = {
       enabled = true,
       preset = {
-        header = [[
-       ____                        _                    _ 
-      |  _ \  ___   __ _      __ _| |__   ___  __ _  __| |
-      | | | |/ _ \ / _` |    / _` | '_ \ / _ \/ _` |/ _` |
-      | |_| | (_) | (_| |_  | (_| | | | |  __/ (_| | (_| |
-      |____/ \___/ \__, ( )  \__,_|_| |_|\___|\__,_|\__,_|
-                   |___/|/
-
-                              __
-                   .,-;-;-,. /'_\
-                 _/_/_/_|_\_\) /
-               '-<_><_><_><_>=/\
-                 `/_/====/_/-'\_\
-                  ""     ""    ""
-      ]],
+        keys = {
+          { icon = ' ', key = 'f', desc = 'Find File', action = ":lua Snacks.dashboard.pick('files')" },
+          -- { icon = ' ', key = 'n', desc = 'New File', action = ':ene | startinsert' },
+          { icon = ' ', key = 'g', desc = 'Find Text', action = ":lua Snacks.dashboard.pick('live_grep')" },
+          { icon = ' ', key = 'r', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = ' ', key = 'c', desc = 'Config', action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+          { icon = '󰒲 ', key = 'L', desc = 'Lazy', action = ':Lazy', enabled = package.loaded.lazy ~= nil },
+          { icon = ' ', key = 'C', desc = 'Colorschemes', action = ':lua Snacks.picker.colorschemes { pattern = vim.g.colors_name }' },
+          { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
+        },
+        header = header,
       },
       sections = {
         { section = 'header' },
@@ -279,13 +304,13 @@ return {
       end,
       desc = 'Dismiss All Notifications',
     },
-    {
-      '<c-/>',
-      function()
-        Snacks.terminal()
-      end,
-      desc = 'Toggle Terminal',
-    },
+    -- {
+    --   '<c-/>',
+    --   function()
+    --     Snacks.terminal()
+    --   end,
+    --   desc = 'Toggle Terminal',
+    -- },
   },
   init = function()
     vim.api.nvim_create_autocmd('User', {
