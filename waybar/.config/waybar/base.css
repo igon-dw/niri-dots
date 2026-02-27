@@ -92,26 +92,18 @@ tooltip {
     transition: all 0.2s;
 }
 
-#taskbar {
+#custom-taskbar {
     margin-left: 24px;
-}
-
-#taskbar button {
-    background-color: @taskbar_btn_bg;
-    border: 2px solid @taskbar_btn_border;
+    padding: 0 10px;
     border-radius: 8px;
-    padding: 0 8px;
-    margin: 0 4px;
-    transition: all 0.3s;
+    background: @taskbar_btn_bg;
+    border: 1px solid @taskbar_btn_border;
+    font-size: 20px;
+    letter-spacing: 2px;
+    transition: all 0.2s;
 }
 
-#taskbar button:hover {
-    background-color: @taskbar_btn_hover_bg;
-    border-color: @taskbar_btn_hover_border;
-}
-
-#taskbar button.active {
-    background-color: @taskbar_btn_active_bg;
+#custom-taskbar.focused {
     border-color: @taskbar_btn_active_border;
 }
 
