@@ -6,3 +6,6 @@ text/csv=org.xfce.mousepad.desktop
 video/x-matroska=org.gnome.Totem.desktop;
 application/pdf=vivaldi-stable.desktop;
 inode/directory=nemo.desktop
+x-scheme-handler/http=vivaldi-stable.desktop;
+x-scheme-handler/https=vivaldi-stable.desktop;
+x-scheme-handler/ftp=vivaldi-stable.desktop;

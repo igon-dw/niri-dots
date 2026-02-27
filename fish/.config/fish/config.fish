@@ -27,7 +27,7 @@ abbr lt5 'eza -a --tree --level=5 --icons --ignore-glob=".git|node_modules"'
 abbr cdf 'cd (fd --type d --hidden --exclude .git --exclude node_modules . ~ | fzf)'
 
 # launch apps easily
-abbr lzg lazygit
+abbr lzg 'lazygit'
 
 # cvim is a command to launch a customized Neovim (e.g., cvim), but currently there are no specific settings.
 abbr cvim 'NVIM_APPNAME=cvim nvim'
@@ -36,11 +36,12 @@ abbr cvim 'NVIM_APPNAME=cvim nvim'
 abbr ffclip 'ffmpeg -hide_banner -y -hwaccel vaapi -hwaccel_device /dev/dri/renderD128 -ss 00:00:00 -to 00:01:00 -i input.mp4 -vf "format=nv12,hwupload" -c:v av1_vaapi -qr 18 -c:a aac -b:a 192k output_clip.mp4'
 
 # Abbreviation for launching github copilot CLI tool
-abbr cplt copilot
+abbr cplt 'copilot'
 abbr cpltr 'copilot --resume'
 
 # Abbreviation for launching opencode
 abbr oc 'opencode'
+abbr ocw 'opencode web'
 
 ## Abbreviation for lauching tty-clock
 abbr ttc 'tty-clock -sc -C 6 -t'

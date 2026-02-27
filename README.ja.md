@@ -59,7 +59,11 @@ niri-dots/
 ├── README.ja.md                   # 日本語版ドキュメント
 ├── LICENSE                        # MITライセンス
 ├── .gitignore                     # Git除外設定
-├── install-packages.sh            # パッケージインストールスクリプト
+├── setup.sh                       # セットアップオーケストレータ
+├── scripts/
+│   ├── install-packages.sh        # パッケージインストールスクリプト
+│   ├── setup-docker.sh            # Docker設定スクリプト
+│   └── setup_gnome_settings.sh    # GNOME設定スクリプト
 │
 ├── niri/                          # Niriコンポジタの設定
 │   └── .config/
@@ -69,54 +73,106 @@ niri-dots/
 │               ├── f2_launcher.sh           # ファイル開きスクリプト
 │               ├── f2_launcher.toml         # ファイルオープナー設定
 │               ├── wallpaper_selector.sh    # 壁紙選択スクリプト
+│               ├── wallpaper_selector_tui.sh
+│               ├── niri-window-picker.sh
 │               └── change-all-themes.sh     # 全テーマ一括変更
 │
 ├── waybar/                        # Waybarステータスバーの設定
 │   └── .config/waybar/
 │       ├── README.md              # Waybar詳細ドキュメント
+│       ├── README.ja.md           # Waybar詳細ドキュメント（日本語）
 │       ├── config.jsonc           # Waybarモジュールとレイアウト
 │       ├── base.css               # Waybarテーマ非依存スタイル
-│       ├── style.css              # Waybarスタイル（Git管理外）
-│       ├── switch-theme.sh        # Waybarテーマ切り替えスクリプト
+│       ├── style.css.template     # Waybarスタイルテンプレート
+│       ├── scripts_for_waybar/
+│       │   ├── switch-theme.sh    # Waybarテーマ切り替えスクリプト
+│       │   ├── get-current-theme.sh
+│       │   ├── get-mpris.sh
+│       │   └── pomo.sh
 │       └── themes/                # Waybarテーマ集
+│           ├── ayu.css
 │           ├── catppuccin.css
+│           ├── earthsong.css
+│           ├── everforest.css
+│           ├── flatland.css
 │           ├── gruvbox.css
+│           ├── night-owl.css
 │           ├── nord.css
 │           ├── original.css
+│           ├── palenight.css
+│           ├── shades-of-purple.css
 │           ├── solarized.css
 │           └── tokyo-night.css
 │
 ├── kitty/                         # Kittyターミナル設定
 │   └── .config/kitty/
 │       ├── README.md              # Kitty詳細ドキュメント
+│       ├── README.ja.md           # Kitty詳細ドキュメント（日本語）
 │       ├── kitty.conf             # メインKitty設定
-│       ├── themes/                # Kittyテーマ集（12+テーマ）
-│       │   ├── ayu.conf
-│       │   ├── catppuccin-mocha.conf
-│       │   ├── Earthsong.conf
-│       │   ├── gruvbox-dark.conf
-│       │   ├── nord.conf
-│       │   └── ...
-│       └── scripts/
-│           ├── switch-theme.sh    # Kittyテーマ切り替え
-│           └── list-themes.sh     # テーマ一覧表示
+│       ├── scripts_for_kitty/
+│       │   ├── switch-theme.sh    # Kittyテーマ切り替え
+│       │   └── list-themes.sh     # テーマ一覧表示
+│       └── themes/                # Kittyテーマ集
+│           ├── ayu.conf
+│           ├── catppuccin.conf
+│           ├── earthsong.conf
+│           ├── everforest.conf
+│           ├── flatland.conf
+│           ├── gruvbox.conf
+│           ├── nord.conf
+│           ├── original.conf
+│           ├── palenight.conf
+│           ├── solarized.conf
+│           └── tokyo-night.conf
+│
+├── ghostty/                       # Ghosttyターミナル設定
+│   └── .config/ghostty/
+│       ├── ghostty.config         # Ghostty設定ファイル
+│       └── scripts_for_ghostty/
+│           ├── switch-theme.sh
+│           └── list-themes.sh
 │
 ├── fuzzel/                        # fuzzelアプリケーションランチャー設定
 │   └── .config/fuzzel/
-│       └── fuzzel.toml
+│       └── fuzzel.ini
 │
-├── nvim/                          # Neovim設定（OSSコア）
+├── fish/                          # Fish shell設定
+│   └── .config/fish/
+│       ├── config.fish
+│       ├── functions/
+│       └── templates/
+│
+├── starship/                      # Starshipプロンプト設定
+│   └── .config/starship.toml
+│
+├── new_nvim/                      # Neovim設定（現行版、OSSコア）
 │   └── .config/nvim/
 │       ├── init.lua               # エントリーポイント
 │       └── lua/
 │           ├── config/            # コア設定
 │           └── plugins/           # プラグイン設定
 │
+├── legacy_nvim/                   # Neovim設定（レガシー版、参考用）
+│   ├── docs/
+│   │   ├── DESIGN_PHILOSOPHY.md
+│   │   ├── DESIGN_PHILOSOPHY_ja.md
+│   │   └── README_KEYMAPS.md
+│   └── .config/nvim/
+│
 ├── nvim-copilot/                  # Neovim AIアドオン（オプション、GitHub Copilotサブスクリプション必要）
 │   └── .config/nvim/
 │       └── lua/plugins/
 │           ├── copilot.lua        # GitHub Copilot連携
 │           └── copilotchat.lua    # CopilotChat連携
+│
+├── lazygit/                       # Lazygit設定
+│   └── .config/lazygit/
+│
+├── fastfetch/                     # Fastfetch設定
+│   └── .config/fastfetch/
+│
+├── mako/                          # Mako通知設定
+│   └── .config/mako/
 │
 └── misc/                          # その他の設定とユーティリティ
     ├── .config/
@@ -133,11 +189,11 @@ niri-dots/
 
 ```bash
 # 1. リポジトリのクローン
-git clone https://github.com/yourusername/niri-dots.git
+git clone https://github.com/igon-dw/niri-dots.git
 cd niri-dots
 
 # 2. 必要なパッケージのインストール
-sudo bash install-packages.sh
+sudo bash scripts/install-packages.sh
 
 # 3. 設定ファイルの配置
 # GNU Stowを使用する方法（推奨）：
@@ -178,7 +234,7 @@ systemctl status sddm    # または gdm
 `install-packages.sh` スクリプトがすべての依存パッケージと推奨ツールをインストールします：
 
 ```bash
-sudo bash install-packages.sh
+sudo bash scripts/install-packages.sh
 ```
 
 **インストール内容:**
@@ -189,7 +245,7 @@ sudo bash install-packages.sh
 - **CLIユーティリティ**: `eza`、`fd`、`fzf`、`ripgrep`、`delta`、`lazygit`、`go-yq`、`chafa`
 - **システムユーティリティ**: `docker`、`snapper`、`flatpak`、`gnome-keyring`、`stow`、`xdg-user-dirs`、`xdg-utils`
 - **マルチメディア**: `kdenlive`、`obs-studio`、`steam`、Proton関連
-- **フォント・入力方式**: `fcitx5-mozc`（日本語入力）、Nerd Fonts
+- **フォント・入力方式**: `fcitx5-mozc-ut`（日本語入力）、Nerd Fonts
 
 **注記**: AURからインストールされるパッケージが含まれています。実行前にスクリプトを確認し、必要に応じて `yay` を使用するよう修正してください。
 
@@ -212,6 +268,8 @@ stow niri          # Niriのみ
 stow waybar        # Waybarのみ
 stow kitty         # Kittyのみ
 stow fuzzel        # Fuzzelのみ
+stow fish          # Fish shellのみ
+stow starship      # Starshipのみ
 stow misc          # その他のユーティリティとコマンド
 ```
 
@@ -266,10 +324,10 @@ Waybarはシステム情報を表示し、一般的な機能への素早いア�
 
 ```bash
 # テーマを切り替え（インタラクティブ）
-~/.config/waybar/switch-theme.sh
+~/.config/waybar/scripts_for_waybar/switch-theme.sh
 
 # 特定のテーマを指定
-~/.config/waybar/switch-theme.sh gruvbox
+~/.config/waybar/scripts_for_waybar/switch-theme.sh gruvbox
 ```
 
 **詳細**: [Waybar設定ガイド](./waybar/.config/waybar/README.md)
@@ -284,13 +342,13 @@ Kittyは高性能でテーマ対応のターミナルエミュレータです。
 
 ```bash
 # テーマを切り替え（インタラクティブ）
-~/.config/kitty/scripts/switch-theme.sh
+~/.config/kitty/scripts_for_kitty/switch-theme.sh
 
 # 特定のテーマを指定
-~/.config/kitty/scripts/switch-theme.sh tokyo-night
+~/.config/kitty/scripts_for_kitty/switch-theme.sh tokyo-night
 
 # テーマ一覧を表示
-~/.config/kitty/scripts/list-themes.sh
+~/.config/kitty/scripts_for_kitty/list-themes.sh
 ```
 
 **詳細**: [Kitty設定ガイド](./kitty/.config/kitty/README.md)
@@ -299,7 +357,7 @@ Kittyは高性能でテーマ対応のターミナルエミュレータです。
 
 Fuzzelはモダンなアプリケーションランチャーです。
 
-**設定ファイル**: `~/.config/fuzzel/fuzzel.toml`
+**設定ファイル**: `~/.config/fuzzel/fuzzel.ini`
 
 **詳細**: [Fuzzel GitHub](https://codeberg.org/dnkl/fuzzel)
 
@@ -323,23 +381,24 @@ lazy.nvimプラグインマネージャー、LSPサポート、モジュラー�
 
 ```bash
 cd niri-dots
-stow nvim
+stow new_nvim
 ```
 
 #### パターン2: OSSコア + GitHub Copilot（推奨・安全な方法）
 
 ```bash
 cd niri-dots
-stow nvim nvim-copilot  # 両方を同時にデプロイ
+stow new_nvim nvim-copilot  # 両方を同時にデプロイ
 ```
 
-⚠️ **注意**: `stow nvim` を実行後に `stow nvim-copilot` を後付けする場合、stowが既存ディレクトリを検出してシンボリックリンクの構造を自動調整します。これは正常な動作ですが、確実を期すためには上記の同時デプロイを推奨します。
+⚠️ **注意**: `stow new_nvim` を実行後に `stow nvim-copilot` を後付けする場合、stowが既存ディレクトリを検出してシンボリックリンクの構造を自動調整します。これは正常な動作ですが、確実を期すためには上記の同時デプロイを推奨します。
 
 **AIアドオン（オプション）**:
 
 `nvim-copilot`アドオンはGitHub Copilot連携を提供します。
 
 **必要条件:**
+
 - GitHub Copilotサブスクリプション
 - GitHub CLIツール（`github-cli`パッケージ）
 - GitHub CLI認証
@@ -357,7 +416,7 @@ gh auth login
 
 ```bash
 cd niri-dots
-stow nvim nvim-copilot  # OSSコアとCopilotアドオンの両方をデプロイ
+stow new_nvim nvim-copilot  # OSSコアとCopilotアドオンの両方をデプロイ
 ```
 
 3. **Neovimで認証トークンを確認:**
@@ -369,11 +428,11 @@ nvim
 
 **使用方法:**
 
-| キーマップ | 機能 |
-|-----------|------|
-| `Ctrl+y` | Copilot提案を全て受け入れ |
-| `Ctrl+i` | Copilot提案の次の単語を受け入れ |
-| `<leader>ai` | CopilotChatを開く |
+| キーマップ   | 機能                            |
+| ------------ | ------------------------------- |
+| `Ctrl+y`     | Copilot提案を全て受け入れ       |
+| `Ctrl+i`     | Copilot提案の次の単語を受け入れ |
+| `<leader>ai` | CopilotChatを開く               |
 
 **トラブルシューティング:**
 
@@ -390,8 +449,8 @@ gh auth login
 
 ```bash
 # デプロイ状況を確認
-stow -d niri-dots --list-only nvim
-stow -d niri-dots --list-only nvim-copilot
+stow -d niri-dots -n new_nvim
+stow -d niri-dots -n nvim-copilot
 
 # nvim-copilotを後から追加する場合
 cd niri-dots
@@ -400,17 +459,17 @@ stow nvim-copilot
 # nvim-copilotを削除（OSSコアは保持）
 stow -D nvim-copilot
 
-# nvim全体を削除
-stow -D nvim nvim-copilot
+# new_nvim全体を削除
+stow -D new_nvim nvim-copilot
 
 # 完全にリセットする場合
-stow -D nvim
+stow -D new_nvim
 stow -D nvim-copilot
 # その後、必要に応じて再度デプロイ
-stow nvim
+stow new_nvim
 ```
 
-**詳細ドキュメント**: [Neovim設計思想](./nvim/docs/DESIGN_PHILOSOPHY_ja.md)
+**詳細ドキュメント**: [Neovim設計思想](./legacy_nvim/docs/DESIGN_PHILOSOPHY_ja.md)
 
 ---
 
@@ -522,7 +581,7 @@ input {
 
 ### 5. 日本語入力の設定（オプション）
 
-fcitx5-moczをインストールして日本語入力を使用する場合、環境変数を設定してNiri設定で自動起動：
+fcitx5-mozc-utをインストールして日本語入力を使用する場合、環境変数を設定してNiri設定で自動起動：
 
 ```bash
 # 環境変数の設定
@@ -541,14 +600,14 @@ spawn-at-startup "fcitx5" "-d"
 
 `~/.config/niri/config.kdl` のキーバインディングを編集。デフォルトで以下のような設定があります：
 
-```kdl
+```bash
 binds {
     Mod+Return { spawn "kitty"; }                    # ターミナル起動
     Alt+Space { spawn "fuzzel"; }                    # アプリケーションランチャー
     Mod+Q { close-window; }                          # ウィンドウを閉じる
-    Mod+W { spawn-sh "~/.config/niri/scripts_for_niri/wallpaper_selector.sh"; }
-    Mod+T { spawn-sh "~/.config/waybar/switch-theme.sh"; }
-    Mod+Alt+T { spawn-sh "~/.config/kitty/scripts/switch-theme.sh"; }
+    Mod+Shift+W { spawn "kitty" "--class" "kitty-floating" "-e" "bash" "-c" "$HOME/.config/niri/scripts_for_niri/wallpaper_selector_tui.sh"; }
+    Mod+T { spawn-sh "~/.config/waybar/scripts_for_waybar/switch-theme.sh"; }
+    Mod+Alt+T { spawn-sh "~/.config/kitty/scripts_for_kitty/switch-theme.sh"; }
 }
 ```
 
@@ -564,10 +623,10 @@ binds {
 
 ```bash
 # インタラクティブに選択
-~/.config/waybar/switch-theme.sh
+~/.config/waybar/scripts_for_waybar/switch-theme.sh
 
 # 直接指定
-~/.config/waybar/switch-theme.sh nord
+~/.config/waybar/scripts_for_waybar/switch-theme.sh nord
 
 # Niriキーバインド（デフォルト: Mod+T）で起動可能
 ```
@@ -578,13 +637,13 @@ binds {
 
 ```bash
 # インタラクティブに選択
-~/.config/kitty/scripts/switch-theme.sh
+~/.config/kitty/scripts_for_kitty/switch-theme.sh
 
 # 直接指定
-~/.config/kitty/scripts/switch-theme.sh palenight
+~/.config/kitty/scripts_for_kitty/switch-theme.sh palenight
 
 # テーマ一覧を表示
-~/.config/kitty/scripts/list-themes.sh
+~/.config/kitty/scripts_for_kitty/list-themes.sh
 
 # Niriキーバインド（デフォルト: Mod+Alt+T）で起動可能
 ```
@@ -593,10 +652,10 @@ binds {
 
 ```bash
 # Waybarテーマを初期化
-~/.config/waybar/switch-theme.sh
+~/.config/waybar/scripts_for_waybar/switch-theme.sh
 
 # Kittyテーマを初期化（自動初期化機能あり）
-~/.config/kitty/scripts/switch-theme.sh
+~/.config/kitty/scripts_for_kitty/switch-theme.sh
 ```
 
 ### Waybarモジュールの調整
@@ -673,10 +732,10 @@ fcitx5-diagnose
 
 ```bash
 # スクリプトが実行可能か確認
-ls -la ~/.config/kitty/scripts/switch-theme.sh
+ls -la ~/.config/kitty/scripts_for_kitty/switch-theme.sh
 
 # 手動で再初期化
-~/.config/kitty/scripts/switch-theme.sh Earthsong
+~/.config/kitty/scripts_for_kitty/switch-theme.sh earthsong
 ```
 
 ---
@@ -698,13 +757,11 @@ AI支援によるすべての成果物は、プロジェクト管理者による
 
 このプロジェクトはMITライセンスの下でライセンスされています。詳細は [LICENSE](LICENSE) ファイルを参照してください。
 
----
-
-## リソースとドキュメント
+**リソースとドキュメント**
 
 - [Niri GitHub リポジトリ](https://github.com/YaLTeR/niri)
 - [Waybar GitHub](https://github.com/Alexays/Waybar)
-- [Kitty GitHub](https://sw.kovidgoyal.net/kitty/)
+- [Kitty ドキュメント](https://sw.kovidgoyal.net/kitty/)
 - [Fuzzel Codeberg](https://codeberg.org/dnkl/fuzzel)
 - [Arch Linux Wiki](https://wiki.archlinux.org/)
 - [Wayland ドキュメント](https://wayland.freedesktop.org/)

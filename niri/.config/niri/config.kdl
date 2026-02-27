@@ -146,12 +146,12 @@ binds {
         show-hotkey-overlay
     }
     // Launchers
-    Mod+Return hotkey-overlay-title="Open a Terminal: kitty" {
-        spawn "kitty"
-    }
-    // Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" {
-    //     spawn "ghostty"
+    // Mod+Return hotkey-overlay-title="Open a Terminal: kitty" {
+    //     spawn "kitty"
     // }
+    Mod+Return hotkey-overlay-title="Open a Terminal: Ghostty" {
+        spawn "ghostty"
+    }
     Alt+Space hotkey-overlay-title="Run an Application: fuzzel" {
         spawn "fuzzel"
     }
@@ -453,30 +453,31 @@ binds {
     // Wallpaper binding
     Mod+Shift+W hotkey-overlay-title="Change the Wallpaper" {
         // spawn-sh "~/.config/niri/scripts_for_niri/wallpaper_selector.sh"
-        spawn "kitty" "--class" "kitty-floating" "-e" "bash" "-c" "$HOME/.config/niri/scripts_for_niri/wallpaper_selector_tui.sh"
+        // spawn "kitty" "--class" "kitty-floating" "-e" "bash" "-c" "$HOME/.config/niri/scripts_for_niri/wallpaper_selector_tui.sh"
+        spawn "ghostty" "--title=ghostty-floating" "-e" "bash" "-c" "$HOME/.config/niri/scripts_for_niri/wallpaper_selector_tui.sh"
     }
     // Fuzzy Window Switcher binding
     Mod+W hotkey-overlay-title="Open Fast Fuzzy Window Switcher" {
-        spawn-sh "~/niri-dots/niri/.config/niri/scripts_for_niri/niri-window-picker.sh"
+        spawn-sh "~/.config/niri/scripts_for_niri/niri-window-picker.sh"
     }
     // Fuzzy launcher binding
     Mod+A hotkey-overlay-title="Open Fast Fuzzy Launcher" {
-        spawn-sh "~/niri-dots/niri/.config/niri/scripts_for_niri/f2_launcher.sh"
+        spawn-sh "~/.config/niri/scripts_for_niri/f2_launcher.sh"
     }
     // Color scheme changers bindings
     Mod+T hotkey-overlay-title="Change the Waybar Color Scheme" {
-        spawn-sh "~/niri-dots/waybar/.config/waybar/scripts_for_waybar/switch-theme.sh"
+        spawn-sh "~/.config/waybar/scripts_for_waybar/switch-theme.sh"
     }
-    Mod+Alt+T hotkey-overlay-title="Change the Kitty Color Scheme" {
-        spawn-sh "~/niri-dots/kitty/.config/kitty/scripts_for_kitty/switch-theme.sh"
- // spawn-sh "~/niri-dots/ghostty/.config/ghostty/scripts_for_ghostty/switch-theme.sh"
+    Mod+Alt+T hotkey-overlay-title="Change the Ghostty Color Scheme" {
+        // spawn-sh "~/.config/kitty/scripts_for_kitty/switch-theme.sh"
+        spawn-sh "~/niri-dots/ghostty/.config/ghostty/scripts_for_ghostty/switch-theme.sh"
     }
     Mod+Ctrl+Alt+T hotkey-overlay-title="Change the All Color Scheme" {
         spawn-sh "~/.config/niri/scripts_for_niri/change-all-themes.sh"
     }
-    Mod+Semicolon {
-        spawn "kitty" "--class" "kitty-floating" "-e" "clipse"
- // spawn "ghostty" "--title=ghostty-floating" "-e" "clipse"
+    Mod+Semicolon hotkey-overlay-title="Clipse" {
+        // spawn "kitty" "--class" "kitty-floating" "-e" "clipse"
+        spawn "ghostty" "--title=ghostty-floating" "-e" "clipse"
     }
     // Screenshot bindings
     Print {

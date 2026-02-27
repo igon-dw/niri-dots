@@ -30,11 +30,10 @@ apply_setting() {
   local schema="$1"
   local key="$2"
   local value="$3"
-  local type="$4"
 
   if gsettings list-schemas | grep -q "^${schema}$"; then
     echo "Applying: $schema $key -> $value"
-    gsettings set "$schema" "$key" "$type" "$value"
+    gsettings set "$schema" "$key" "$value"
   else
     echo "Skipping: Schema '$schema' not found."
   fi
@@ -54,19 +53,19 @@ echo "----------------------------------------"
 # ------------------------------------------------------------------------------
 
 # Color Scheme: Critical for xdg-desktop-portal-gnome and Libadwaita apps
-apply_setting "org.gnome.desktop.interface" "color-scheme" "$COLOR_SCHEME" "s"
+apply_setting "org.gnome.desktop.interface" "color-scheme" "$COLOR_SCHEME"
 
 # Text Scaling: nwg-look handles DPI, this factor is separate
-apply_setting "org.gnome.desktop.interface" "text-scaling-factor" "$TEXT_SCALING" "d"
+apply_setting "org.gnome.desktop.interface" "text-scaling-factor" "$TEXT_SCALING"
 
 # Animations: Enable/disable desktop animations
-apply_setting "org.gnome.desktop.interface" "enable-animations" "$ENABLE_ANIMATIONS" "b"
+apply_setting "org.gnome.desktop.interface" "enable-animations" "$ENABLE_ANIMATIONS"
 
 # Sound Theme: Usually 'freedesktop'
-apply_setting "org.gnome.desktop.sound" "theme-name" "$SOUND_THEME" "s"
+apply_setting "org.gnome.desktop.sound" "theme-name" "$SOUND_THEME"
 
 # Event Sounds: Enable/disable system event sounds
-apply_setting "org.gnome.desktop.sound" "event-sounds" "$EVENT_SOUNDS" "b"
+apply_setting "org.gnome.desktop.sound" "event-sounds" "$EVENT_SOUNDS"
 
 echo "----------------------------------------"
 echo "Configuration complete."

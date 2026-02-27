@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Script to install required packages for niri environment
 # Run with sudo privileges if necessary
@@ -21,118 +21,118 @@ PKGS_OFFICIAL=(
   superfile          # TUI file manager
 
   # === Terminal & Shell ===
-  kitty              # Terminal emulator
-  starship           # Prompt
-  zoxide             # Fast directory jumper
+  kitty    # Terminal emulator
+  starship # Prompt
+  zoxide   # Fast directory jumper
 
   # === Editors ===
-  neovim             # Advanced terminal-based text/code editor
-  mousepad           # Lightweight graphical text editor (XFCE)
+  neovim   # Advanced terminal-based text/code editor
+  mousepad # Lightweight graphical text editor (XFCE)
 
   # === Development & Languages ===
-  zed                # Modern GUI code editor (fast, collaborative)
-  go                 # Go language
+  zed # Modern GUI code editor (fast, collaborative)
+  go  # Go language
 
   # === CLI Tools ===
-  eza                # Alternative to ls
-  fd                 # Fast file search
-  fzf                # Command-line fuzzy finder
-  ripgrep            # Fast grep
-  git-delta          # git diff viewer
-  lazygit            # Terminal git client
-  go-yq              # YAML processor
-  chafa              # Terminal image viewer
-  trash-cli          # rm alternative (moves files to trash)
+  eza       # Alternative to ls
+  fd        # Fast file search
+  fzf       # Command-line fuzzy finder
+  ripgrep   # Fast grep
+  git-delta # git diff viewer
+  lazygit   # Terminal git client
+  go-yq     # YAML processor
+  chafa     # Terminal image viewer
+  trash-cli # rm alternative (moves files to trash)
 
   # === Version Control & APIs ===
-  git                # Version control
-  github-cli         # GitHub CLI
+  git        # Version control
+  github-cli # GitHub CLI
 
   # === Dotfiles Management ===
-  stow               # Symlink farm manager
+  stow # Symlink farm manager
 
   # === System & File Management ===
-  xdg-user-dirs      # User directory management
-  xdg-utils          # XDG utilities
-  xdg-desktop-portal-wlr   # XDG desktop portal for wlroots
-  snapper            # btrfs snapshot management
-  clamav             # Virus scanner
-  rclone             # Cloud storage integration
-  flatpak            # Universal package manager
-  gnome-keyring      # GNOME keyring (credentials manager)
-  blueman            # Bluetooth manager
-  kvantum            # Kvantum manager (official, recommended for theme configuration)
-  kvantum-qt5        # Qt theme engine (Kvantum, official)
-  qt5ct              # Qt5 configuration tool
-  qt6ct              # Qt6 configuration tool
+  xdg-user-dirs          # User directory management
+  xdg-utils              # XDG utilities
+  xdg-desktop-portal-wlr # XDG desktop portal for wlroots
+  snapper                # btrfs snapshot management
+  clamav                 # Virus scanner
+  rclone                 # Cloud storage integration
+  flatpak                # Universal package manager
+  gnome-keyring          # GNOME keyring (credentials manager)
+  blueman                # Bluetooth manager
+  kvantum                # Kvantum manager (official, recommended for theme configuration)
+  kvantum-qt5            # Qt theme engine (Kvantum, official)
+  qt5ct                  # Qt5 configuration tool
+  qt6ct                  # Qt6 configuration tool
 
   # === System Monitoring ===
-  fastfetch          # System info display
-  htop               # Process viewer
-  nvtop              # GPU process viewer
-  gdu                # Disk usage analyzer
+  fastfetch # System info display
+  htop      # Process viewer
+  nvtop     # GPU process viewer
+  gdu       # Disk usage analyzer
 
   # === Multimedia & Applications ===
-  pavucontrol        # Audio volume control
-  mpv                # Media player
-  totem              # Media player (GNOME)
-  loupe              # Image viewer
-  kdenlive           # Video editing
-  obs-studio         # Streaming/recording
-  mako               # Notification daemon
-  scrcpy             # Android screen mirroring
-  steam              # Game platform
-  protonup-qt        # Proton/Wine management for gaming
-  vivaldi            # Vivaldi browser
-  mpv-mpris          # MPRIS plugin for MPV
+  pavucontrol # Audio volume control
+  mpv         # Media player
+  totem       # Media player (GNOME)
+  loupe       # Image viewer
+  kdenlive    # Video editing
+  obs-studio  # Streaming/recording
+  mako        # Notification daemon
+  scrcpy      # Android screen mirroring
+  steam       # Game platform
+  protonup-qt # Proton/Wine management for gaming
+  vivaldi     # Vivaldi browser
+  mpv-mpris   # MPRIS plugin for MPV
 
   # === Communication ===
-  geary              # Email client
+  geary # Email client
 
   # === Fonts ===
   ttf-jetbrains-mono-nerd # JetBrains Mono Nerd Font
-  ttf-firacode-nerd  # FiraCode Nerd Font
-  ttf-moralerspace   # MoralerSpace Font
-  ttf-rounded-mplus  # Rounded M+ Font
+  ttf-firacode-nerd       # FiraCode Nerd Font
+  ttf-moralerspace        # MoralerSpace Font
+  ttf-rounded-mplus       # Rounded M+ Font
 
   # === Development Tools ===
   github-copilot-cli # GitHub Copilot CLI
 
   # === Virtualization ===
-  docker             # Container management
-  virt-manger        # Virtual machine manager
-  qemu-desktop       # QEMU virtualization (desktop)
+  docker       # Container management
+  virt-manager # Virtual machine manager
+  qemu-desktop # QEMU virtualization (desktop)
 )
 
 # AUR packages
 PKGS_AUR=(
-  google-chrome      # Google Chrome browser (AUR)
-  swww               # Image switching / wallpaper (AUR)
-  nwg-look           # GTK theme settings (AUR)
-  obs-vkcapture      # OBS Vulkan capture plugin (AUR)
+  google-chrome          # Google Chrome browser (AUR)
+  swww                   # Image switching / wallpaper (AUR)
+  nwg-look               # GTK theme settings (AUR)
+  obs-vkcapture          # OBS Vulkan capture plugin (AUR)
   visual-studio-code-bin # Visual Studio Code (AUR)
-  losslesscut-bin    # Video editing tool (AUR)
-  tty-clock          # Terminal clock (AUR)
-  frogmouth          # Markdown Browser (AUR)
+  losslesscut-bin        # Video editing tool (AUR)
+  tty-clock              # Terminal clock (AUR)
+  frogmouth              # Markdown Browser (AUR)
 )
 
 # Flatpak packages
 FLATPAK_PKGS=(
-    org.upscayl.Upscayl # AI image upscaler
+  org.upscayl.Upscayl # AI image upscaler
 )
 
 # AMD GPU additional packages
 PKGS_AMD_GPU=(
-  libva-utils        # VA-API utilities
-  bc                 # Calculator (required for some scripts)
+  libva-utils # VA-API utilities
+  bc          # Calculator (required for some scripts)
 )
 
 # Additional packages for Japanese language environment
 PKGS_JAPANESE=(
-  fcitx5-configtool  # Fcitx5 configuration tool
-  fcitx5-gtk         # Fcitx5 GTK integration
-  fcitx5-qt          # Fcitx5 Qt integration
-  fcitx5-mozc-ut     # Mozc engine for Fcitx5
+  fcitx5-configtool # Fcitx5 configuration tool
+  fcitx5-gtk        # Fcitx5 GTK integration
+  fcitx5-qt         # Fcitx5 Qt integration
+  fcitx5-mozc-ut    # Mozc engine for Fcitx5
 )
 
 echo "Official packages to be installed:"
@@ -160,7 +160,7 @@ echo "================================"
 echo "Installing Flatpak packages..."
 echo "================================"
 
-if command -v flatpak &> /dev/null; then
+if command -v flatpak &>/dev/null; then
   flatpak install flathub -y "${FLATPAK_PKGS[@]}"
   echo "✓ Flatpak packages installed"
 else

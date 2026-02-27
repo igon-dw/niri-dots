@@ -52,7 +52,11 @@ niri-dots/
 ├── README.ja.md                   # Japanese documentation
 ├── LICENSE                        # MIT License
 ├── .gitignore                     # Git exclusion settings
-├── install-packages.sh            # Package installation script
+├── setup.sh                       # Setup orchestrator
+├── scripts/
+│   ├── install-packages.sh        # Package installation script
+│   ├── setup-docker.sh            # Docker setup script
+│   └── setup_gnome_settings.sh    # GNOME settings script
 │
 ├── niri/                          # Niri compositor configuration
 │   └── .config/
@@ -62,54 +66,106 @@ niri-dots/
 │               ├── f2_launcher.sh           # File opener script
 │               ├── f2_launcher.toml         # File opener settings
 │               ├── wallpaper_selector.sh    # Wallpaper selector script
+│               ├── wallpaper_selector_tui.sh
+│               ├── niri-window-picker.sh
 │               └── change-all-themes.sh     # Batch theme change script
 │
 ├── waybar/                        # Waybar status bar configuration
 │   └── .config/waybar/
 │       ├── README.md              # Waybar detailed documentation
+│       ├── README.ja.md           # Waybar detailed documentation (Japanese)
 │       ├── config.jsonc           # Waybar modules and layout
 │       ├── base.css               # Waybar theme-independent style
-│       ├── style.css              # Waybar style (Git-managed)
-│       ├── switch-theme.sh        # Waybar theme switcher script
+│       ├── style.css.template     # Waybar style template
+│       ├── scripts_for_waybar/
+│       │   ├── switch-theme.sh    # Waybar theme switcher script
+│       │   ├── get-current-theme.sh
+│       │   ├── get-mpris.sh
+│       │   └── pomo.sh
 │       └── themes/                # Waybar theme collection
+│           ├── ayu.css
 │           ├── catppuccin.css
+│           ├── earthsong.css
+│           ├── everforest.css
+│           ├── flatland.css
 │           ├── gruvbox.css
+│           ├── night-owl.css
 │           ├── nord.css
 │           ├── original.css
+│           ├── palenight.css
+│           ├── shades-of-purple.css
 │           ├── solarized.css
 │           └── tokyo-night.css
 │
 ├── kitty/                         # Kitty terminal configuration
 │   └── .config/kitty/
 │       ├── README.md              # Kitty detailed documentation
+│       ├── README.ja.md           # Kitty detailed documentation (Japanese)
 │       ├── kitty.conf             # Main Kitty configuration
-│       ├── themes/                # Kitty theme collection (12+ themes)
-│       │   ├── ayu.conf
-│       │   ├── catppuccin-mocha.conf
-│       │   ├── Earthsong.conf
-│       │   ├── gruvbox-dark.conf
-│       │   ├── nord.conf
-│       │   └── ...
-│       └── scripts/
-│           ├── switch-theme.sh    # Kitty theme switcher
-│           └── list-themes.sh     # List available themes
+│       ├── scripts_for_kitty/
+│       │   ├── switch-theme.sh    # Kitty theme switcher
+│       │   └── list-themes.sh     # List available themes
+│       └── themes/                # Kitty theme collection
+│           ├── ayu.conf
+│           ├── catppuccin.conf
+│           ├── earthsong.conf
+│           ├── everforest.conf
+│           ├── flatland.conf
+│           ├── gruvbox.conf
+│           ├── nord.conf
+│           ├── original.conf
+│           ├── palenight.conf
+│           ├── solarized.conf
+│           └── tokyo-night.conf
+│
+├── ghostty/                       # Ghostty terminal configuration
+│   └── .config/ghostty/
+│       ├── ghostty.config         # Ghostty configuration file
+│       └── scripts_for_ghostty/
+│           ├── switch-theme.sh
+│           └── list-themes.sh
 │
 ├── fuzzel/                        # Fuzzel application launcher configuration
 │   └── .config/fuzzel/
-│       └── fuzzel.toml
+│       └── fuzzel.ini
 │
-├── nvim/                          # Neovim configuration (OSS core)
+├── fish/                          # Fish shell configuration
+│   └── .config/fish/
+│       ├── config.fish
+│       ├── functions/
+│       └── templates/
+│
+├── starship/                      # Starship prompt configuration
+│   └── .config/starship.toml
+│
+├── new_nvim/                      # Neovim configuration (current version, OSS core)
 │   └── .config/nvim/
 │       ├── init.lua               # Entry point
 │       └── lua/
 │           ├── config/            # Core settings
 │           └── plugins/           # Plugin configurations
 │
+├── legacy_nvim/                   # Neovim configuration (legacy version, for reference)
+│   ├── docs/
+│   │   ├── DESIGN_PHILOSOPHY.md
+│   │   ├── DESIGN_PHILOSOPHY_ja.md
+│   │   └── README_KEYMAPS.md
+│   └── .config/nvim/
+│
 ├── nvim-copilot/                  # Neovim AI addon (optional, requires GitHub Copilot subscription)
 │   └── .config/nvim/
 │       └── lua/plugins/
 │           ├── copilot.lua        # GitHub Copilot integration
 │           └── copilotchat.lua    # CopilotChat integration
+│
+├── lazygit/                       # Lazygit configuration
+│   └── .config/lazygit/
+│
+├── fastfetch/                     # Fastfetch configuration
+│   └── .config/fastfetch/
+│
+├── mako/                          # Mako notification configuration
+│   └── .config/mako/
 │
 └── misc/                          # Additional configuration and utilities
     ├── .config/
@@ -126,11 +182,11 @@ For experienced users, here's the minimal setup:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/niri-dots.git
+git clone https://github.com/igon-dw/niri-dots.git
 cd niri-dots
 
 # 2. Install required packages
-sudo bash install-packages.sh
+sudo bash scripts/install-packages.sh
 
 # 3. Deploy configuration files
 # Using GNU Stow (recommended):
@@ -170,7 +226,7 @@ systemctl status sddm    # or gdm
 The `install-packages.sh` script installs all dependencies and recommended tools:
 
 ```bash
-sudo bash install-packages.sh
+sudo bash scripts/install-packages.sh
 ```
 
 **What gets installed:**
@@ -181,7 +237,7 @@ sudo bash install-packages.sh
 - **CLI Utilities**: `eza`, `fd`, `fzf`, `ripgrep`, `delta`, `lazygit`, `go-yq`, `chafa`
 - **System Utilities**: `docker`, `snapper`, `flatpak`, `gnome-keyring`, `stow`, `xdg-user-dirs`, `xdg-utils`
 - **Multimedia**: `kdenlive`, `obs-studio`, `steam`, Proton-related packages
-- **Fonts & Input**: `fcitx5-mozc` (Japanese input), Nerd Fonts
+- **Fonts & Input**: `fcitx5-mozc-ut` (Japanese input), Nerd Fonts
 
 **Note**: Some packages are installed from the AUR. Review the script before running, especially if you prefer to use `yay` instead of `paru`.
 
@@ -204,6 +260,8 @@ stow niri          # Only Niri config
 stow waybar        # Only Waybar config
 stow kitty         # Only Kitty config
 stow fuzzel        # Only Fuzzel config
+stow fish          # Only Fish shell config
+stow starship      # Only Starship config
 stow misc          # Only utilities and commands
 ```
 
@@ -258,10 +316,10 @@ Waybar displays system information and provides quick access to common functions
 
 ```bash
 # Switch themes (interactive)
-~/.config/waybar/switch-theme.sh
+~/.config/waybar/scripts_for_waybar/switch-theme.sh
 
 # Switch to specific theme
-~/.config/waybar/switch-theme.sh gruvbox
+~/.config/waybar/scripts_for_waybar/switch-theme.sh gruvbox
 ```
 
 **Documentation**: [Waybar Configuration Guide](./waybar/.config/waybar/README.md)
@@ -276,13 +334,13 @@ Kitty is a high-performance terminal emulator with theme support.
 
 ```bash
 # Switch themes (interactive)
-~/.config/kitty/scripts/switch-theme.sh
+~/.config/kitty/scripts_for_kitty/switch-theme.sh
 
 # Switch to specific theme
-~/.config/kitty/scripts/switch-theme.sh tokyo-night
+~/.config/kitty/scripts_for_kitty/switch-theme.sh tokyo-night
 
 # List available themes
-~/.config/kitty/scripts/list-themes.sh
+~/.config/kitty/scripts_for_kitty/list-themes.sh
 ```
 
 **Documentation**: [Kitty Configuration Guide](./kitty/.config/kitty/README.md)
@@ -291,7 +349,7 @@ Kitty is a high-performance terminal emulator with theme support.
 
 Fuzzel is a modern application launcher.
 
-**Configuration File**: `~/.config/fuzzel/fuzzel.toml`
+**Configuration File**: `~/.config/fuzzel/fuzzel.ini`
 
 **Documentation**: [Fuzzel Codeberg](https://codeberg.org/dnkl/fuzzel)
 
@@ -315,23 +373,24 @@ Modern Neovim configuration with lazy.nvim plugin manager, LSP support, and modu
 
 ```bash
 cd niri-dots
-stow nvim
+stow new_nvim
 ```
 
 #### Pattern 2: OSS Core + GitHub Copilot (Recommended - Safe Method)
 
 ```bash
 cd niri-dots
-stow nvim nvim-copilot  # Deploy both simultaneously
+stow new_nvim nvim-copilot  # Deploy both simultaneously
 ```
 
-⚠️ **Note**: If you run `stow nvim` first and then `stow nvim-copilot` later, stow will automatically adjust the symlink structure when detecting existing directories. This is normal behavior, but for certainty, simultaneous deployment (Pattern 2) is recommended.
+⚠️ **Note**: If you run `stow new_nvim` first and then `stow nvim-copilot` later, stow will automatically adjust the symlink structure when detecting existing directories. This is normal behavior, but for certainty, simultaneous deployment (Pattern 2) is recommended.
 
 **AI Addon (Optional)**:
 
 The `nvim-copilot` addon provides GitHub Copilot integration.
 
 **Requirements**:
+
 - GitHub Copilot subscription
 - GitHub CLI tool (`github-cli` package)
 - GitHub CLI authentication
@@ -349,7 +408,7 @@ gh auth login
 
 ```bash
 cd niri-dots
-stow nvim nvim-copilot  # Deploy both OSS core and Copilot addon
+stow new_nvim nvim-copilot  # Deploy both OSS core and Copilot addon
 ```
 
 3. **Verify authentication in Neovim**:
@@ -361,11 +420,11 @@ nvim
 
 **Usage**:
 
-| Keymap | Function |
-|--------|----------|
-| `Ctrl+y` | Accept full Copilot suggestion |
-| `Ctrl+i` | Accept next word of Copilot suggestion |
-| `<leader>ai` | Open CopilotChat |
+| Keymap       | Function                               |
+| ------------ | -------------------------------------- |
+| `Ctrl+y`     | Accept full Copilot suggestion         |
+| `Ctrl+i`     | Accept next word of Copilot suggestion |
+| `<leader>ai` | Open CopilotChat                       |
 
 **Troubleshooting**:
 
@@ -382,27 +441,11 @@ gh auth login
 
 ```bash
 # Check deployment status
-stow -d niri-dots --list-only nvim
-stow -d niri-dots --list-only nvim-copilot
-
-# Add nvim-copilot after initial deployment
-cd niri-dots
-stow nvim-copilot
-
-# Remove nvim-copilot only (keep OSS core)
-stow -D nvim-copilot
-
-# Remove entire nvim setup
-stow -D nvim nvim-copilot
-
-# Complete reset
-stow -D nvim
-stow -D nvim-copilot
-# Then redeploy if needed
-stow nvim
+stow -d niri-dots -n nvim
+stow -d niri-dots -n nvim-copilot
 ```
 
-**Documentation**: [Neovim Design Philosophy](./nvim/docs/DESIGN_PHILOSOPHY.md)
+**Documentation**: [Neovim Design Philosophy](./legacy_nvim/docs/DESIGN_PHILOSOPHY.md)
 
 ---
 
@@ -540,7 +583,7 @@ binds {
     Mod+Q { close-window; }                          # Close window
     Mod+W { spawn-sh "~/.config/niri/scripts_for_niri/wallpaper_selector.sh"; }
     Mod+T { spawn-sh "~/.config/waybar/switch-theme.sh"; }
-    Mod+Alt+T { spawn-sh "~/.config/kitty/scripts/switch-theme.sh"; }
+    Mod+Alt+T { spawn-sh "~/.config/kitty/scripts_for_kitty/switch-theme.sh"; }
 }
 ```
 
@@ -570,13 +613,13 @@ For details, see [Kitty README](./kitty/.config/kitty/README.md).
 
 ```bash
 # Interactive theme selection
-~/.config/kitty/scripts/switch-theme.sh
+~/.config/kitty/scripts_for_kitty/switch-theme.sh
 
 # Direct theme selection
-~/.config/kitty/scripts/switch-theme.sh palenight
+~/.config/kitty/scripts_for_kitty/switch-theme.sh palenight
 
 # List available themes
-~/.config/kitty/scripts/list-themes.sh
+~/.config/kitty/scripts_for_kitty/list-themes.sh
 
 # Accessible via Niri keybinding (default: Mod+Alt+T)
 ```
@@ -588,7 +631,7 @@ For details, see [Kitty README](./kitty/.config/kitty/README.md).
 ~/.config/waybar/switch-theme.sh
 
 # Initialize Kitty theme (auto-initializes on first use)
-~/.config/kitty/scripts/switch-theme.sh
+~/.config/kitty/scripts_for_kitty/switch-theme.sh
 ```
 
 ### Adjusting Waybar Modules
@@ -665,10 +708,10 @@ fcitx5-diagnose
 
 ```bash
 # Verify script is executable
-ls -la ~/.config/kitty/scripts/switch-theme.sh
+ls -la ~/.config/kitty/scripts_for_kitty/switch-theme.sh
 
 # Manually reinitialize
-~/.config/kitty/scripts/switch-theme.sh Earthsong
+~/.config/kitty/scripts_for_kitty/switch-theme.sh Earthsong
 ```
 
 ---

@@ -1,8 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
-WAYBAR_THEMES_DIR="$HOME/niri-dots/waybar/.config/waybar/themes"
-KITTY_THEMES_DIR="$HOME/niri-dots/kitty/.config/kitty/themes"
+WAYBAR_THEMES_DIR="$HOME/.config/waybar/themes"
+KITTY_THEMES_DIR="$HOME/.config/kitty/themes"
 
 # Get theme list from waybar (base)
 THEME_LIST=$(cd "$WAYBAR_THEMES_DIR" && ls -1 *.css 2>/dev/null | sed 's/\.css$//' || echo "")
@@ -25,7 +25,7 @@ else
 fi
 
 # Apply to waybar
-if ~/niri-dots/waybar/.config/waybar/scripts_for_waybar/switch-theme.sh "$SELECTED_THEME"; then
+if ~/.config/waybar/scripts_for_waybar/switch-theme.sh "$SELECTED_THEME"; then
   WAYBAR_SUCCESS=true
 else
   WAYBAR_SUCCESS=false
@@ -33,14 +33,14 @@ fi
 
 # Check if theme exists in kitty
 if [ -f "$KITTY_THEMES_DIR/$SELECTED_THEME.conf" ]; then
-  if "$HOME/niri-dots/kitty/.config/kitty/scripts_for_kitty/switch-theme.sh" "$SELECTED_THEME"; then
+  if ~/.config/kitty/scripts_for_kitty/switch-theme.sh "$SELECTED_THEME"; then
     KITTY_SUCCESS=true
   else
     KITTY_SUCCESS=false
   fi
 else
   notify-send "Theme '$SELECTED_THEME' not found in Kitty" "Please select a Kitty theme manually" -u normal
-  if "$HOME/niri-dots/kitty/.config/kitty/scripts_for_kitty/switch-theme.sh"; then
+  if ~/.config/kitty/scripts_for_kitty/switch-theme.sh; then
     KITTY_SUCCESS=true
   else
     KITTY_SUCCESS=false
