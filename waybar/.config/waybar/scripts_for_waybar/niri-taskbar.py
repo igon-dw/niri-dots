@@ -36,33 +36,33 @@ APP_ICONS: dict[str, str] = {
     #   Google Chrome -> "Google-chrome"  (matched via .lower() -> "google-chrome")
     "vivaldi-stable": "󰖟",
     "vivaldi": "󰖟",
-    "google-chrome": "",  # StartupWMClass=Google-chrome (.lower() hits this)
-    "com.google.chrome": "",  # Flatpak variant
-    "chromium": "",
-    "firefox": "",
-    "brave-browser": "",
-    "org.mozilla.firefox": "",
+    "google-chrome": "",
+    "com.google.chrome": "",
+    "chromium": "",
+    "firefox": "󰈹",
+    "brave-browser": "󰖟",
+    "org.mozilla.firefox": "󰈹",
     # Terminals
-    "com.mitchellh.ghostty": "󰆍",
-    "ghostty": "󰆍",
+    "com.mitchellh.ghostty": "󰊠",
+    "ghostty": "󰊠",
     "kitty": "󰄛",
-    "Alacritty": "",
+    "Alacritty": "",
     "foot": "󰽒",
-    "wezterm-gui": "",
+    "wezterm-gui": "",
     # Editors / IDEs
-    "obsidian": "",
-    "nvim": "",
-    "neovim": "",
+    "obsidian": "",
+    "nvim": "",
+    "neovim": "",
     "code": "󰨞",
     "code-insiders": "󰨞",
     "visual-studio-code": "󰨞",
-    "zed": "",
+    "zed": "",
     # File managers
-    "nemo": "",
-    "nautilus": "",
-    "org.gnome.nautilus": "",
-    "pcmanfm": "",
-    "thunar": "",
+    "nemo": "󰉋",
+    "nautilus": "󰉋",
+    "org.gnome.nautilus": "󰉋",
+    "pcmanfm": "󰉋",
+    "thunar": "󰉋",
     # Communication
     "discord": "󰙯",
     "slack": "󰒱",
@@ -71,18 +71,18 @@ APP_ICONS: dict[str, str] = {
     "thunderbird": "󰇮",
     "org.gnome.geary": "󰇮",
     # Media
-    "mpv": "",
+    "mpv": "",
     "vlc": "󰕼",
-    "spotify": "",
-    "clapper": "",
-    "totem": "",
-    "org.gnome.totem": "",
+    "spotify": "󰓇",
+    "clapper": "󰿎",
+    "totem": "󰿎",
+    "org.gnome.totem": "󰿎",
     # Graphics / Design
-    "gimp-2.99": "",
-    "gimp": "",
-    "inkscape": "",
-    "org.inkscape.inkscape": "",
-    "krita": "",
+    "gimp-2.99": "󰏘",
+    "gimp": "󰏘",
+    "inkscape": "󰽉",
+    "org.inkscape.inkscape": "󰽉",
+    "krita": "󰏘",
     # Settings / System
     "gnome-control-center": "󰒓",
     "org.gnome.settings": "󰒓",
@@ -91,26 +91,26 @@ APP_ICONS: dict[str, str] = {
     "blueman-manager": "󰂯",
     "nm-connection-editor": "󰛳",
     # Gaming
-    "steam": "",
-    "lutris": "",
-    "heroic": "",
+    "steam": "󰓓",
+    "lutris": "󰊗",
+    "heroic": "󰊗",
     # Productivity
-    "libreoffice-writer": "",
-    "libreoffice-calc": "",
-    "libreoffice-impress": "",
-    "org.libreoffice.writer": "",
-    "org.libreoffice.calc": "",
-    "obsidian-notes": "",
+    "libreoffice-writer": "󰈬",
+    "libreoffice-calc": "󰈙",
+    "libreoffice-impress": "󰈧",
+    "org.libreoffice.writer": "󰈬",
+    "org.libreoffice.calc": "󰈙",
+    "onlyoffice-desktopeditors": "󰏆",
     # Misc
     "clipse": "󰅌",
     "fuzzel": "󱓞",
-    "loupe": "",
-    "org.gnome.loupe": "",
+    "loupe": "󰋩",
+    "org.gnome.loupe": "󰋩",
     "wlogout": "󰤆",
 }
 
 DEFAULT_ICON = "󰘔"  # Generic window icon
-SEPARATOR = "  │  "  # Visual separator between monitors
+SEPARATOR = "│"  # Visual separator between monitors
 
 
 # ---------------------------------------------------------------------------
@@ -221,10 +221,10 @@ def render_text(
 
         icon = icon_for(app_id)
 
-        # Focused window: bold + underline for theme-agnostic visual emphasis.
-        # CSS #custom-taskbar.focused can additionally style the whole bar.
+        # Focused window: bold + fixed yellow, theme-independent.
+        # Non-focused windows are dimmed with alpha.
         if focused:
-            parts.append(f"<span><b><u>{icon}</u></b></span>")
+            parts.append(f'<span foreground="#ffcc00"><b>{icon}</b></span>')
         else:
             parts.append(f'<span alpha="80%">{icon}</span>')
 
@@ -236,7 +236,7 @@ def render_text(
 
         prev_output = out_name
 
-    text = "  ".join(parts)
+    text = " ".join(parts)
     tooltip = "\n".join(tooltip_lines) if tooltip_lines else "No windows"
     return text, tooltip, any_focused
 

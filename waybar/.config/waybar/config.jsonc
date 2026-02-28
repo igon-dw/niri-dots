@@ -14,7 +14,11 @@
     "custom/gpu",
     "custom/taskbar",
   ],
-  "modules-center": ["clock", "niri/workspaces", "custom/makoDismiss"],
+  "modules-center": [
+    "clock",
+    "niri/workspaces",
+    "custom/makoDismiss"
+  ],
   "modules-right": [
     "custom/mpris",
     "custom/theme",
@@ -53,7 +57,9 @@
     ],
     "critical-threshold": 82,
     "format": "{icon} {temperatureC}°C",
-    "format-icons": ["󰈸"],
+    "format-icons": [
+      "󰈸"
+    ],
     "tooltip": true,
     "tooltip-format": "CPU Temperature: {temperatureC}°C",
     "on-click": "ghostty -e btop",
@@ -84,7 +90,7 @@
   "custom/taskbar": {
     "exec": "python3 $HOME/.config/waybar/scripts_for_waybar/niri-taskbar.py",
     "return-type": "json",
-    "interval": 2,
+    "interval": 1,
     "markup": true,
     "tooltip": true,
   },
@@ -134,8 +140,15 @@
       "phone": "",
       "portable": "",
       "car": "",
-      "default": ["", "", "󰕾", ""],
-      "ignored-sinks": ["Easy Effects Sink"],
+      "default": [
+        "",
+        "",
+        "󰕾",
+        ""
+      ],
+      "ignored-sinks": [
+        "Easy Effects Sink"
+      ],
     },
     "scroll-step": 5.0,
     "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",

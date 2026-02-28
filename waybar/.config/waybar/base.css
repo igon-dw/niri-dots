@@ -6,7 +6,7 @@
 ******************************************************************************/
 
 * {
-    font-family: "Moralerspace Neon JPDOC";
+    font-family: "Moralerspace Neon JPDOC", "GeistMono Nerd Font";
     /* font-family alternatives left as comments for quick swaps */
     font-size: 14px;
     font-weight: 600;
@@ -35,7 +35,7 @@ tooltip {
     color: @appmenu_fg;
     margin-left: 5px;
     font-size: 24px;
-    padding: 0 6px;
+    padding: 0 10px;
 }
 
 #custom-appmenu:hover {
@@ -45,7 +45,7 @@ tooltip {
 #cpu {
     color: @cpu_fg;
     margin-left: 12px;
-    padding: 0 10px;
+    padding: 0 12px;
     border-radius: 8px;
     background: @module_bg;
     border: 1px solid @module_border;
@@ -55,7 +55,7 @@ tooltip {
 #temperature {
     color: @temperature_fg;
     margin-left: 12px;
-    padding: 0 10px;
+    padding: 0 6px;
     border-radius: 8px;
     background: @module_bg;
     border: 1px solid @module_border;
@@ -99,7 +99,7 @@ tooltip {
     background: @taskbar_btn_bg;
     border: 1px solid @taskbar_btn_border;
     font-size: 20px;
-    letter-spacing: 2px;
+    letter-spacing: 0px;
     transition: all 0.2s;
 }
 

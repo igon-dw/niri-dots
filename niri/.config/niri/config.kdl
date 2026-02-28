@@ -1,4 +1,5 @@
 spawn-at-startup "waybar"
+spawn-at-startup "$HOME/.config/waybar/scripts_for_waybar/niri-taskbar-watcher.sh"
 spawn-at-startup "fcitx5" "-d"
 spawn-at-startup "swww-daemon"
 spawn-at-startup "swww" "restore"
