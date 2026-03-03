@@ -93,6 +93,7 @@
     "interval": 1,
     "markup": true,
     "tooltip": true,
+    "on-click": "$HOME/.config/niri/scripts_for_niri/niri-window-picker.sh",
   },
   "niri/workspaces": {
     "format": "{icon}",

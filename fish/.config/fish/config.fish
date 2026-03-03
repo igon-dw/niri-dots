@@ -68,6 +68,11 @@ set -gx PYTORCH_HIP_ALLOC_CONF max_split_size_mb:64
 set -gx HIP_LAUNCH_BLOCKING 1
 set -gx HSA_ENABLE_SDMA 0
 
+# If you have a additional options file, source it
+if test -f ~/.config/fish/options.fish
+    source ~/.config/fish/options.fish
+end
+
 # Use fnm (Fast Node Manager) for managing Node.js versions
 # This is initialization for fnm
 fnm env --use-on-cd | source

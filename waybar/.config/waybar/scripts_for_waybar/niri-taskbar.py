@@ -90,6 +90,9 @@ APP_ICONS: dict[str, str] = {
     "pavucontrol": "󰕾",
     "blueman-manager": "󰂯",
     "nm-connection-editor": "󰛳",
+    "org.gnome.World.PikaBackup": "󰃮",
+    "mousepad": "󰏫",
+    "dev.zed.Zed": "",
     # Gaming
     "steam": "󰓓",
     "lutris": "󰊗",
@@ -111,6 +114,7 @@ APP_ICONS: dict[str, str] = {
 
 DEFAULT_ICON = "󰘔"  # Generic window icon
 SEPARATOR = "│"  # Visual separator between monitors
+WORKSPACE_SEPARATOR = "·"  # Visual separator between workspaces within same monitor
 
 
 # ---------------------------------------------------------------------------
@@ -205,10 +209,13 @@ def render_text(
     parts: list[str] = []
     tooltip_lines: list[str] = []
     prev_output: str | None = None
+    prev_workspace_id: int | None = None
     any_focused = False
 
     for w in sorted_windows:
         out_name = get_output_name(w)
+        ws = ws_map.get(w.get("workspace_id"), {})
+        ws_id = w.get("workspace_id")
         app_id = w.get("app_id", "")
         title = w.get("title", "")
         focused = w.get("is_focused", False)
@@ -218,6 +225,13 @@ def render_text(
         # Insert separator between monitors
         if prev_output is not None and out_name != prev_output:
             parts.append(f'<span alpha="60%">{SEPARATOR}</span>')
+        # Insert separator between workspaces within same monitor
+        elif (
+            prev_workspace_id is not None
+            and ws_id != prev_workspace_id
+            and out_name == prev_output
+        ):
+            parts.append(f'<span alpha="40%">{WORKSPACE_SEPARATOR}</span>')
 
         icon = icon_for(app_id)
 
@@ -229,12 +243,12 @@ def render_text(
             parts.append(f'<span alpha="80%">{icon}</span>')
 
         # Tooltip: one line per window
-        ws = ws_map.get(w.get("workspace_id"), {})
         ws_idx = ws.get("idx", "?")
         monitor = out_name or "?"
         tooltip_lines.append(f"[{monitor} WS{ws_idx}] {icon} {title}")
 
         prev_output = out_name
+        prev_workspace_id = ws_id
 
     text = " ".join(parts)
     tooltip = "\n".join(tooltip_lines) if tooltip_lines else "No windows"

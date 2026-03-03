@@ -97,14 +97,9 @@ tooltip {
     padding: 0 10px;
     border-radius: 8px;
     background: @taskbar_btn_bg;
-    border: 1px solid @taskbar_btn_border;
     font-size: 20px;
     letter-spacing: 0px;
     transition: all 0.2s;
-}
-
-#custom-taskbar.focused {
-    border-color: @taskbar_btn_active_border;
 }
 
 #workspaces {
