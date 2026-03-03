@@ -1,0 +1,107 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "lsp": {
+    "bash-lsp": {
+      "command": [
+        "bash-language-server",
+        "start"
+      ],
+      "extensions": [
+        ".sh"
+      ],
+    },
+    "json-lsp": {
+      "command": [
+        "vscode-json-language-server",
+        "--stdio"
+      ],
+      "extensions": [
+        ".jsonc",
+        ".json"
+      ],
+    },
+  },
+  // "model": "github-copilot/claude-haiku-4.5",
+  "model": "github-copilot/gpt-4.1",
+  // "model": "github-copilot/raptor-mini",
+  // "model": "github-copilot/grok-code-fast-1",
+  "autoupdate": true,
+  "permission": {
+    "edit": "ask",
+    "bash": {
+      "default": "deny",
+      "git status": "allow",
+      "git diff": "allow",
+      "git log": "allow",
+      "ls": "allow",
+      "pwd": "allow",
+      "cat": "allow",
+      "grep": "allow",
+      "find": "allow",
+      "git push": "ask",
+      "npm run build": "ask",
+      "npm install": "ask",
+    },
+  },
+  "formatter": {
+    "prettier": {
+      "command": [
+        "prettier",
+        "--write",
+        "$FILE"
+      ],
+      "extensions": [
+        ".md",
+        ".jsonc"
+      ],
+    },
+    "black": {
+      "command": [
+        "black",
+        "$FILE"
+      ],
+      "extensions": [
+        ".py"
+      ],
+    },
+    "shfmt": {
+      "command": [
+        "shfmt",
+        "-w",
+        "$FILE"
+      ],
+      "extensions": [
+        ".sh",
+        ".bash"
+      ],
+    },
+    "fish_indent": {
+      "command": [
+        "fish_indent",
+        "$FILE"
+      ],
+      "extensions": [
+        ".fish"
+      ],
+    },
+    "gofmt": {
+      "command": [
+        "gofmt",
+        "-w",
+        "$FILE"
+      ],
+      "extensions": [
+        ".go"
+      ],
+    },
+    "stylua": {
+      "command": [
+        "stylua",
+        "$FILE"
+      ],
+      "extensions": [
+        ".lua"
+      ],
+    },
+  },
+}
