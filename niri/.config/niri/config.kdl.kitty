@@ -18,7 +18,6 @@ input {
         tap
         natural-scroll
     }
-
     mouse {
 
     }
@@ -186,25 +185,29 @@ binds {
     Mod+Q repeat=false {
         close-window
     }
+    Mod+H {
+        focus-column-left
+    }
     Mod+Left {
         focus-column-left
     }
-    Mod+Down {
-        focus-window-down
-    }
-    Mod+Up {
-        focus-window-up
+    Mod+L {
+        focus-column-right
     }
     Mod+Right {
         focus-column-right
     }
-    Mod+H {
-        focus-column-left
+    Mod+J {
+        focus-window-or-workspace-down
     }
-    // Mod+J     { focus-window-down; }
-    // Mod+K     { focus-window-up; }
-    Mod+L {
-        focus-column-right
+    Mod+Down {
+        focus-window-or-workspace-down
+    }
+    Mod+K {
+        focus-window-or-workspace-up
+    }
+    Mod+Up {
+        focus-window-or-workspace-up
     }
     Mod+Ctrl+Left {
         move-column-left
@@ -221,19 +224,11 @@ binds {
     Mod+Ctrl+H {
         move-column-left
     }
-    // Mod+Ctrl+J     { move-window-down; }
-    // Mod+Ctrl+K     { move-window-up; }
     Mod+Ctrl+L {
         move-column-right
     }
     // Alternative commands that move across workspaces when reaching
     // the first or last window in a column.
-    Mod+J {
-        focus-window-or-workspace-down
-    }
-    Mod+K {
-        focus-window-or-workspace-up
-    }
     Mod+Ctrl+J {
         move-window-down-or-to-workspace-down
     }
@@ -489,3 +484,5 @@ binds {
         screenshot-window
     }
 }
+
+

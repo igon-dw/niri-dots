@@ -8,4 +8,6 @@ fish/.config/fish/conf.d/
 fish/.config/fish/fish_variables
 fish/.config/fish/options.fish
 AGENTS.md
+opencode/bun.lock
+opencode/package.json
 *.bak

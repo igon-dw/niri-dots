@@ -6,9 +6,12 @@
 set -euo pipefail
 
 # Repository root (relative to this script's location)
+# This script is at: [REPO_ROOT]/niri/.config/niri/scripts_for_niri/switch-terminal.sh
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-REPO_NIRI="$(cd "$SCRIPT_DIR/../.." && pwd)"
-REPO_WAYBAR="$(cd "$REPO_NIRI/../../waybar/.config/waybar" && pwd)"
+# NIRI config is at: [REPO_ROOT]/niri/.config/niri/config.kdl
+REPO_NIRI="$(cd "$SCRIPT_DIR/.." && pwd)"
+# WAYBAR config is at: [REPO_ROOT]/waybar/.config/waybar/config.jsonc
+REPO_WAYBAR="$(cd "$SCRIPT_DIR/../../../../waybar/.config/waybar" && pwd)"
 
 NIRI_LINK="$REPO_NIRI/config.kdl"
 WAYBAR_LINK="$REPO_WAYBAR/config.jsonc"

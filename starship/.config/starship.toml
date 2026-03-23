@@ -24,6 +24,7 @@ $java\
 $kotlin\
 $haskell\
 $python\
+$nix_shell\
 [](bg:color_bg3 fg:color_blue)\
 $docker_context\
 $conda\
@@ -48,6 +49,7 @@ color_purple = '#b16286'
 color_red = '#cc241d'
 color_yellow = '#d79921'
 color_dp = '#6c3483'
+color_nix = '#5277C3'
 
 # OS
 [os]
@@ -202,3 +204,12 @@ vimcmd_symbol = '[](bold fg:color_green)'
 vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
 vimcmd_replace_symbol = '[](bold fg:color_purple)'
 vimcmd_visual_symbol = '[](bold fg:color_yellow)'
+
+[nix_shell]
+heuristic = true
+symbol = " "
+impure_msg = "nix"
+pure_msg = "nix"
+unknown_msg = "nix"
+style = "bg:color_blue fg:color_fg0 bold"
+format = '[ $symbol$state ]($style)'

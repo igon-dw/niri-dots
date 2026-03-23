@@ -80,22 +80,23 @@ selected_line=$(jq -r -s '
   # 6. Create formatted output for fuzzel
   .[] |
   
-  # Pad & Truncate application name to exactly 15 chars (left align)
-  (((._display_name + "               ")[0:15]) as $padded_name |
-   "\($padded_name) │ \(.title)|\(.id)\u0000icon\u001f\(._icon_name)"
-  )
+   # Pad ID to 5 chars (right align), Pad & Truncate application name to exactly 15 chars (left align)
+   ((.id | tostring | ("     " + .)[-5:]) as $padded_id |
+    ((._display_name + "               ")[0:15]) as $padded_name |
+    "\($padded_id) │ \($padded_name) │ \(.title)\u0000icon\u001f\(._icon_name)"
+   )
 
 ' <(echo "$windows") <(echo "$workspaces") <(echo "$outputs") | fuzzel --dmenu -i -w 100 -l 20 -p "Select Window:")
 
 # Exit if selection is cancelled
 if [ -z "$selected_line" ]; then
-  exit 0
+	exit 0
 fi
 
-# Extract window ID from selected line
-window_id=$(echo "$selected_line" | cut -d'|' -f2)
+# Extract window ID from selected line (first field, whitespace delimited)
+window_id=$(echo "$selected_line" | awk '{print $1}')
 
 # Focus selected window
 if [ -n "$window_id" ]; then
-  niri msg action focus-window --id "$window_id"
+	niri msg action focus-window --id "$window_id"
 fi
