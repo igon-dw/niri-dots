@@ -12,8 +12,8 @@ preview_image() {
 }
 export -f preview_image
 
-# Get monitors from swww
-monitors=($(swww query | awk -F': ' 'NF>1 {print $2}' | awk -F':' '{print $1}'))
+# Get monitors from awww
+monitors=($(awww query | awk -F': ' 'NF>1 {print $2}' | awk -F':' '{print $1}'))
 [[ ${#monitors[@]} -eq 0 ]] && {
 	echo "Error: No monitors found"
 	exit 1
@@ -29,11 +29,11 @@ select_wallpaper() {
 
 if [[ ${#monitors[@]} -eq 1 ]]; then
 	selected=$(select_wallpaper "Select Wallpaper (ESC to cancel)")
-	[[ -n "$selected" ]] && swww img "$selected" && echo "✓ Set: $(basename "$selected")"
+	[[ -n "$selected" ]] && awww img "$selected" && echo "✓ Set: $(basename "$selected")"
 else
 	# Multiple monitors: select wallpaper for each
 	for m in "${monitors[@]}"; do
 		selected=$(select_wallpaper "Select for $m (ESC to skip)")
-		[[ -n "$selected" ]] && swww img --outputs "$m" "$selected" && echo "✓ $m: $(basename "$selected")"
+		[[ -n "$selected" ]] && awww img --outputs "$m" "$selected" && echo "✓ $m: $(basename "$selected")"
 	done
 fi

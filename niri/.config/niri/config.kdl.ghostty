@@ -1,8 +1,8 @@
 spawn-at-startup "waybar"
 spawn-at-startup "$HOME/.config/waybar/scripts_for_waybar/niri-taskbar-watcher.sh"
 spawn-at-startup "fcitx5" "-d"
-spawn-at-startup "swww-daemon"
-spawn-at-startup "swww" "restore"
+spawn-at-startup "awww-daemon"
+spawn-at-startup "awww" "restore"
 // Folowing config will set the idle timeout to 1 hour (3600 seconds) to lock the screen
 // and to 3 hours (10800 seconds) to suspend the system. You can adjust these values as needed.
 spawn-at-startup "swayidle" "-w" "timeout" "3600" "swaylock -f" "timeout" "10800" "systemctl suspend" "before-sleep" "swaylock -f"

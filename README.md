@@ -1,200 +1,114 @@
 # niri-dots
 
-A comprehensive dotfiles repository for setting up an integrated Niri desktop environment on Arch Linux systems.
+[![Beta](https://img.shields.io/badge/status-beta-orange)](https://github.com/igon-dw/niri-dots)
 
-**niri-dots** provides configuration files, automation scripts, and installation guides to streamline the deployment of a modern, productivity-focused Niri-based desktop environment with complementary applications and utilities.
+> ⚠️ **Beta Notice**: This project is currently in beta. Features, configurations, and scripts may change significantly. Please review changes before updating.
 
----
+Dotfiles and helper scripts for a Niri-based Wayland desktop on Arch Linux.
 
-## Table of Contents
+This repository focuses on a practical daily-driver setup built around Niri, Waybar, terminal theme switching, Neovim, Fish, and a small set of workflow scripts for launching files, switching windows, managing wallpapers, and keeping terminal/bar themes in sync.
 
-- [Overview](#overview)
-- [Repository Structure](#repository-structure)
-- [Quick Start](#quick-start)
-- [Installation](#installation)
-  - [Prerequisites](#prerequisites)
-  - [Package Installation](#package-installation)
-  - [Dotfiles Deployment](#dotfiles-deployment)
-- [Component Configuration](#component-configuration)
-  - [Niri](#niri)
-  - [Waybar](#waybar)
-  - [Kitty](#kitty)
-  - [Fuzzel](#fuzzel)
-- [Automation Scripts](#automation-scripts)
-  - [f2_launcher](#f2_launcher)
-- [Post-Installation Setup](#post-installation-setup)
-- [Customization](#customization)
-- [Troubleshooting](#troubleshooting)
-- [License](#license)
+> **日本語版はこちら / Japanese version available**: [README.ja.md](README.ja.md)
 
 ---
 
 ## Overview
 
-**Niri** is a modern Wayland compositor designed for productivity. This repository provides a complete integration setup that includes:
+Main pieces included in this repository:
 
-- **Niri Compositor**: The core window manager
-- **Waybar**: Status bar with system information and quick actions, with dynamic theme switching
-- **Kitty**: High-performance terminal emulator with theme support
-- **Fuzzel**: Application launcher
-- **Automation Scripts**: Tools to streamline configuration management
-- **System Integration**: Utilities for system monitoring, file management, and development tools
+- **Niri**: compositor, keybindings, startup programs, window rules, and wallpaper/theme helpers
+- **Waybar**: taskbar-oriented bar with multiple terminal-aware profiles and theme switching
+- **Kitty / Ghostty**: terminal configurations with separate theme switching workflows
+- **Fuzzel**: launcher used by Niri scripts and interactive selectors
+- **Fish + Starship**: interactive shell setup, abbreviations, and prompt
+- **Neovim**: current config in `new_nvim`, legacy reference config in `legacy_nvim`, optional Copilot addon in `nvim-copilot`
+- **Utility configs**: `fastfetch`, `lazygit`, `mako`, MIME associations, and local helper scripts
+- **Bootstrap scripts**: package installation, Docker setup, and GNOME/libadwaita-related settings
+- **OpenCode config**: local editor/CLI assistant configuration under `opencode/`
 
-The configurations are designed to work seamlessly together, providing a cohesive desktop experience optimized for productivity and usability.
+The repository is designed around GNU Stow, so most directories map cleanly into `~/.config` or `~/.local/bin`.
 
 ---
 
 ## Repository Structure
 
-```
+```text
 niri-dots/
-├── README.md                      # This file (English version)
-├── README.ja.md                   # Japanese documentation
-├── LICENSE                        # MIT License
-├── .gitignore                     # Git exclusion settings
-├── setup.sh                       # Setup orchestrator
-├── scripts/
-│   ├── install-packages.sh        # Package installation script
-│   ├── setup-docker.sh            # Docker setup script
-│   └── setup_gnome_settings.sh    # GNOME settings script
-│
-├── niri/                          # Niri compositor configuration
-│   └── .config/
-│       └── niri/
-│           ├── config.kdl         # Main Niri configuration
-│           └── scripts_for_niri/
-│               ├── f2_launcher.sh           # File opener script
-│               ├── f2_launcher.toml         # File opener settings
-│               ├── wallpaper_selector.sh    # Wallpaper selector script
-│               ├── wallpaper_selector_tui.sh
-│               ├── niri-window-picker.sh
-│               └── change-all-themes.sh     # Batch theme change script
-│
-├── waybar/                        # Waybar status bar configuration
-│   └── .config/waybar/
-│       ├── README.md              # Waybar detailed documentation
-│       ├── README.ja.md           # Waybar detailed documentation (Japanese)
-│       ├── config.jsonc           # Waybar modules and layout
-│       ├── base.css               # Waybar theme-independent style
-│       ├── style.css.template     # Waybar style template
-│       ├── scripts_for_waybar/
-│       │   ├── switch-theme.sh    # Waybar theme switcher script
-│       │   ├── get-current-theme.sh
-│       │   ├── get-mpris.sh
-│       │   └── pomo.sh
-│       └── themes/                # Waybar theme collection
-│           ├── ayu.css
-│           ├── catppuccin.css
-│           ├── earthsong.css
-│           ├── everforest.css
-│           ├── flatland.css
-│           ├── gruvbox.css
-│           ├── night-owl.css
-│           ├── nord.css
-│           ├── original.css
-│           ├── palenight.css
-│           ├── shades-of-purple.css
-│           ├── solarized.css
-│           └── tokyo-night.css
-│
-├── kitty/                         # Kitty terminal configuration
-│   └── .config/kitty/
-│       ├── README.md              # Kitty detailed documentation
-│       ├── README.ja.md           # Kitty detailed documentation (Japanese)
-│       ├── kitty.conf             # Main Kitty configuration
-│       ├── scripts_for_kitty/
-│       │   ├── switch-theme.sh    # Kitty theme switcher
-│       │   └── list-themes.sh     # List available themes
-│       └── themes/                # Kitty theme collection
-│           ├── ayu.conf
-│           ├── catppuccin.conf
-│           ├── earthsong.conf
-│           ├── everforest.conf
-│           ├── flatland.conf
-│           ├── gruvbox.conf
-│           ├── nord.conf
-│           ├── original.conf
-│           ├── palenight.conf
-│           ├── solarized.conf
-│           └── tokyo-night.conf
-│
-├── ghostty/                       # Ghostty terminal configuration
-│   └── .config/ghostty/
-│       ├── ghostty.config         # Ghostty configuration file
-│       └── scripts_for_ghostty/
-│           ├── switch-theme.sh
-│           └── list-themes.sh
-│
-├── fuzzel/                        # Fuzzel application launcher configuration
-│   └── .config/fuzzel/
-│       └── fuzzel.ini
-│
-├── fish/                          # Fish shell configuration
-│   └── .config/fish/
-│       ├── config.fish
-│       ├── functions/
-│       └── templates/
-│
-├── starship/                      # Starship prompt configuration
-│   └── .config/starship.toml
-│
-├── new_nvim/                      # Neovim configuration (current version, OSS core)
-│   └── .config/nvim/
-│       ├── init.lua               # Entry point
-│       └── lua/
-│           ├── config/            # Core settings
-│           └── plugins/           # Plugin configurations
-│
-├── legacy_nvim/                   # Neovim configuration (legacy version, for reference)
-│   ├── docs/
-│   │   ├── DESIGN_PHILOSOPHY.md
-│   │   ├── DESIGN_PHILOSOPHY_ja.md
-│   │   └── README_KEYMAPS.md
-│   └── .config/nvim/
-│
-├── nvim-copilot/                  # Neovim AI addon (optional, requires GitHub Copilot subscription)
-│   └── .config/nvim/
-│       └── lua/plugins/
-│           ├── copilot.lua        # GitHub Copilot integration
-│           └── copilotchat.lua    # CopilotChat integration
-│
-├── lazygit/                       # Lazygit configuration
-│   └── .config/lazygit/
-│
-├── fastfetch/                     # Fastfetch configuration
-│   └── .config/fastfetch/
-│
-├── mako/                          # Mako notification configuration
-│   └── .config/mako/
-│
-└── misc/                          # Additional configuration and utilities
-    ├── .config/
-    │   └── (other configuration files)
-    └── .local/bin/
-        └── update-arch            # Arch system update script
+|- README.md
+|- README.ja.md
+|- setup.sh
+|- scripts/
+|  |- install-packages.sh
+|  |- setup-docker.sh
+|  `- setup_gnome_settings.sh
+|- niri/
+|  `- .config/niri/
+|     |- config.kdl
+|     |- config.kdl.kitty
+|     |- config.kdl.ghostty
+|     `- scripts_for_niri/
+|- waybar/
+|  `- .config/waybar/
+|     |- config.jsonc
+|     |- config.jsonc.kitty
+|     |- config.jsonc.ghostty
+|     |- style.css.template
+|     |- themes/
+|     `- scripts_for_waybar/
+|- kitty/
+|  `- .config/kitty/
+|     |- kitty.conf
+|     |- themes/
+|     `- scripts_for_kitty/
+|- ghostty/
+|  `- .config/ghostty/
+|     |- config
+|     |- theme.conf
+|     `- scripts_for_ghostty/
+|- fuzzel/
+|- fish/
+|- starship/
+|- new_nvim/
+|- legacy_nvim/
+|- nvim-copilot/
+|- fastfetch/
+|- lazygit/
+|- mako/
+|- misc/
+|  |- .config/mimeapps.list
+|  `- .local/bin/update-arch
+`- opencode/
 ```
+
+Notes:
+
+- `config.kdl` and `waybar/.config/waybar/config.jsonc` are the active tracked profiles.
+- Terminal-specific variants also exist as `config.kdl.kitty`, `config.kdl.ghostty`, `config.jsonc.kitty`, and `config.jsonc.ghostty`.
+- Ghostty uses `theme.conf`, which is generated and updated by the theme switcher script.
+- Kitty uses `current-theme.conf`, which is generated as a symlink on first theme selection.
 
 ---
 
 ## Quick Start
 
-For experienced users, here's the minimal setup:
-
 ```bash
-# 1. Clone the repository
 git clone https://github.com/igon-dw/niri-dots.git
 cd niri-dots
 
-# 2. Install required packages
-sudo bash scripts/install-packages.sh
+# Review the install script first.
+bash scripts/install-packages.sh
 
-# 3. Deploy configuration files
-# Using GNU Stow (recommended):
-stow niri waybar kitty fuzzel misc
+# Deploy the configs you want.
+stow niri waybar kitty ghostty fuzzel fish starship fastfetch lazygit mako misc
 
-# 4. Start Niri
-# Log out and select "Niri" from the login manager (SDDM/GDM) session selection
+# Optional Neovim setup
+stow new_nvim
+
+# Optional Copilot addon for Neovim
+stow new_nvim nvim-copilot
 ```
+
+Then log out, choose the Niri session in your display manager, and sign back in.
 
 ---
 
@@ -202,565 +116,424 @@ stow niri waybar kitty fuzzel misc
 
 ### Prerequisites
 
-- **Distribution**: Arch Linux or Arch-based distribution (Manjaro, EndeavourOS, etc.)
-- **AUR Helper**: `paru` or `yay` (for AUR package installation)
-- **Base System**: Updated system with essential build tools
-- **Login Manager**: SDDM or GDM (required for Niri session)
+- Arch Linux or an Arch-based distribution
+- `paru` available in `PATH` (the package installer currently requires `paru`)
+- A display manager/session launcher that can start Niri
 
-#### Checking Prerequisites
+**Note**: GNU Stow is installed by `install-packages.sh`, so run the package installation script before deploying dotfiles with Stow.
+
+### Bootstrap Script
+
+`setup.sh` runs the repository bootstrap in this order:
+
+1. `scripts/install-packages.sh`
+2. `scripts/setup-docker.sh`
+3. `scripts/setup_gnome_settings.sh`
+
+Run it if you want the full bootstrap flow:
 
 ```bash
-# Verify Arch-based system
-cat /etc/os-release
-
-# Check for paru or yay
-which paru
-which yay
-
-# Check login manager status
-systemctl status sddm    # or gdm
+sh setup.sh
 ```
 
-### Package Installation
+### Package Installation Script
 
-The `install-packages.sh` script installs all dependencies and recommended tools:
+The main installer is `scripts/install-packages.sh`.
+
+Basic usage:
 
 ```bash
-sudo bash scripts/install-packages.sh
+bash scripts/install-packages.sh
 ```
 
-**What gets installed:**
-
-- **Desktop Environment**: `niri`, `xwayland-satellite`, `waybar`, `fuzzel`, `wlogout`, `wl-clipboard`, `networkmanager`, `nemo`
-- **Terminal & Shell**: `kitty` (terminal emulator), `starship` (shell prompt customization tool), `zoxide` (fast directory jumper)
-- **Development**: `neovim`, `zed`, `mousepad`, `git`, `github-cli`, `go`
-- **CLI Utilities**: `eza`, `fd`, `fzf`, `ripgrep`, `delta`, `lazygit`, `go-yq`, `chafa`
-- **System Utilities**: `docker`, `snapper`, `flatpak`, `gnome-keyring`, `stow`, `xdg-user-dirs`, `xdg-utils`
-- **Multimedia**: `kdenlive`, `obs-studio`, `steam`, Proton-related packages
-- **Fonts & Input**: `fcitx5-mozc-ut` (Japanese input), Nerd Fonts
-
-**Note**: Some packages are installed from the AUR. Review the script before running, especially if you prefer to use `yay` instead of `paru`.
-
-### Dotfiles Deployment
-
-#### Option 1: Using GNU Stow (Recommended)
-
-GNU Stow symlinks configuration files to your home directory, making updates simple:
+Optional flags:
 
 ```bash
-# Install stow if not already installed
-sudo pacman -S stow
-
-# Deploy all configurations
-cd niri-dots
-stow niri waybar kitty fuzzel misc
-
-# Deploy individual components
-stow niri          # Only Niri config
-stow waybar        # Only Waybar config
-stow kitty         # Only Kitty config
-stow fuzzel        # Only Fuzzel config
-stow fish          # Only Fish shell config
-stow starship      # Only Starship config
-stow misc          # Only utilities and commands
+INSTALL_NIX=1 bash scripts/install-packages.sh
+INSTALL_AMD_GPU=1 bash scripts/install-packages.sh
+INSTALL_JAPANESE=1 bash scripts/install-packages.sh
 ```
 
-#### Option 2: Manual Deployment
+What it installs:
+
+- Wayland desktop tools such as `ly`, `niri`, `waybar`, `fuzzel`, `swayidle`, `wl-clipboard`, `cliphist`, and `clipse`
+- Terminal and shell tools such as `kitty`, `ghostty`, `starship`, `zoxide`, `zk`, and `sheldon`
+- Editors and development tools such as `neovim`, `zed`, `mousepad`, `go`, `git`, and `github-cli`
+- Utilities such as `fd`, `fzf`, `ripgrep`, `git-delta`, `lazygit`, `fastfetch`, `trash-cli`, `jq`, and `rclone`
+- Desktop applications and desktop-side helpers such as `mako`, `mpv`, `kdenlive`, `obs-studio`, `steam`, `vivaldi`, `geary`, `playerctl`, and `brightnessctl`
+- Fonts including JetBrains Mono Nerd Font and FiraCode Nerd Font
+
+Important details:
+
+- The script installs official packages and AUR packages with `paru -Syu --needed ...`.
+- It also installs `org.upscayl.Upscayl` via Flatpak if `flatpak` is available.
+- Docker setup and GNOME setting tweaks are handled by separate scripts, not by Stow.
+
+### Deploying Dotfiles with Stow
+
+Recommended deployment:
 
 ```bash
-# Copy configuration files to home directory
-mkdir -p ~/.config ~/.local/bin
-cp -r niri/.config/niri ~/.config/
-cp -r waybar/.config/waybar ~/.config/
-cp -r kitty/.config/kitty ~/.config/
-cp -r fuzzel/.config/fuzzel ~/.config/
-cp -r misc/.config/* ~/.config/ 2>/dev/null || true
-cp -r misc/.local/bin/* ~/.local/bin/ 2>/dev/null || true
-chmod +x ~/.config/*/scripts/*.sh ~/.local/bin/* 2>/dev/null || true
+stow niri waybar kitty ghostty fuzzel fish starship fastfetch lazygit mako misc
+```
+
+Add Neovim as needed:
+
+```bash
+stow new_nvim
+stow new_nvim nvim-copilot
+```
+
+You can also stow individual components, for example:
+
+```bash
+stow niri
+stow waybar
+stow kitty
+stow ghostty
+stow fish
+stow misc
 ```
 
 ---
 
-## Component Configuration
+## Terminal Profiles
+
+This repository supports two terminal-oriented desktop profiles:
+
+- **Kitty profile**: Kitty is the main terminal and Waybar launches monitoring commands in Kitty
+- **Ghostty profile**: Ghostty is the main terminal and Waybar launches monitoring commands in Ghostty
+
+The switching helper is `niri/.config/niri/scripts_for_niri/switch-terminal.sh`.
+
+Run it from the repository checkout:
+
+```bash
+bash niri/.config/niri/scripts_for_niri/switch-terminal.sh
+```
+
+What it changes:
+
+- switches `niri/.config/niri/config.kdl` between `config.kdl.kitty` and `config.kdl.ghostty`
+- switches `waybar/.config/waybar/config.jsonc` between `config.jsonc.kitty` and `config.jsonc.ghostty`
+
+After switching, reload Niri config:
+
+```bash
+niri msg action reload-config
+```
+
+Operational note:
+
+- This script edits symlinks inside the repository itself. Run it from the checked-out repo that your Stow deployment points to.
+
+---
+
+## Component Notes
 
 ### Niri
 
-Niri is the Wayland compositor and window manager at the heart of this setup.
+Main config:
 
-**Configuration File**: `~/.config/niri/config.kdl`
+- `niri/.config/niri/config.kdl`
 
-**Key Features**:
+Enabled startup programs in the active config include:
 
-- Tiling and floating window layouts
-- Custom keybindings
-- Per-application window rules (opacity, default width, etc.)
-- Monitor and resolution settings
-- Focus ring and border customization
+- `waybar`
+- `niri-taskbar-watcher.sh`
+- `fcitx5 -d`
+- `swww-daemon` and `swww restore`
+- `swayidle`
+- `wl-paste --watch cliphist store`
+- `clipse -listen`
 
-**Getting Started**:
+Useful built-in keybindings in the current config:
 
-1. Review the default configuration in this repository
-2. Customize keybindings to match your preferences
-3. Adjust per-application window rules (opacity, default width, etc.)
-4. Configure output settings if using multiple displays
-
-**Documentation**: [Niri GitHub](https://github.com/YaLTeR/niri)
+- `Mod+Return`: launch terminal
+- `Alt+Space`: launch `fuzzel`
+- `Mod+W`: fuzzy window picker
+- `Mod+A`: MIME-aware file launcher
+- `Mod+Shift+W`: wallpaper selector in a floating terminal
+- `Mod+T`: switch Waybar theme
+- `Mod+Alt+T`: switch terminal theme
+- `Mod+Ctrl+Alt+T`: switch Waybar + terminal theme together
+- `Mod+Semicolon`: open `clipse`
+- `Print`, `Ctrl+Print`, `Alt+Print`: screenshot actions
 
 ### Waybar
 
-Waybar displays system information and provides quick access to common functions.
+Files:
 
-**Configuration File**: `~/.config/waybar/config.jsonc`, `~/.config/waybar/style.css`
+- `waybar/.config/waybar/config.jsonc`
+- `waybar/.config/waybar/style.css.template`
+- `waybar/.config/waybar/themes/`
+- `waybar/.config/waybar/scripts_for_waybar/`
 
-**Theme System**: Supports multiple themes including Catppuccin, Gruvbox, Nord, Solarized, and Tokyo Night.
+Current Waybar setup includes:
+
+- taskbar-style custom Niri window list via `niri-taskbar.py`
+- MPRIS module
+- notification dismiss button
+- theme indicator and theme switcher
+- separate config variants for Kitty and Ghostty
+
+Switch theme:
 
 ```bash
-# Switch themes (interactive)
 ~/.config/waybar/scripts_for_waybar/switch-theme.sh
-
-# Switch to specific theme
 ~/.config/waybar/scripts_for_waybar/switch-theme.sh gruvbox
 ```
 
-**Documentation**: [Waybar Configuration Guide](./waybar/.config/waybar/README.md)
-
 ### Kitty
 
-Kitty is a high-performance terminal emulator with theme support.
+Files:
 
-**Configuration File**: `~/.config/kitty/kitty.conf`
+- `kitty/.config/kitty/kitty.conf`
+- `kitty/.config/kitty/themes/`
+- `kitty/.config/kitty/scripts_for_kitty/`
 
-**Theme System**: Supports 12+ themes with auto-initialization on first use.
+Kitty details:
+
+- `kitty.conf` includes `./current-theme.conf`
+- `current-theme.conf` is created automatically on first theme switch
+- remote control is enabled so the switcher can apply colors to running Kitty instances
+
+Switch theme:
 
 ```bash
-# Switch themes (interactive)
 ~/.config/kitty/scripts_for_kitty/switch-theme.sh
-
-# Switch to specific theme
 ~/.config/kitty/scripts_for_kitty/switch-theme.sh tokyo-night
-
-# List available themes
 ~/.config/kitty/scripts_for_kitty/list-themes.sh
 ```
 
-**Documentation**: [Kitty Configuration Guide](./kitty/.config/kitty/README.md)
+### Ghostty
 
-### Fuzzel
+Files:
 
-Fuzzel is a modern application launcher.
+- `ghostty/.config/ghostty/config`
+- `ghostty/.config/ghostty/theme.conf`
+- `ghostty/.config/ghostty/scripts_for_ghostty/`
 
-**Configuration File**: `~/.config/fuzzel/fuzzel.ini`
+Ghostty details:
 
-**Documentation**: [Fuzzel Codeberg](https://codeberg.org/dnkl/fuzzel)
+- `config` includes `~/.config/ghostty/theme.conf`
+- `theme.conf` is generated by the switcher script
+- theme names are validated against `ghostty +list-themes`
+
+Switch theme:
+
+```bash
+~/.config/ghostty/scripts_for_ghostty/switch-theme.sh
+~/.config/ghostty/scripts_for_ghostty/switch-theme.sh "Catppuccin Mocha"
+~/.config/ghostty/scripts_for_ghostty/list-themes.sh
+```
+
+### Fish and Starship
+
+Fish config lives in `fish/.config/fish/config.fish` and includes:
+
+- Starship initialization
+- Zoxide initialization
+- shell abbreviations for `eza`, `lazygit`, `opencode`, video encoding helpers, and more
+- PATH additions for `~/.local/bin` and Mason-managed Neovim tools
+- optional local overrides from `fish/.config/fish/options.fish`
+
+Starship config is in `starship/.config/starship.toml`.
 
 ### Neovim
 
-Modern Neovim configuration with lazy.nvim plugin manager, LSP support, and modular architecture.
+Current setup:
 
-**Configuration File**: `~/.config/nvim/init.lua`
+- `new_nvim/.config/nvim/`: current Neovim config
+- `legacy_nvim/.config/nvim/`: older reference config
+- `nvim-copilot/.config/nvim/`: optional Copilot addon overlay
 
-**Key Features**:
+The current Neovim config includes plugins for LSP, Treesitter, formatting, linting, DAP, which-key, Snacks, Noice, and Copilot Vim integration.
 
-- Modular plugin architecture with lazy.nvim
-- LSP support with auto-installation (Mason)
-- Telescope for fuzzy finding
-- Treesitter for syntax highlighting
-- Which-key for discoverable keybindings
+Copilot addon notes:
 
-**Deployment**:
+- deploy with `stow new_nvim nvim-copilot`
+- the addon adds `copilot.lua` and `CopilotChat.nvim`
+- `CopilotChat` is mapped to `<leader>ai`
 
-#### Pattern 1: OSS Core Only (Recommended - Simple)
+### Miscellaneous Config
 
-```bash
-cd niri-dots
-stow new_nvim
-```
-
-#### Pattern 2: OSS Core + GitHub Copilot (Recommended - Safe Method)
-
-```bash
-cd niri-dots
-stow new_nvim nvim-copilot  # Deploy both simultaneously
-```
-
-⚠️ **Note**: If you run `stow new_nvim` first and then `stow nvim-copilot` later, stow will automatically adjust the symlink structure when detecting existing directories. This is normal behavior, but for certainty, simultaneous deployment (Pattern 2) is recommended.
-
-**AI Addon (Optional)**:
-
-The `nvim-copilot` addon provides GitHub Copilot integration.
-
-**Requirements**:
-
-- GitHub Copilot subscription
-- GitHub CLI tool (`github-cli` package)
-- GitHub CLI authentication
-
-**Setup Steps**:
-
-1. **Authenticate with GitHub CLI (first time only)**:
-
-```bash
-gh auth login
-# Follow the prompts to complete authentication
-```
-
-2. **Deploy nvim-copilot**:
-
-```bash
-cd niri-dots
-stow new_nvim nvim-copilot  # Deploy both OSS core and Copilot addon
-```
-
-3. **Verify authentication in Neovim**:
-
-```bash
-nvim
-# :checkhealth copilot
-```
-
-**Usage**:
-
-| Keymap       | Function                               |
-| ------------ | -------------------------------------- |
-| `Ctrl+y`     | Accept full Copilot suggestion         |
-| `Ctrl+i`     | Accept next word of Copilot suggestion |
-| `<leader>ai` | Open CopilotChat                       |
-
-**Troubleshooting**:
-
-```bash
-# Check authentication status
-gh auth status
-
-# Re-authenticate if needed
-gh auth logout
-gh auth login
-```
-
-**Managing Symlinks**:
-
-```bash
-# Check deployment status
-stow -d niri-dots -n nvim
-stow -d niri-dots -n nvim-copilot
-```
-
-**Documentation**: [Neovim Design Philosophy](./legacy_nvim/docs/DESIGN_PHILOSOPHY.md)
+- `fastfetch/.config/fastfetch/config.jsonc`: styled fastfetch output
+- `lazygit/.config/lazygit/config.yml`: Lazygit settings
+- `mako/.config/mako/config`: notification daemon config
+- `misc/.config/mimeapps.list`: default app associations
+- `misc/.local/bin/update-arch`: local update helper
+- `opencode/opencode.jsonc`: OpenCode model, formatter, and permission settings
 
 ---
 
-## Automation Scripts
+## Workflow Scripts
 
-### f2_launcher
+### MIME-aware file launcher
 
-Advanced Fuzzy File Launcher with MIME-type support. Select applications to open files based on their MIME types.
+Files:
 
-**Location**: `~/.config/niri/scripts_for_niri/f2_launcher.sh`
+- `niri/.config/niri/scripts_for_niri/f2_launcher.sh`
+- `niri/.config/niri/scripts_for_niri/f2_launcher.toml`
 
-**Configuration File**: `~/.config/niri/scripts_for_niri/f2_launcher.toml`
+What it does:
 
-**Features**:
+1. searches files from `$HOME` using `fd`
+2. filters selection through `fuzzel`
+3. detects MIME type with `file`
+4. looks up candidate apps in TOML config
+5. opens GUI apps directly
+6. opens CLI apps inside the configured terminal
 
-- **MIME-type based application selection**: Configure multiple candidate applications for each MIME type
-- **Automatic CLI/GUI detection**: CLI apps like `nvim` and `nano` automatically launch in terminal; GUI apps like `zed` launch directly
-- **User selection dialog**: Choose from multiple candidates via Fuzzel
-- **Configuration-driven**: Easy customization using TOML format
-
-**Usage**:
+Run it directly:
 
 ```bash
-# Run the script
 ~/.config/niri/scripts_for_niri/f2_launcher.sh
-
-# Register in Niri keybindings
-Mod+A { spawn-sh "~/.config/niri/scripts_for_niri/f2_launcher.sh"; }
 ```
 
-**Configuration Example**:
+The current TOML config includes mappings for text, Markdown, JSON, YAML, images, audio, video, and directories.
 
-```toml
-[app_metadata]
-nvim = "cli"
-nano = "cli"
-zed = "gui"
-code = "gui"
+### Fuzzy window picker
 
-[mime_types]
-"text/plain" = ["zed", "code", "nvim"]
-"text/x-shellscript" = ["zed", "code", "nano"]
-"text/x-python" = ["zed", "code", "nvim"]
+File:
+
+- `niri/.config/niri/scripts_for_niri/niri-window-picker.sh`
+
+This script queries Niri over `niri msg --json`, formats windows with `jq`, and lets you jump to a window through `fuzzel`.
+
+### Theme synchronization
+
+File:
+
+- `niri/.config/niri/scripts_for_niri/change-all-themes.sh`
+
+This helper:
+
+- selects one Waybar theme via `fuzzel`
+- applies the matching Waybar theme
+- applies the same theme to Kitty if a matching `.conf` exists
+- tries to apply the same theme to Ghostty, otherwise falls back to Ghostty's interactive selector
+
+Run it with:
+
+```bash
+~/.config/niri/scripts_for_niri/change-all-themes.sh
 ```
 
-**Workflow**:
+### Wallpaper selection
 
-1. Select file using `fd` and `fuzzel`
-2. Detect MIME type using `file` command
-3. Get candidate applications from configuration
-4. Filter by installed applications
-5. Display candidates in Fuzzel (if multiple available)
-6. Detect if application is CLI or GUI and launch accordingly
-   - **CLI**: Launch in terminal (foot/kitty/alacritty/xterm)
-   - **GUI**: Launch directly
+Files:
+
+- `niri/.config/niri/scripts_for_niri/wallpaper_selector.sh`
+- `niri/.config/niri/scripts_for_niri/wallpaper_selector_tui.sh`
+- `niri/.config/niri/scripts_for_niri/wallpaper_selector_tui_chafa.sh`
+
+The current Niri keybinding opens the TUI wallpaper selector in a floating terminal.
 
 ---
 
-## Post-Installation Setup
+## Operational Notes
 
-After deploying configurations, perform these additional setup steps:
+### Japanese input
 
-### 1. Start Niri
+The active Niri config starts `fcitx5 -d` automatically.
 
-```bash
-# Via login manager (recommended, verified with SDDM/GDM)
-# Log out and select "Niri" from the session selection screen at login
-```
-
-### 2. Configure Displays (Multi-Monitor Setup)
-
-Edit `~/.config/niri/config.kdl` to specify display settings:
-
-```kdl
-output "HDMI-A-1" {
-    position x=0 y=0
-}
-
-output "DP-1" {
-    position x=2560 y=0
-}
-```
-
-You can specify resolution and refresh rate with the `mode` option if needed.
-
-### 3. Set Up Waybar Autostart
-
-Add to your Niri configuration to start Waybar automatically:
-
-```kdl
-spawn-at-startup "waybar"
-```
-
-### 4. Keyboard Configuration
-
-Customize keyboard settings in `~/.config/niri/config.kdl`:
-
-```kdl
-input {
-    keyboard {
-        xkb {
-            # layout "us"  # Specify layout if needed
-            # layout "jp"  # For Japanese
-            options "ctrl:nocaps"  # Change CapsLock to Ctrl
-        }
-    }
-}
-```
-
-### 5. Set Up Japanese Input (Optional)
-
-If you installed fcitx5-mozc for Japanese input, configure environment variables:
+If you want a Japanese input environment, install the optional package set:
 
 ```bash
-# Set environment variables
-echo 'export GTK_IM_MODULE=fcitx' >> ~/.bashrc
-echo 'export QT_IM_MODULE=fcitx' >> ~/.bashrc
-echo 'export XMODIFIERS=@im=fcitx' >> ~/.bashrc
+INSTALL_JAPANESE=1 bash scripts/install-packages.sh
 ```
 
-Niri configuration already includes:
+### Docker
 
-```kdl
-spawn-at-startup "fcitx5" "-d"
-```
+`scripts/setup-docker.sh` enables and starts Docker with systemd, then attempts to add the sudo user to the `docker` group.
 
-### 6. Customize Niri Keybindings
+You may need to log out and back in after running it.
 
-Edit keybindings in `~/.config/niri/config.kdl`. Default bindings include:
+### GNOME/libadwaita backend settings
 
-```kdl
-binds {
-    Mod+Return { spawn "kitty"; }                    # Launch terminal
-    Alt+Space { spawn "fuzzel"; }                    # Application launcher
-    Mod+Q { close-window; }                          # Close window
-    Mod+W { spawn-sh "~/.config/niri/scripts_for_niri/wallpaper_selector.sh"; }
-    Mod+T { spawn-sh "~/.config/waybar/switch-theme.sh"; }
-    Mod+Alt+T { spawn-sh "~/.config/kitty/scripts_for_kitty/switch-theme.sh"; }
-}
-```
+`scripts/setup_gnome_settings.sh` applies a few `gsettings` values, including:
 
----
+- color scheme
+- text scaling
+- animation toggle
+- sound theme and event sounds
 
-## Customization
+This is mainly for portal/libadwaita integration; theme and icon appearance are still expected to be managed elsewhere.
 
-### Changing Themes
+### Extra runtime tools used by scripts
 
-#### Waybar Theme
+Several workflows in this repo assume extra tools are available, including:
 
-For details, see [Waybar README](./waybar/.config/waybar/README.md).
+- `jq`
+- `playerctl`
+- `brightnessctl`
+- `swaylock`
+- `sensors`
+- `python3`
+- `btop`
+- `notify-send`
 
-```bash
-# Interactive theme selection
-~/.config/waybar/switch-theme.sh
-
-# Direct theme selection
-~/.config/waybar/switch-theme.sh nord
-
-# Accessible via Niri keybinding (default: Mod+T)
-```
-
-#### Kitty Theme
-
-For details, see [Kitty README](./kitty/.config/kitty/README.md).
-
-```bash
-# Interactive theme selection
-~/.config/kitty/scripts_for_kitty/switch-theme.sh
-
-# Direct theme selection
-~/.config/kitty/scripts_for_kitty/switch-theme.sh palenight
-
-# List available themes
-~/.config/kitty/scripts_for_kitty/list-themes.sh
-
-# Accessible via Niri keybinding (default: Mod+Alt+T)
-```
-
-#### Initial Theme Setup
-
-```bash
-# Initialize Waybar theme
-~/.config/waybar/switch-theme.sh
-
-# Initialize Kitty theme (auto-initializes on first use)
-~/.config/kitty/scripts_for_kitty/switch-theme.sh
-```
-
-### Adjusting Waybar Modules
-
-Edit `~/.config/waybar/config.jsonc` to add, remove, or reorder modules.
-
-### Configuring Niri Layout
-
-Customize layout settings in `~/.config/niri/config.kdl`:
-
-```kdl
-layout {
-    gaps 5
-
-    preset-column-widths {
-        proportion 0.33333
-        proportion 0.5
-        proportion 0.66667
-    }
-
-    default-column-width { proportion 0.5; }
-
-    focus-ring {
-        width 3.2
-        active-color "violet"
-        inactive-color "#505050"
-    }
-}
-```
+If a keybinding or module does nothing, check whether the relevant command is installed on your system.
 
 ---
 
 ## Troubleshooting
 
-### Waybar Not Showing
+### Niri does not pick up profile changes
 
 ```bash
-# Check if Waybar is running
-pgrep waybar
+niri msg action reload-config
+```
 
-# Start Waybar manually
+### Waybar is missing or stale
+
+```bash
+pkill -x waybar
 waybar
-
-# Check logs
-journalctl -u waybar -n 50
 ```
 
-### Niri Crashes or Won't Start
+### Kitty theme does not update
 
 ```bash
-# Check Niri logs
-journalctl -u niri -n 50
-
-# Verify configuration syntax
-niri validate-config
-
-# Try with minimal configuration (backup your config first)
-mv ~/.config/niri/config.kdl ~/.config/niri/config.kdl.bak
-niri  # Will use default configuration
+~/.config/kitty/scripts_for_kitty/switch-theme.sh
+kitty @ ls
 ```
 
-### Input Method Issues
+### Ghostty theme does not update
 
 ```bash
-# Restart fcitx5
-killall fcitx5
-fcitx5 &
-
-# Check fcitx5 status
-fcitx5-diagnose
+ghostty +list-themes
+~/.config/ghostty/scripts_for_ghostty/switch-theme.sh
 ```
 
-### Kitty Theme Not Applying
+### File launcher or window picker fails
+
+Check for these commands first:
 
 ```bash
-# Verify script is executable
-ls -la ~/.config/kitty/scripts_for_kitty/switch-theme.sh
-
-# Manually reinitialize
-~/.config/kitty/scripts_for_kitty/switch-theme.sh Earthsong
+command -v fd fuzzel file yq jq
 ```
-
----
-
-## Contributing
-
-Contributions are welcome! If you have improvements to configurations or scripts:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request with a clear description
-
----
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## Acknowledgments
 
-This project was developed by the project maintainer with assistance from **GitHub Copilot**, an AI-powered code completion and generation tool. The project management, architectural decisions, and overall structure have been designed and planned by the project maintainer. GitHub Copilot has specifically assisted with:
-
-- Code completion and refinement
-- Small-scale processing and implementation details
-- Documentation content refinement and organization
-- Commit message composition
-
-All work assisted by AI has undergone thorough review, modification, and validation by the project maintainer. The project maintainer maintains complete control over the project's direction, quality standards, and technical decisions. This collaboration represents a pragmatic approach to modern development, where AI tools enhance productivity while the human maintainer retains full responsibility for the final product's accuracy, completeness, and quality assurance.
+This project was developed by the project maintainer using **GitHub Copilot** and **OpenCode**. Project management, architectural decisions, and overall structure are designed and planned by the maintainer. These AI tools have assisted with code completion, implementation details, documentation refinement, and commit message composition. All AI-assisted output has been reviewed and validated by the maintainer, who retains full responsibility for the project's direction, quality, and technical decisions.
 
 ---
 
-## Resources & Documentation
+## Resources
 
 - [Niri GitHub Repository](https://github.com/YaLTeR/niri)
 - [Waybar GitHub](https://github.com/Alexays/Waybar)
 - [Kitty Documentation](https://sw.kovidgoyal.net/kitty/)
+- [Ghostty](https://ghostty.org/)
 - [Fuzzel Codeberg](https://codeberg.org/dnkl/fuzzel)
 - [Arch Linux Wiki](https://wiki.archlinux.org/)
-- [Wayland Documentation](https://wayland.freedesktop.org/)
 
 ---
 
-## Support
+## License
 
-For issues or questions:
-
-1. Check the [Troubleshooting](#troubleshooting) section
-2. Review component documentation (Waybar, Kitty) for detailed information
-3. Open an issue on GitHub with detailed information about your setup and the problem
+This project is licensed under the MIT License. See `LICENSE`.

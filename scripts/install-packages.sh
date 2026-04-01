@@ -50,12 +50,15 @@ install_nix() {
 # Official repository packages
 PKGS_OFFICIAL=(
 	# === Desktop Environment ===
+	ly                 # Display manager (TUI-based)
 	niri               # Window manager
 	xwayland-satellite # XWayland satellite
 	waybar             # Status bar
 	fuzzel             # Alternative launcher
+	ghostty            # GPU-accelerated terminal emulator
 	wlogout            # Logout screen for Wayland (provides UI for logout, reboot, shutdown, etc.)
 	swayidle           # Idle management daemon for Wayland
+	swaylock           # Screen locker used by swayidle
 	wl-clipboard       # Clipboard manager for Wayland
 	cliphist           # Clipboard history manager for Wayland (stores/recalls with dmenu/rofi/wofi/fuzzel)
 	clipse             # Configurable TUI clipboard manager with multi-select, pinning, and auto-paste
@@ -88,6 +91,7 @@ PKGS_OFFICIAL=(
 	go-yq     # YAML processor
 	chafa     # Terminal image viewer
 	trash-cli # rm alternative (moves files to trash)
+	jq        # JSON processor for niri helper scripts
 
 	# === Version Control & APIs ===
 	git        # Version control
@@ -108,11 +112,17 @@ PKGS_OFFICIAL=(
 	blueman                # Bluetooth manager
 	kvantum                # Kvantum manager (official, recommended for theme configuration)
 	kvantum-qt5            # Qt theme engine (Kvantum, official)
+	libnotify              # notify-send support for desktop notifications
+	lm_sensors             # sensors command for hardware telemetry
+	brightnessctl          # Backlight control for media keys
+	playerctl              # MPRIS control used by Waybar and key actions
+	python                 # python3 runtime for custom Waybar modules
 	qt5ct                  # Qt5 configuration tool
 	qt6ct                  # Qt6 configuration tool
 
 	# === System Monitoring ===
 	fastfetch # System info display
+	btop      # System monitor opened from Waybar modules
 	htop      # Process viewer
 	nvtop     # GPU process viewer
 	gdu       # Disk usage analyzer

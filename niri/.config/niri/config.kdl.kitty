@@ -1,8 +1,8 @@
 spawn-at-startup "waybar"
 spawn-at-startup "$HOME/.config/waybar/scripts_for_waybar/niri-taskbar-watcher.sh"
 spawn-at-startup "fcitx5" "-d"
-spawn-at-startup "swww-daemon"
-spawn-at-startup "swww" "restore"
+spawn-at-startup "awww-daemon"
+spawn-at-startup "awww" "restore"
 // Folowing config will set the idle timeout to 1 hour (3600 seconds) to lock the screen
 // and to 3 hours (10800 seconds) to suspend the system. You can adjust these values as needed.
 spawn-at-startup "swayidle" "-w" "timeout" "3600" "swaylock -f" "timeout" "10800" "systemctl suspend" "before-sleep" "swaylock -f"
@@ -73,32 +73,32 @@ window-rule {
         fixed 1280
     }
 }
-// window-rule {
-//     match app-id="^com\\.mitchellh\\.ghostty$" is-focused=true
-//     match app-id="^com\\.mitchellh\\.ghostty$" is-focused=false
-//     opacity 0.9
-// }
-// window-rule {
-//     match app-id="ghostty-floating"
-//     open-floating true
-//     default-column-width {
-//         fixed 1440
-//     }
-//     default-window-height {
-//         fixed 960
-//     }
-// }
-// window-rule {
-//     // アプリIDは正規のGhostty、かつタイトルが "ghostty-floating" の場合のみマッチ
-//     match app-id="^com\\.mitchellh\\.ghostty$" title="^ghostty-floating$"
-//     open-floating true
-//     default-column-width {
-//         fixed 1440
-//     }
-//     default-window-height {
-//         fixed 960
-//     }
-// }
+window-rule {
+    match app-id="^com\\.mitchellh\\.ghostty$" is-focused=true
+    match app-id="^com\\.mitchellh\\.ghostty$" is-focused=false
+    opacity 0.9
+}
+window-rule {
+    match app-id="ghostty-floating"
+    open-floating true
+    default-column-width {
+        fixed 1440
+    }
+    default-window-height {
+        fixed 960
+    }
+}
+window-rule {
+    // アプリIDは正規のGhostty、かつタイトルが "ghostty-floating" の場合のみマッチ
+    match app-id="^com\\.mitchellh\\.ghostty$" title="^ghostty-floating$"
+    open-floating true
+    default-column-width {
+        fixed 1440
+    }
+    default-window-height {
+        fixed 960
+    }
+}
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 animations {
 
@@ -484,5 +484,4 @@ binds {
         screenshot-window
     }
 }
-
 
