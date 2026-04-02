@@ -90,7 +90,7 @@
   "custom/taskbar": {
     "exec": "python3 $HOME/.config/waybar/scripts_for_waybar/niri-taskbar.py",
     "return-type": "json",
-    "interval": 1,
+    "signal": 8,
     "markup": true,
     "tooltip": true,
     "on-click": "$HOME/.config/niri/scripts_for_niri/niri-window-picker.sh",

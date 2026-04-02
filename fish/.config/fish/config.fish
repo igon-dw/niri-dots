@@ -43,6 +43,9 @@ abbr cpltr 'copilot --resume'
 abbr oc 'opencode'
 abbr ocw 'opencode web'
 
+# Abbreviation for launching codex
+abbr cdx 'codex'
+
 ## Abbreviation for lauching tty-clock
 abbr ttc 'tty-clock -sc -C 6 -t'
 
