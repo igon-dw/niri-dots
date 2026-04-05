@@ -8,6 +8,7 @@ return {
       return ctx.plugin and 0 or 200
     end,
     spec = {
+      { '<leader>a', group = '[A]I' },
       { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
       { '<leader>d', group = '[D]ebug' },
       { '<leader>r', group = '[R]ename' },

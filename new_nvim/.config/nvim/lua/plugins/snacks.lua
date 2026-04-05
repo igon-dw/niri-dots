@@ -71,6 +71,7 @@ return {
       sources = {
         files = { hidden = true, ignored = true },
         grep = { hidden = true, ignored = true },
+        projects = { dev = { '~/dev', '~/projects', '~/Projects' } },
       },
     },
     -- Enable quickfix improvements
@@ -155,6 +156,13 @@ return {
         Snacks.picker.git_files()
       end,
       desc = 'Find Git Files',
+    },
+    {
+      '<leader>fp',
+      function()
+        Snacks.picker.projects()
+      end,
+      desc = 'Projects',
     },
     {
       '<leader>fr',

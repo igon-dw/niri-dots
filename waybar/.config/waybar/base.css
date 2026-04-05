@@ -148,6 +148,20 @@ tooltip {
     transition: all 0.2s;
 }
 
+#custom-clipboard {
+    color: @clipboard_fg;
+    margin-right: 12px;
+    padding: 0 10px;
+    border-radius: 8px;
+    background: @module_bg;
+    border: 1px solid @module_border;
+    transition: all 0.2s;
+}
+
+#custom-clipboard.empty {
+    color: @clipboard_empty_fg;
+}
+
 #custom-theme {
     color: @theme_fg;
     margin-right: 12px;

@@ -1,4 +1,4 @@
-spawn-at-startup "waybar"
+spawn-at-startup "bash" "-lc" "$HOME/.config/niri/scripts_for_niri/start-waybar.sh"
 spawn-at-startup "bash" "-lc" "$HOME/.config/waybar/scripts_for_waybar/niri-taskbar-watcher.sh"
 spawn-at-startup "fcitx5" "-d"
 spawn-at-startup "awww-daemon"
@@ -6,7 +6,7 @@ spawn-at-startup "awww" "restore"
 // Folowing config will set the idle timeout to 1 hour (3600 seconds) to lock the screen
 // and to 3 hours (10800 seconds) to suspend the system. You can adjust these values as needed.
 spawn-at-startup "swayidle" "-w" "timeout" "3600" "swaylock -f" "timeout" "10800" "systemctl suspend" "before-sleep" "swaylock -f"
-spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
+// spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "clipse" "-listen"
 input {
     keyboard {
@@ -153,6 +153,10 @@ binds {
     }
     Alt+Space hotkey-overlay-title="Run an Application: fuzzel" {
         spawn "fuzzel"
+    }
+    // Launch my original Prompt Steward tool binary directly.
+    Mod+P hotkey-overlay-title="Run Prompt Steward" {
+        spawn "~/.local/bin/prompt-steward"
     }
     Mod+Shift+C hotkey-overlay-title="Clear All Notifications (mako)" {
         spawn "makoctl" "dismiss" "-a"

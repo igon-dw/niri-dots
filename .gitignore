@@ -1,4 +1,5 @@
 waybar/.config/waybar/style.css
+waybar/.config/waybar/config.jsonc
 waybar/.config/waybar/scripts_for_waybar/
 kitty/.config/kitty/current-theme.conf
 ghostty/.config/ghostty/theme.conf
@@ -10,4 +11,6 @@ fish/.config/fish/options.fish
 AGENTS.md
 opencode/bun.lock
 opencode/package.json
+.codex
+misc/.local/bin/prompt-steward
 *.bak

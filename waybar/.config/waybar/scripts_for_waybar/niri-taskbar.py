@@ -90,8 +90,10 @@ APP_ICONS: dict[str, str] = {
     "pavucontrol": "󰕾",
     "blueman-manager": "󰂯",
     "nm-connection-editor": "󰛳",
-    "org.gnome.World.PikaBackup": "󰃮",
+    "org.gnome.World.PikaBackup": "󰆓",
+    "org.gnome.world.pikabackup": "󰆓",
     "mousepad": "󰏫",
+    "org.xfce.mousepad": "󰏫",
     "dev.zed.Zed": "",
     # Gaming
     "steam": "󰓓",
@@ -111,6 +113,8 @@ APP_ICONS: dict[str, str] = {
     "org.gnome.loupe": "󰋩",
     "wlogout": "󰤆",
 }
+
+APP_ICONS_LOWER = {key.lower(): icon for key, icon in APP_ICONS.items()}
 
 DEFAULT_ICON = "󰘔"  # Generic window icon
 SEPARATOR = "│"  # Visual separator between monitors
@@ -178,7 +182,7 @@ def build_sort_key(windows: list, workspaces: list, outputs: dict):
 
 def icon_for(app_id: str) -> str:
     """Return Nerd Font icon for given app_id."""
-    return APP_ICONS.get(app_id, APP_ICONS.get(app_id.lower(), DEFAULT_ICON))
+    return APP_ICONS.get(app_id, APP_ICONS_LOWER.get(app_id.lower(), DEFAULT_ICON))
 
 
 def render_text(

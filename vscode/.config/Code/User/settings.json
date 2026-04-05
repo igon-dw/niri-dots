@@ -1,0 +1,26 @@
+{
+    "diffEditor.codeLens": true,
+    "geminicodeassist.customCommands": {
+        "jp-explanation": "Explain this in japanese"
+    },
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "editor.fontFamily": "JetBrainsMono Nerd Font Mono",
+    "window.zoomLevel": 0.75,
+    "shellformat.path": "~/.local/share/nvim/mason/bin/shfmt",
+    "stylua.path": "~/.local/share/nvim/mason/bin/stylua",
+    "editor.formatOnSave": true,
+    // VS Code extension recommendations
+    "extensions": {
+        "recommendations": [
+            "foxundermoon.shell-format"
+        ]
+    },
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": true,
+        "scminput": false
+    },
+    "chat.viewSessions.orientation": "stacked",
+    "workbench.colorTheme": "Catppuccin Mocha"
+}

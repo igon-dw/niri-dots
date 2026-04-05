@@ -14,6 +14,10 @@ return {
       globalstatus = true,
       component_separators = { left = component_sep_left, right = component_sep_left },
       section_separators = { left = section_sep_left, right = section_sep_left_alt },
+      disabled_filetypes = {
+        statusline = { 'AgenticChat', 'AgenticInput', 'AgenticCode', 'AgenticFiles', 'AgenticDiagnostics' },
+        winbar = { 'AgenticChat', 'AgenticInput', 'AgenticCode', 'AgenticFiles', 'AgenticDiagnostics' },
+      },
     },
     sections = {
       lualine_a = { 'mode' },
