@@ -1,14 +1,10 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    branch = 'master', -- これを追加して安定版を強制します
+    branch = 'main',
     build = ':TSUpdate',
-    config = function(_, opts)
-      require('nvim-treesitter.configs').setup(opts)
-    end,
-    -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-    opts = {
-      ensure_installed = {
+    init = function()
+      local ensure_installed = {
         'bash',
         'c',
         'diff',
@@ -26,17 +22,37 @@ return {
         'typescript',
         'yaml',
         'dockerfile',
-      },
-      -- Autoinstall languages that are not installed
+      }
+      local already_installed = require('nvim-treesitter.config').get_installed()
+      local parsers_to_install = vim
+        .iter(ensure_installed)
+        :filter(function(parser)
+          return not vim.tbl_contains(already_installed, parser)
+        end)
+        :totable()
+
+      if #parsers_to_install > 0 then
+        require('nvim-treesitter').install(parsers_to_install)
+      end
+
+      vim.api.nvim_create_autocmd('FileType', {
+        group = vim.api.nvim_create_augroup('nvim-treesitter-filetypes', { clear = true }),
+        callback = function(event)
+          if event.match ~= 'ruby' then
+            pcall(vim.treesitter.start)
+            vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+            return
+          end
+
+          vim.bo.indentexpr = ''
+        end,
+      })
+    end,
+    config = function(_, opts)
+      require('nvim-treesitter').setup(opts)
+    end,
+    opts = {
       auto_install = true,
-      highlight = {
-        enable = true,
-        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-        --  If you are experiencing weird indenting issues, add the language to
-        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby' },
-      },
-      indent = { enable = true, disable = { 'ruby' } },
     },
   },
 }
