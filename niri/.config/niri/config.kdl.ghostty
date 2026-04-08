@@ -75,6 +75,27 @@ window-rule {
 //     }
 // }
 window-rule {
+    match app-id="kitty-floating"
+    open-floating true
+    default-column-width {
+        fixed 1920
+    }
+    default-window-height {
+        fixed 1280
+    }
+}
+window-rule {
+    // Match the canonical Kitty app-id only when the window class is "kitty-floating".
+    match app-id="^kitty$" title="^kitty-floating$"
+    open-floating true
+    default-column-width {
+        fixed 1920
+    }
+    default-window-height {
+        fixed 1280
+    }
+}
+window-rule {
     match app-id="^com\\.mitchellh\\.ghostty$" is-focused=true
     match app-id="^com\\.mitchellh\\.ghostty$" is-focused=false
     opacity 0.9
@@ -83,21 +104,21 @@ window-rule {
     match app-id="ghostty-floating"
     open-floating true
     default-column-width {
-        fixed 1440
+        fixed 1920
     }
     default-window-height {
-        fixed 960
+        fixed 1280
     }
 }
 window-rule {
-    // アプリIDは正規のGhostty、かつタイトルが "ghostty-floating" の場合のみマッチ
+    // Match the canonical Ghostty app-id only when the window title is "ghostty-floating".
     match app-id="^com\\.mitchellh\\.ghostty$" title="^ghostty-floating$"
     open-floating true
     default-column-width {
-        fixed 1440
+        fixed 1920
     }
     default-window-height {
-        fixed 960
+        fixed 1280
     }
 }
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
@@ -465,7 +486,10 @@ binds {
     }
     // Fuzzy launcher binding
     Mod+A hotkey-overlay-title="Open Fast Fuzzy Launcher" {
-        spawn-sh "~/.config/niri/scripts_for_niri/f2_launcher.sh"
+        spawn-sh "~/.config/niri/scripts_for_niri/f2_launcher/f2_launcher.sh"
+    }
+    Mod+Shift+A hotkey-overlay-title="Open FZF Quick Opener" {
+        spawn "ghostty" "--title=ghostty-floating" "-e" "bash" "-lc" "$HOME/Projects/f3-launcher/bin/fzf_quick_opener"
     }
     // Color scheme changers bindings
     Mod+T hotkey-overlay-title="Change the Waybar Color Scheme" {

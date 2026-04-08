@@ -1,6 +1,6 @@
 waybar/.config/waybar/style.css
 waybar/.config/waybar/config.jsonc
-waybar/.config/waybar/scripts_for_waybar/
+waybar/.config/waybar/scripts_for_waybar/__pycache__/
 kitty/.config/kitty/current-theme.conf
 ghostty/.config/ghostty/theme.conf
 legacy_nvim/.config/nvim/lazy-lock.json

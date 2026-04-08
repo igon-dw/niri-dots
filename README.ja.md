@@ -251,6 +251,7 @@ niri msg action reload-config
 - `Alt+Space`: `fuzzel` 起動
 - `Mod+W`: fuzzy window picker
 - `Mod+A`: MIME ベースの file launcher
+- `Mod+Shift+A`: フローティング端末で `fzf` quick opener 起動
 - `Mod+Shift+W`: フローティング端末で壁紙セレクタ起動
 - `Mod+T`: Waybar テーマ切り替え
 - `Mod+Alt+T`: 端末テーマ切り替え
@@ -371,8 +372,8 @@ Copilot addon に関する補足:
 
 関連ファイル:
 
-- `niri/.config/niri/scripts_for_niri/f2_launcher.sh`
-- `niri/.config/niri/scripts_for_niri/f2_launcher.toml`
+- `niri/.config/niri/scripts_for_niri/f2_launcher/f2_launcher.sh`
+- `niri/.config/niri/scripts_for_niri/f2_launcher/f2_launcher.toml`
 
 動作概要:
 
@@ -386,10 +387,32 @@ Copilot addon に関する補足:
 直接実行する場合:
 
 ```bash
-~/.config/niri/scripts_for_niri/f2_launcher.sh
+~/.config/niri/scripts_for_niri/f2_launcher/f2_launcher.sh
 ```
 
 現行の TOML では、テキスト、Markdown、JSON、YAML、画像、音声、動画、ディレクトリ向けの関連付けが入っています。
+
+### FZF quick opener
+
+関連ファイル:
+
+- `niri/.config/niri/scripts_for_niri/fzf_quick_opener/fzf_quick_opener.sh`
+- `niri/.config/niri/scripts_for_niri/fzf_quick_opener/fzf_quick_opener_core.sh`
+- `niri/.config/niri/scripts_for_niri/fzf_quick_opener/fzf_quick_opener_icons.sh`
+
+動作概要:
+
+1. フローティングの Kitty または Ghostty 端末内で起動する
+2. `fd` で `$HOME` 配下の候補を列挙する
+3. `fzf` でアイコン、種別ラベル、プレビュー付きで絞り込む
+4. パス選択後に使用アプリをもう一度選ぶ
+5. アプリ関連付けは `f2_launcher` と同じ TOML 設定を使う
+
+直接実行する場合:
+
+```bash
+~/.config/niri/scripts_for_niri/fzf_quick_opener/fzf_quick_opener.sh
+```
 
 ### Fuzzy window picker
 

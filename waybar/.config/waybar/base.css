@@ -173,16 +173,6 @@ tooltip {
     transition: all 0.2s;
 }
 
-#language {
-    margin-right: 12px;
-    padding: 0 10px;
-    font-size: 12px;
-    border-radius: 8px;
-    background: @module_bg;
-    border: 1px solid @module_border;
-    transition: all 0.2s;
-}
-
 #pulseaudio {
     margin-right: 12px;
     padding: 0 10px;

@@ -9,12 +9,6 @@
     "shellformat.path": "~/.local/share/nvim/mason/bin/shfmt",
     "stylua.path": "~/.local/share/nvim/mason/bin/stylua",
     "editor.formatOnSave": true,
-    // VS Code extension recommendations
-    "extensions": {
-        "recommendations": [
-            "foxundermoon.shell-format"
-        ]
-    },
     "github.copilot.enable": {
         "*": true,
         "plaintext": false,
@@ -22,5 +16,7 @@
         "scminput": false
     },
     "chat.viewSessions.orientation": "stacked",
-    "workbench.colorTheme": "Catppuccin Mocha"
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
 }

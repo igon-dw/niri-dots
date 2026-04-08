@@ -191,7 +191,6 @@ Right side:
 
 - `custom/mpris`
 - `custom/theme`
-- `niri/language`
 - `tray`
 - `pulseaudio`
 - `custom/wlogout`

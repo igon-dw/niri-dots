@@ -28,3 +28,5 @@
 @define-color menuitem_hover_fg       #f07178;
 @define-color theme_fg                #f07178;
 @define-color mpris_fg                #89ddff;
+@define-color clipboard_fg            #f07178;
+@define-color clipboard_empty_fg      #6f7890;

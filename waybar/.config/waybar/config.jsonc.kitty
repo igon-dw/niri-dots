@@ -23,7 +23,6 @@
   "modules-right": [
     "custom/mpris",
     "custom/theme",
-    "niri/language",
     "tray",
     "pulseaudio",
     "custom/wlogout",
@@ -180,11 +179,6 @@
     "on-click": "playerctl play-pause",
     "on-scroll-up": "playerctl volume 0.05+",
     "on-scroll-down": "playerctl volume 0.05-",
-  },
-  "niri/language": {
-    "format": "{short}",
-    // "tooltip": "Change Keyboard Layout",
-    // "on-click": "niri-keyboard-layout-switcher",
   },
   "tray": {
     "icon-size": 20,

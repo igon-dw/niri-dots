@@ -253,6 +253,7 @@ Useful built-in keybindings in the current config:
 - `Alt+Space`: launch `fuzzel`
 - `Mod+W`: fuzzy window picker
 - `Mod+A`: MIME-aware file launcher
+- `Mod+Shift+A`: floating `fzf` quick opener
 - `Mod+Shift+W`: wallpaper selector in a floating terminal
 - `Mod+T`: switch Waybar theme
 - `Mod+Alt+T`: switch terminal theme
@@ -373,8 +374,8 @@ Copilot addon notes:
 
 Files:
 
-- `niri/.config/niri/scripts_for_niri/f2_launcher.sh`
-- `niri/.config/niri/scripts_for_niri/f2_launcher.toml`
+- `niri/.config/niri/scripts_for_niri/f2_launcher/f2_launcher.sh`
+- `niri/.config/niri/scripts_for_niri/f2_launcher/f2_launcher.toml`
 
 What it does:
 
@@ -388,10 +389,32 @@ What it does:
 Run it directly:
 
 ```bash
-~/.config/niri/scripts_for_niri/f2_launcher.sh
+~/.config/niri/scripts_for_niri/f2_launcher/f2_launcher.sh
 ```
 
 The current TOML config includes mappings for text, Markdown, JSON, YAML, images, audio, video, and directories.
+
+### FZF quick opener
+
+Files:
+
+- `niri/.config/niri/scripts_for_niri/fzf_quick_opener/fzf_quick_opener.sh`
+- `niri/.config/niri/scripts_for_niri/fzf_quick_opener/fzf_quick_opener_core.sh`
+- `niri/.config/niri/scripts_for_niri/fzf_quick_opener/fzf_quick_opener_icons.sh`
+
+What it does:
+
+1. opens inside a floating Kitty or Ghostty terminal
+2. lists files from `$HOME` using `fd`
+3. shows icons, file kind labels, and a preview through `fzf`
+4. asks which app to use after selecting a path
+5. reuses the same TOML app mappings as `f2_launcher`
+
+Run it directly:
+
+```bash
+~/.config/niri/scripts_for_niri/fzf_quick_opener/fzf_quick_opener.sh
+```
 
 ### Fuzzy window picker
 

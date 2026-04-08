@@ -189,7 +189,6 @@ Niri の startup で起動しておくことで、短い polling だけに頼ら
 
 - `custom/mpris`
 - `custom/theme`
-- `niri/language`
 - `tray`
 - `pulseaudio`
 - `custom/wlogout`

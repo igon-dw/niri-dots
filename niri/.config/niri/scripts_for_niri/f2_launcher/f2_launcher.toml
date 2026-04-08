@@ -14,7 +14,31 @@ active = "fuzzel"
 # Fuzzel dmenu arguments
 dmenu_args = "-w 120 -l 20"
 # Patterns to exclude from file search
-exclude = [".git", "node_modules", ".cache", ".local", "__pycache__", ".venv"]
+exclude = [
+  ".git",
+  "node_modules",
+  ".cache",
+  "__pycache__",
+  ".venv",
+  ".local/share/Trash",
+  ".npm",
+  ".pnpm-store",
+  ".cargo",
+  ".rustup",
+  ".bun",
+  ".mozilla",
+  ".config/google-chrome",
+  ".config/chromium",
+  ".steam",
+  ".var",
+]
+
+[launcher.fzf]
+prompt = "Quick Open > "
+header = "Enter: select path | Esc: cancel"
+height = "85%"
+layout = "reverse"
+preview_window = "right,60%,border-left"
 
 # Future launcher configurations (commented out)
 # [launcher.rofi]
@@ -90,6 +114,7 @@ xdg-open = "gui"
 "text/plain" = ["zeditor", "code", "mousepad", "nvim"]
 "text/x-shellscript" = ["zeditor", "code", "mousepad", "nvim"]
 "text/x-python" = ["zeditor", "code", "mousepad", "nvim"]
+"text/csv" = ["zeditor", "code", "mousepad", "nvim"]
 "application/json" = ["zeditor", "code", "mousepad", "nvim"]
 "application/x-yaml" = ["zeditor", "code", "mousepad", "nvim"]
 "text/markdown" = ["zeditor", "code", "mousepad", "nvim"]
