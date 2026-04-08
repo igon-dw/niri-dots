@@ -19,7 +19,7 @@ Arch Linux 向けの Niri ベース Wayland デスクトップ環境を構築す
 - **Kitty / Ghostty**: それぞれ別ワークフローで管理するターミナル設定
 - **Fuzzel**: Niri 補助スクリプトやセレクタで利用するランチャー
 - **Fish + Starship**: 対話シェル設定、abbreviation、プロンプト
-- **Neovim**: 現行構成の `new_nvim`、参考用の `legacy_nvim`、任意追加の `nvim-copilot`
+- **Neovim**: 現行の保守対象である `nvim`。Snacks と Agentic を中心に構成
 - **補助設定**: `fastfetch`、`lazygit`、`mako`、MIME 関連、ローカルコマンド
 - **初期セットアップ用スクリプト**: パッケージ導入、Docker 設定、GNOME/libadwaita 関連設定
 - **OpenCode 設定**: `opencode/` 以下のローカル設定
@@ -66,9 +66,7 @@ niri-dots/
 |- fuzzel/
 |- fish/
 |- starship/
-|- new_nvim/
-|- legacy_nvim/
-|- nvim-copilot/
+|- nvim/
 |- fastfetch/
 |- lazygit/
 |- mako/
@@ -100,10 +98,7 @@ bash scripts/install-packages.sh
 stow niri waybar kitty ghostty fuzzel fish starship fastfetch lazygit mako misc
 
 # Neovim を使う場合
-stow new_nvim
-
-# Copilot addon も使う場合
-stow new_nvim nvim-copilot
+stow nvim
 ```
 
 その後ログアウトし、ディスプレイマネージャから Niri セッションを選んで再ログインします。
@@ -178,8 +173,7 @@ stow niri waybar kitty ghostty fuzzel fish starship fastfetch lazygit mako misc
 Neovim を加える場合:
 
 ```bash
-stow new_nvim
-stow new_nvim nvim-copilot
+stow nvim
 ```
 
 個別に配置する場合の例:
@@ -343,17 +337,9 @@ Starship 設定は `starship/.config/starship.toml` です。
 
 現行構成:
 
-- `new_nvim/.config/nvim/`: 現在使う Neovim 設定
-- `legacy_nvim/.config/nvim/`: 旧構成の参考用
-- `nvim-copilot/.config/nvim/`: 任意追加の Copilot addon overlay
+- `nvim/.config/nvim/`: 現在使う Neovim 設定
 
-現在の Neovim 構成には、LSP、Treesitter、formatting、linting、DAP、which-key、Snacks、Noice、Copilot Vim integration などが含まれます。
-
-Copilot addon に関する補足:
-
-- `stow new_nvim nvim-copilot` で導入
-- addon 側で `copilot.lua` と `CopilotChat.nvim` を追加
-- `CopilotChat` は `<leader>ai` に割り当て
+現在の Neovim 構成には、LSP、Treesitter、formatting、linting、DAP、which-key、Snacks、Noice、Agentic、Copilot Vim integration などが含まれます。
 
 ### その他の設定
 

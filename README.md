@@ -21,7 +21,7 @@ Main pieces included in this repository:
 - **Kitty / Ghostty**: terminal configurations with separate theme switching workflows
 - **Fuzzel**: launcher used by Niri scripts and interactive selectors
 - **Fish + Starship**: interactive shell setup, abbreviations, and prompt
-- **Neovim**: current config in `new_nvim`, legacy reference config in `legacy_nvim`, optional Copilot addon in `nvim-copilot`
+- **Neovim**: current config in `nvim`, built around Snacks, Agentic, and the actively maintained setup
 - **Utility configs**: `fastfetch`, `lazygit`, `mako`, MIME associations, and local helper scripts
 - **Bootstrap scripts**: package installation, Docker setup, and GNOME/libadwaita-related settings
 - **OpenCode config**: local editor/CLI assistant configuration under `opencode/`
@@ -68,9 +68,7 @@ niri-dots/
 |- fuzzel/
 |- fish/
 |- starship/
-|- new_nvim/
-|- legacy_nvim/
-|- nvim-copilot/
+|- nvim/
 |- fastfetch/
 |- lazygit/
 |- mako/
@@ -102,10 +100,7 @@ bash scripts/install-packages.sh
 stow niri waybar kitty ghostty fuzzel fish starship fastfetch lazygit mako misc
 
 # Optional Neovim setup
-stow new_nvim
-
-# Optional Copilot addon for Neovim
-stow new_nvim nvim-copilot
+stow nvim
 ```
 
 Then log out, choose the Niri session in your display manager, and sign back in.
@@ -180,8 +175,7 @@ stow niri waybar kitty ghostty fuzzel fish starship fastfetch lazygit mako misc
 Add Neovim as needed:
 
 ```bash
-stow new_nvim
-stow new_nvim nvim-copilot
+stow nvim
 ```
 
 You can also stow individual components, for example:
@@ -345,17 +339,9 @@ Starship config is in `starship/.config/starship.toml`.
 
 Current setup:
 
-- `new_nvim/.config/nvim/`: current Neovim config
-- `legacy_nvim/.config/nvim/`: older reference config
-- `nvim-copilot/.config/nvim/`: optional Copilot addon overlay
+- `nvim/.config/nvim/`: current Neovim config
 
-The current Neovim config includes plugins for LSP, Treesitter, formatting, linting, DAP, which-key, Snacks, Noice, and Copilot Vim integration.
-
-Copilot addon notes:
-
-- deploy with `stow new_nvim nvim-copilot`
-- the addon adds `copilot.lua` and `CopilotChat.nvim`
-- `CopilotChat` is mapped to `<leader>ai`
+The current Neovim config includes plugins for LSP, Treesitter, formatting, linting, DAP, which-key, Snacks, Noice, Agentic, and Copilot Vim integration.
 
 ### Miscellaneous Config
 
