@@ -152,7 +152,7 @@ INSTALL_JAPANESE=1 bash scripts/install-packages.sh
 - Wayland デスクトップ関連: `niri`、`waybar`、`fuzzel`、`swayidle`、`wl-clipboard`、`cliphist`、`clipse`
 - ターミナル/シェル関連: `kitty`、`ghostty`、`starship`、`zoxide`、`zk`、`sheldon`
 - 開発関連: `neovim`、`zed`、`mousepad`、`go`、`git`、`github-cli`
-- CLI ツール: `fd`、`fzf`、`ripgrep`、`git-delta`、`lazygit`、`fastfetch`、`trash-cli`、`jq`、`rclone`
+- CLI ツール: `fd`、`fzf`、`ripgrep`、`git-delta`、`lazygit`、`fastfetch`、`trash-cli`、`jq`、`rclone`、`tree-sitter-cli`
 - デスクトップアプリ/補助ツール: `mako`、`mpv`、`kdenlive`、`obs-studio`、`steam`、`vivaldi`、`geary`、`playerctl`、`brightnessctl`
 - フォント: JetBrains Mono Nerd Font、FiraCode Nerd Font など
 
@@ -266,7 +266,8 @@ niri msg action reload-config
 
 - `niri-taskbar.py` を使った taskbar 風のウィンドウ一覧
 - MPRIS モジュール
-- 通知一括 dismiss ボタン
+- 通知状態表示モジュールと dismiss-all / DND toggle 操作
+- clipboard 状態表示と quick open / clear 操作
 - 現在テーマ表示とテーマ切り替え
 - Kitty / Ghostty 向け variant config
 
@@ -345,7 +346,7 @@ Starship 設定は `starship/.config/starship.toml` です。
 
 - `fastfetch/.config/fastfetch/config.jsonc`: Fastfetch 表示設定
 - `lazygit/.config/lazygit/config.yml`: Lazygit 設定
-- `mako/.config/mako/config`: 通知デーモン設定
+- `mako/.config/mako/config`: DND mode 対応を含む通知デーモン設定
 - `misc/.config/mimeapps.list`: デフォルトアプリ関連付け
 - `misc/.local/bin/update-arch`: 更新補助コマンド
 - `opencode/opencode.jsonc`: OpenCode の model / formatter / permission 設定

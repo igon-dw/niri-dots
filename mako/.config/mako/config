@@ -23,3 +23,6 @@ text-color=#ffffffff
 background-color=#003d3dcc
 border-color=#003d3dcc
 text-color=#e0ffffcc
+
+[mode=dnd]
+invisible=1

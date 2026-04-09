@@ -88,6 +88,7 @@ PKGS_OFFICIAL=(
 	ripgrep   # Fast grep
 	git-delta # git diff viewer
 	lazygit   # Terminal git client
+	tree-sitter-cli # Tree-sitter CLI used by the Neovim 0.12+ setup
 	go-yq     # YAML processor
 	chafa     # Terminal image viewer
 	trash-cli # rm alternative (moves files to trash)

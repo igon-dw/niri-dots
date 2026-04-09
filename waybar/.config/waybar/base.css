@@ -103,7 +103,7 @@ tooltip {
 }
 
 #workspaces {
-    margin-left: 32px;
+    margin-left: 12px;
     padding: 0 10px;
     border-radius: 8px;
     background: @module_bg;
@@ -139,9 +139,8 @@ tooltip {
 }
 
 #custom-makoDismiss {
-    margin-left: 20px;
-    margin-right: 12px;
-    padding: 0 16px 0 10px;
+    margin-left: 12px;
+    padding: 0 10px;
     border-radius: 8px;
     background: @module_bg;
     border: 1px solid @module_border;
@@ -150,7 +149,7 @@ tooltip {
 
 #custom-clipboard {
     color: @clipboard_fg;
-    margin-right: 12px;
+    margin-left: 12px;
     padding: 0 10px;
     border-radius: 8px;
     background: @module_bg;

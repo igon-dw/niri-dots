@@ -1,57 +1,55 @@
 #!/bin/bash
 
-# --- 1. 設定セクション ---
-# 作業時間（デバッグ用に短くしています。本番は25で）
+# --- 1. Configuration section ---
+# Work duration in minutes. Kept short for debugging; use 25 in production.
 DURATION_MIN=1
-# プロセスIDを保存するファイル（後でシグナルを送る宛先になります）
+# File used to store the process ID for later signaling.
 PID_FILE="/tmp/pomo.pid"
-# Waybar用のステータスファイル（まだ使いませんが定義だけ）
+# Status file for Waybar; defined here even though it is not used yet.
 STATUS_FILE="/tmp/pomo_status.json"
 
-# --- 2. 後始末関数 (Cleanup) ---
-# スクリプトが終了する時（正常、エラー問わず）に必ず呼ばれます
+# --- 2. Cleanup function ---
+# Always runs when the script exits, whether normally or due to an error.
 cleanup() {
-  echo "終了処理を行っています..."
-  # ファイルが存在すれば削除
+  echo "Running cleanup..."
+  # Remove the files if they exist.
   rm -f "$PID_FILE" "$STATUS_FILE"
   exit 0
 }
 
-# --- 3. トラップ (Trap) の設定 ---
-# "EXIT" シグナル（終了）を検知したら、cleanup関数を実行せよという命令
+# --- 3. Trap setup ---
+# Run cleanup when the EXIT signal is received.
 trap cleanup EXIT
 
-# --- 4. 起動処理 ---
-# 二重起動チェック（簡易版）
+# --- 4. Startup ---
+# Simple double-start check.
 if [ -f "$PID_FILE" ]; then
-  echo "既に起動しているようです。 (PIDファイルが存在します)"
+  echo "It looks like this is already running. (PID file exists)"
   exit 1
 fi
 
-# 自分のPIDをファイルに書き込む
-# $$ は「現在のプロセスのPID」を表す特殊変数です
+# Write this process's PID to the file.
+# `$$` is a special variable that expands to the current process ID.
 echo $$ >"$PID_FILE"
 
-echo "ポモドーロタイマーを起動しました (PID: $$)"
+echo "Started the Pomodoro timer (PID: $$)"
 
-# --- 5. メイン処理 (カウントダウン) ---
+# --- 5. Main logic (countdown) ---
 
-# 分を秒に変換（算術式 $((...)) を使います）
-# ※テスト用に短くしたい場合は DURATION_MIN=1 などのままにしてください
+# Convert minutes to seconds using arithmetic expansion.
+# Keep DURATION_MIN=1 or similar if you want a short test run.
 duration=$((DURATION_MIN * 60))
 remaining=$duration
 
-echo "カウントダウンを開始します: ${DURATION_MIN}分 (${duration}秒)"
+echo "Starting countdown: ${DURATION_MIN} minute(s) (${duration} seconds)"
 
-# 残り時間が0になるまでループ
+# Loop until the remaining time reaches zero.
 while [ $remaining -ge 0 ]; do
-  # 1. 残り秒数を分:秒形式に変換して表示
-  min=$((remaining / 60))
-  sec=$((remaining % 60))
-
-  time_fmt=$(printf "%02d:%02d" $min $sec)
-
+  time_fmt=$(printf "%02d:%02d" $((remaining / 60)) $((remaining % 60)))
+  echo "$time_fmt"
+  sleep 1
+  remaining=$((remaining - 1))
 done
 
-echo "完了。"
-# ここでスクリプトが終わると、自動的に cleanup が呼ばれます
+echo "Done."
+# Cleanup runs automatically when the script exits here.

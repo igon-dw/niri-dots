@@ -1,28 +1,28 @@
 #!/bin/bash
 
-# MPRIS情報を取得して、titleだけを制限するスクリプト
+# Fetch MPRIS metadata and truncate the title.
 
-# MPRISプレイヤーの情報を取得
+# Fetch the MPRIS player metadata.
 PLAYER_INFO=$(playerctl metadata --format '{"player_icon":"{{lc(playerName)}}","title":"{{title}}","artist":"{{artist}}"}' 2>/dev/null)
 
 if [ -z "$PLAYER_INFO" ]; then
     exit 0
 fi
 
-# JSONを解析
+# Parse the JSON payload.
 PLAYER_ICON=$(echo "$PLAYER_INFO" | grep -o '"player_icon":"[^"]*"' | cut -d'"' -f4)
 TITLE=$(echo "$PLAYER_INFO" | grep -o '"title":"[^"]*"' | cut -d'"' -f4)
 ARTIST=$(echo "$PLAYER_INFO" | grep -o '"artist":"[^"]*"' | cut -d'"' -f4)
 
-# titleの最大文字数（調整可能）
+# Maximum title length, adjustable as needed.
 TITLE_MAX_LENGTH=20
 
-# titleを制限
+# Truncate the title if needed.
 if [ ${#TITLE} -gt $TITLE_MAX_LENGTH ]; then
     TITLE="${TITLE:0:$((TITLE_MAX_LENGTH-1))}…"
 fi
 
-# player_iconをemoji/iconに変換
+# Map player_icon to an emoji or icon.
 case "$PLAYER_ICON" in
     chromium|google-chrome|chrome)
         PLAYER_ICON="󰊯"
@@ -47,7 +47,7 @@ case "$PLAYER_ICON" in
         ;;
 esac
 
-# 再生状態を確認
+# Check playback status.
 STATUS=$(playerctl status 2>/dev/null)
 
 if [ "$STATUS" = "Paused" ]; then

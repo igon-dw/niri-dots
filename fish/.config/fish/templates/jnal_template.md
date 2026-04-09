@@ -1,11 +1,10 @@
-## 今日の出来事
+## Today
 
 
-## 学んだこと
+## What I Learned
 
 
 ## TODO
 - [ ] 
 
-## メモ
-
+## Notes

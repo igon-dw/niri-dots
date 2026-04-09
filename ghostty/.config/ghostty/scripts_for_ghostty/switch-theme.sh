@@ -11,7 +11,7 @@ GHOSTTY_DIR="$(dirname "$SCRIPT_DIR")"
 THEME_CONF="$GHOSTTY_DIR/theme.conf"
 DEFAULT_THEME="Catppuccin Mocha"
 
-# theme.conf が存在しない場合は初期化（初回セットアップ）
+# Initialize theme.conf if it does not exist yet (first-time setup).
 if [ ! -e "$THEME_CONF" ]; then
   echo "Initializing theme configuration with default theme: $DEFAULT_THEME"
   
@@ -25,9 +25,9 @@ EOF
   echo ""
 fi
 
-# 引数なしの場合、fuzzelで選択
+# If no argument is given, prompt with fuzzel.
 if [ -z "$1" ]; then
-  # fuzzelがインストールされているか確認
+  # Check whether fuzzel is installed.
   if command -v fuzzel >/dev/null 2>&1; then
     THEME_LIST=$("$SCRIPT_DIR/list-themes.sh" --simple)
     
@@ -43,7 +43,7 @@ if [ -z "$1" ]; then
       exit 0
     fi
     
-    # 選択されたテーマで再帰呼び出し
+    # Re-run the script with the selected theme.
     exec "$SCRIPT_DIR/$(basename "$0")" "$SELECTED_THEME"
   else
     echo "Error: No theme specified and fuzzel is not installed." >&2
@@ -58,7 +58,7 @@ fi
 
 THEME_NAME="$1"
 
-# テーマが存在するか確認（ghostty +list-themesの出力と照合）
+# Check that the theme exists by matching against `ghostty +list-themes`.
 if ! ghostty +list-themes 2>/dev/null | sed 's/ (resources)$//' | grep -Fxq "$THEME_NAME"; then
   echo "Error: Theme '$THEME_NAME' not found." >&2
   echo "" >&2
@@ -66,7 +66,7 @@ if ! ghostty +list-themes 2>/dev/null | sed 's/ (resources)$//' | grep -Fxq "$TH
   exit 1
 fi
 
-# theme.conf を更新
+# Update theme.conf.
 cat > "$THEME_CONF" << EOF
 # Auto-generated theme configuration
 # This file is managed by scripts_for_ghostty/switch-theme.sh

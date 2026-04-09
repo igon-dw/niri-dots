@@ -106,6 +106,8 @@ APP_ICONS: dict[str, str] = {
     "org.libreoffice.writer": "󰈬",
     "org.libreoffice.calc": "󰈙",
     "onlyoffice-desktopeditors": "󰏆",
+    # Database
+    "DBeaver": "󰆼",
     # Misc
     "clipse": "󰅌",
     "fuzzel": "󱓞",

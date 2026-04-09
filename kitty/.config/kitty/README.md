@@ -2,7 +2,7 @@
 
 This directory contains the Kitty configuration used by this repository, with script-driven theme switching and live updates for running Kitty instances.
 
-> **日本語版はこちら / Japanese version available**: [README.ja.md](README.ja.md)
+> **Japanese version available**: [README.ja.md](README.ja.md)
 
 ---
 

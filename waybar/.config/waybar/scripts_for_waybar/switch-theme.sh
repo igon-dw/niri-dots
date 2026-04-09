@@ -14,29 +14,33 @@ TARGET="$DIR/$STYLE_CSS"
 TEMPLATE="$DIR/$STYLE_TEMPLATE"
 THEMES_DIR="$DIR/themes"
 
-# テンプレートファイルの存在確認
+list_themes() {
+  find "$THEMES_DIR" -maxdepth 1 -type f -name '*.css' -exec basename {} .css \; | sort
+}
+
+# Check that the template file exists.
 if [ ! -f "$TEMPLATE" ]; then
   echo "Error: $TEMPLATE not found."
   exit 2
 fi
 
-# 引数なしの場合、fuzzelで選択
+# If no argument is given, prompt with fuzzel.
 if [ -z "$1" ]; then
-  # themes/ ディレクトリからテーマ一覧を取得
+  # Collect the theme list from the themes/ directory.
   if [ ! -d "$THEMES_DIR" ]; then
     echo "Error: themes directory not found."
     exit 2
   fi
 
-  # .cssファイルから拡張子を除いてリスト化
-  THEME_LIST=$(cd "$THEMES_DIR" && ls -1 *.css 2>/dev/null | sed 's/\.css$//' || echo "")
+  # Strip the .css extension and build the list.
+  THEME_LIST=$(list_themes)
 
   if [ -z "$THEME_LIST" ]; then
     echo "Error: No theme files found in $THEMES_DIR"
     exit 2
   fi
 
-  # fuzzelで選択
+  # Let fuzzel handle interactive selection.
   if command -v fuzzel >/dev/null 2>&1; then
     SELECTED_THEME=$(echo "$THEME_LIST" | fuzzel --dmenu --prompt "Select theme: ")
 
@@ -45,7 +49,7 @@ if [ -z "$1" ]; then
       exit 0
     fi
 
-    # 選択されたテーマで再帰呼び出し
+    # Re-run the script with the selected theme.
     exec "$0" "$SELECTED_THEME"
   else
     echo "Error: fuzzel is not installed."
@@ -57,7 +61,7 @@ if [ -z "$1" ]; then
   fi
 fi
 
-# テーマファイルの存在確認
+# Check that the selected theme file exists.
 THEME_FILE="$1.css"
 THEME_PATH="$DIR/themes/$THEME_FILE"
 
@@ -65,32 +69,32 @@ if [ ! -f "$THEME_PATH" ]; then
   echo "Error: Theme '$1' not found."
   echo ""
   echo "Available themes:"
-  cd "$THEMES_DIR" && ls -1 *.css 2>/dev/null | sed 's/\.css$//' | sed 's/^/  /' || echo "  (none)"
+  if ! list_themes | sed 's/^/  /'; then
+    echo "  (none)"
+  fi
   exit 1
 fi
 
-# テーマ名を整形（ハイフンをスペースに、最初の文字を大文字に）
+# Format the theme name by replacing hyphens with spaces and capitalizing words.
 THEME_NAME=$(echo "$1" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2))}1')
 
-# テンプレートからstyle.cssを生成
+# Generate style.css from the template.
 cp "$TEMPLATE" "$TARGET"
 
-# sed で @import "themes/XXX.css" の行を書き換え
-sed -i "s|@import \"themes/.*\.css\";|@import \"themes/$THEME_FILE\";|" "$TARGET"
-
-if [ $? -ne 0 ]; then
+# Rewrite the @import "themes/XXX.css" line with sed.
+if ! sed -i "s|@import \"themes/.*\.css\";|@import \"themes/$THEME_FILE\";|" "$TARGET"; then
   echo "Error: Theme switching failed."
   exit 3
 fi
 
 echo "✓ Theme switched to '$THEME_NAME' ($THEME_FILE)"
 
-# Waybar再起動
+# Restart Waybar.
 if command -v pkill >/dev/null 2>&1; then
   pkill -x waybar 2>/dev/null || true
   sleep 0.5
 
-  # nohupでバックグラウンド実行
+  # Run in the background with nohup.
   if command -v nohup >/dev/null 2>&1; then
     nohup waybar >/dev/null 2>&1 &
   else

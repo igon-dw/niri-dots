@@ -12,13 +12,13 @@ THEMES_DIR="$KITTY_DIR/themes"
 CURRENT_THEME_LINK="$KITTY_DIR/current-theme.conf"
 DEFAULT_THEME="Earthsong"
 
-# テーマディレクトリの存在確認
+# Check that the theme directory exists.
 if [ ! -d "$THEMES_DIR" ]; then
   echo "Error: Themes directory not found at $THEMES_DIR" >&2
   exit 2
 fi
 
-# current-theme.conf が存在しない場合は初期化（初回セットアップ）
+# Initialize current-theme.conf if it does not exist yet (first-time setup).
 if [ ! -e "$CURRENT_THEME_LINK" ]; then
   echo "Initializing theme configuration with default theme: $DEFAULT_THEME"
 
@@ -32,9 +32,9 @@ if [ ! -e "$CURRENT_THEME_LINK" ]; then
   echo ""
 fi
 
-# 引数なしの場合、fuzzelで選択
+# If no argument is given, prompt with fuzzel.
 if [ -z "$1" ]; then
-  # fuzzelがインストールされているか確認
+  # Check whether fuzzel is installed.
   if command -v fuzzel >/dev/null 2>&1; then
     THEME_LIST=$("$SCRIPT_DIR/list-themes.sh" --simple)
 
@@ -50,7 +50,7 @@ if [ -z "$1" ]; then
       exit 0
     fi
 
-    # 選択されたテーマで再帰呼び出し
+    # Re-run the script with the selected theme.
     exec "$SCRIPT_DIR/$(basename "$0")" "$SELECTED_THEME"
   else
     echo "Error: No theme specified and fuzzel is not installed." >&2
@@ -66,7 +66,7 @@ fi
 THEME_NAME="$1"
 THEME_FILE="$THEMES_DIR/$THEME_NAME.conf"
 
-# テーマファイルの存在確認
+# Check that the theme file exists.
 if [ ! -f "$THEME_FILE" ]; then
   echo "Error: Theme '$THEME_NAME' not found." >&2
   echo "Theme file expected at: $THEME_FILE" >&2
@@ -75,12 +75,12 @@ if [ ! -f "$THEME_FILE" ]; then
   exit 1
 fi
 
-# シンボリックリンクを更新（相対パスで可搬性を保つ）
+# Update the symbolic link using a relative path to keep it portable.
 ln -sf "./themes/$THEME_NAME.conf" "$CURRENT_THEME_LINK"
 
 echo "✓ Theme set to: $THEME_NAME"
 
-# 実行中のKittyインスタンスに適用
+# Apply the change to running Kitty instances.
 if command -v kitty >/dev/null 2>&1 && pgrep -x kitty >/dev/null 2>&1; then
   if kitty @ set-colors --all --configured "$CURRENT_THEME_LINK" 2>/dev/null; then
     echo "✓ Applied to running kitty instances"

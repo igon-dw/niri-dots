@@ -2,7 +2,7 @@
 
 This directory contains the Waybar configuration used by this repository, including theme switching, terminal-aware config variants, and custom Niri integration modules.
 
-> **日本語版はこちら / Japanese version available**: [README.ja.md](README.ja.md)
+> **Japanese version available**: [README.ja.md](README.ja.md)
 
 ---
 
@@ -61,6 +61,7 @@ waybar/.config/waybar/
    |- switch-theme.sh
    |- get-current-theme.sh
    |- get-mpris.sh
+   |- mako-status.py
    |- niri-taskbar.py
    |- niri-taskbar-watcher.sh
    `- pomo.sh
@@ -165,7 +166,23 @@ This module displays the current theme and opens the theme selector on click.
 
 ### `custom/makoDismiss`
 
-This module dismisses all notifications via `makoctl dismiss -a`.
+This module uses `scripts_for_waybar/mako-status.py` to show the current notification state.
+
+It also supports:
+
+- click: dismiss all notifications with `makoctl dismiss -a`
+- right click: toggle Mako DND mode and refresh the module
+
+When DND mode is enabled, the matching Mako mode hides notifications through the Mako config.
+
+### `custom/clipboard`
+
+This module uses `scripts_for_waybar/clipboard-status.py` to show clipboard history status.
+
+It also supports:
+
+- click: open `clipse` in the configured terminal profile
+- right click: clear clipboard history and send a desktop notification
 
 ---
 
@@ -190,6 +207,7 @@ Center:
 Right side:
 
 - `custom/mpris`
+- `custom/clipboard`
 - `custom/theme`
 - `tray`
 - `pulseaudio`

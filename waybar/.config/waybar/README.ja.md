@@ -59,6 +59,7 @@ waybar/.config/waybar/
    |- switch-theme.sh
    |- get-current-theme.sh
    |- get-mpris.sh
+   |- mako-status.py
    |- niri-taskbar.py
    |- niri-taskbar-watcher.sh
    `- pomo.sh
@@ -163,7 +164,23 @@ Niri の startup で起動しておくことで、短い polling だけに頼ら
 
 ### `custom/makoDismiss`
 
-`makoctl dismiss -a` で通知を全消去します。
+`scripts_for_waybar/mako-status.py` を使って現在の通知状態を表示します。
+
+操作:
+
+- click: `makoctl dismiss -a` で通知を全消去
+- right click: Mako の DND mode を切り替えてモジュールを再描画
+
+DND mode が有効な間は、Mako 側の設定で通知を非表示にします。
+
+### `custom/clipboard`
+
+`scripts_for_waybar/clipboard-status.py` を使って clipboard history の状態を表示します。
+
+操作:
+
+- click: 設定済みの端末プロファイルで `clipse` を開く
+- right click: clipboard history を消去してデスクトップ通知を出す
 
 ---
 
@@ -188,6 +205,7 @@ Niri の startup で起動しておくことで、短い polling だけに頼ら
 右側:
 
 - `custom/mpris`
+- `custom/clipboard`
 - `custom/theme`
 - `tray`
 - `pulseaudio`

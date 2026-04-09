@@ -76,7 +76,7 @@
     "format": "󰢮 {}",
     "tooltip": true,
     "tooltip-format": "GPU Temperature: {}",
-    "interval": 2,
+    "interval": 10,
     "exec": "sensors | grep -i 'edge' | awk '{gsub(/\\+/, \"\", $2); split($2, a, \".\"); print a[1] \"°C\"}'",
     "on-click": "kitty -e nvtop",
   },
@@ -158,10 +158,14 @@
     "smooth-scrolling-threshold": 1,
   },
   "custom/makoDismiss": {
-    "format": "",
-    "format-icons": "",
-    "tooltip-format": "Dismiss all notifications",
-    "on-click": "makoctl dismiss -a",
+    "format": "{}",
+    "return-type": "json",
+    "interval": 1,
+    "exec": "python3 $HOME/.config/waybar/scripts_for_waybar/mako-status.py",
+    "tooltip": true,
+    "on-click": "makoctl dismiss -a && pkill -RTMIN+9 waybar",
+    "on-click-right": "makoctl mode -t dnd && pkill -RTMIN+9 waybar",
+    "signal": 9
   },
   "custom/clipboard": {
     "format": "{}",

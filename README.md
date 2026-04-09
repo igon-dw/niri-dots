@@ -8,7 +8,7 @@ Dotfiles and helper scripts for a Niri-based Wayland desktop on Arch Linux.
 
 This repository focuses on a practical daily-driver setup built around Niri, Waybar, terminal theme switching, Neovim, Fish, and a small set of workflow scripts for launching files, switching windows, managing wallpapers, and keeping terminal/bar themes in sync.
 
-> **日本語版はこちら / Japanese version available**: [README.ja.md](README.ja.md)
+> **Japanese version available**: [README.ja.md](README.ja.md)
 
 ---
 
@@ -154,7 +154,7 @@ What it installs:
 - Wayland desktop tools such as `ly`, `niri`, `waybar`, `fuzzel`, `swayidle`, `wl-clipboard`, `cliphist`, and `clipse`
 - Terminal and shell tools such as `kitty`, `ghostty`, `starship`, `zoxide`, `zk`, and `sheldon`
 - Editors and development tools such as `neovim`, `zed`, `mousepad`, `go`, `git`, and `github-cli`
-- Utilities such as `fd`, `fzf`, `ripgrep`, `git-delta`, `lazygit`, `fastfetch`, `trash-cli`, `jq`, and `rclone`
+- Utilities such as `fd`, `fzf`, `ripgrep`, `git-delta`, `lazygit`, `fastfetch`, `trash-cli`, `jq`, `rclone`, and `tree-sitter-cli`
 - Desktop applications and desktop-side helpers such as `mako`, `mpv`, `kdenlive`, `obs-studio`, `steam`, `vivaldi`, `geary`, `playerctl`, and `brightnessctl`
 - Fonts including JetBrains Mono Nerd Font and FiraCode Nerd Font
 
@@ -268,7 +268,8 @@ Current Waybar setup includes:
 
 - taskbar-style custom Niri window list via `niri-taskbar.py`
 - MPRIS module
-- notification dismiss button
+- notification status module with dismiss-all and DND toggle actions
+- clipboard status module with quick open and clear actions
 - theme indicator and theme switcher
 - separate config variants for Kitty and Ghostty
 
@@ -347,7 +348,7 @@ The current Neovim config includes plugins for LSP, Treesitter, formatting, lint
 
 - `fastfetch/.config/fastfetch/config.jsonc`: styled fastfetch output
 - `lazygit/.config/lazygit/config.yml`: Lazygit settings
-- `mako/.config/mako/config`: notification daemon config
+- `mako/.config/mako/config`: notification daemon config with DND mode support
 - `misc/.config/mimeapps.list`: default app associations
 - `misc/.local/bin/update-arch`: local update helper
 - `opencode/opencode.jsonc`: OpenCode model, formatter, and permission settings
