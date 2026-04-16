@@ -1,4 +1,5 @@
 local keymap = vim.keymap
+local markdown_preview = require 'config.markdown_preview'
 
 local function cycle_window_width_ratio()
   local ratios = { 0.25, 0.5, 0.75 }
@@ -37,6 +38,12 @@ keymap.set('n', '<leader>bp', '<cmd>bprevious<CR>', { desc = 'Previous buffer' }
 
 -- Window resizing
 keymap.set('n', '<leader>w=', cycle_window_width_ratio, { desc = 'Cycle window width ratio' })
+
+vim.api.nvim_create_user_command('MarkdownPreview', markdown_preview.preview, {
+  desc = 'Open Markdown preview in browser',
+})
+
+keymap.set('n', '<leader>mp', markdown_preview.preview, { desc = 'Open Markdown preview in browser' })
 
 -- Terminal mode
 keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })

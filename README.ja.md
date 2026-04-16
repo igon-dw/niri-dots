@@ -389,7 +389,7 @@ Starship 設定は `starship/.config/starship.toml` です。
 
 動作概要:
 
-1. フローティングの Kitty または Ghostty 端末内で起動する
+1. フローティングの Kitty または Ghostty 端末から `f3-opener` を起動する
 2. `fd` で `$HOME` 配下の候補を列挙する
 3. `fzf` でアイコン、種別ラベル、プレビュー付きで絞り込む
 4. パス選択後に使用アプリをもう一度選ぶ
@@ -398,8 +398,10 @@ Starship 設定は `starship/.config/starship.toml` です。
 直接実行する場合:
 
 ```bash
-~/.config/niri/scripts_for_niri/fzf_quick_opener/fzf_quick_opener.sh
+$HOME/Projects/f3-launcher/bin/f3-opener
 ```
+
+Niri のバインドは、Kitty / Ghostty の両方とも `$HOME/Projects/f3-launcher/bin/f3-opener` を呼び出します。
 
 ### Fuzzy window picker
 

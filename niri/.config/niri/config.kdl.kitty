@@ -474,7 +474,7 @@ binds {
         spawn-sh "~/.config/niri/scripts_for_niri/f2_launcher/f2_launcher.sh"
     }
     Mod+Shift+A hotkey-overlay-title="Open FZF Quick Opener" {
-        spawn "kitty" "--class" "kitty-floating" "-e" "bash" "-lc" "$HOME/.config/niri/scripts_for_niri/fzf_quick_opener/fzf_quick_opener.sh"
+        spawn "kitty" "--class" "kitty-floating" "-e" "bash" "-lc" "$HOME/Projects/f3-launcher/bin/f3-opener"
     }
     // Color scheme changers bindings
     Mod+T hotkey-overlay-title="Change the Waybar Color Scheme" {

@@ -19,6 +19,7 @@ return {
       { '<leader>u', group = '[U]I' },
       { '<leader>f', group = '[F]ind' },
       { '<leader>g', group = '[G]it' },
+      { '<leader>m', group = '[M]arkdown' },
     },
   },
   keys = {

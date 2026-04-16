@@ -82,17 +82,17 @@ PKGS_OFFICIAL=(
 	go  # Go language
 
 	# === CLI Tools ===
-	eza       # Alternative to ls
-	fd        # Fast file search
-	fzf       # Command-line fuzzy finder
-	ripgrep   # Fast grep
-	git-delta # git diff viewer
-	lazygit   # Terminal git client
+	eza             # Alternative to ls
+	fd              # Fast file search
+	fzf             # Command-line fuzzy finder
+	ripgrep         # Fast grep
+	git-delta       # git diff viewer
+	lazygit         # Terminal git client
 	tree-sitter-cli # Tree-sitter CLI used by the Neovim 0.12+ setup
-	go-yq     # YAML processor
-	chafa     # Terminal image viewer
-	trash-cli # rm alternative (moves files to trash)
-	jq        # JSON processor for niri helper scripts
+	go-yq           # YAML processor
+	chafa           # Terminal image viewer
+	trash-cli       # rm alternative (moves files to trash)
+	jq              # JSON processor for niri helper scripts
 
 	# === Version Control & APIs ===
 	git        # Version control
@@ -158,6 +158,12 @@ PKGS_OFFICIAL=(
 	docker       # Container management
 	virt-manager # Virtual machine manager
 	qemu-desktop # QEMU virtualization (desktop)
+
+	# === Printing ===
+	avahi       # mDNS/DNS-SD service discovery (for network printers)
+	cups        # Printer management system
+	nss-mdns    # mDNS hostname resolution via glibc NSS
+	ghostscript # PostScript/PDF interpreter for printing
 )
 
 # AUR packages
@@ -170,6 +176,7 @@ PKGS_AUR=(
 	losslesscut-bin        # Video editing tool (AUR)
 	tty-clock              # Terminal clock (AUR)
 	frogmouth              # Markdown Browser (AUR)
+	appimagelauncher       # AppImage launcher (AUR)
 )
 
 # Flatpak packages

@@ -391,7 +391,7 @@ Files:
 
 What it does:
 
-1. opens inside a floating Kitty or Ghostty terminal
+1. launches `f3-opener` from a floating Kitty or Ghostty terminal
 2. lists files from `$HOME` using `fd`
 3. shows icons, file kind labels, and a preview through `fzf`
 4. asks which app to use after selecting a path
@@ -400,8 +400,10 @@ What it does:
 Run it directly:
 
 ```bash
-~/.config/niri/scripts_for_niri/fzf_quick_opener/fzf_quick_opener.sh
+$HOME/Projects/f3-launcher/bin/f3-opener
 ```
+
+Niri binds this action to `$HOME/Projects/f3-launcher/bin/f3-opener` in both Kitty and Ghostty profiles.
 
 ### Fuzzy window picker
 

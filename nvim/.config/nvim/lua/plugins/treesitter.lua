@@ -21,6 +21,7 @@ return {
         'javascript',
         'typescript',
         'yaml',
+        'toml',
         'dockerfile',
       }
       local already_installed = require('nvim-treesitter.config').get_installed()

@@ -41,7 +41,13 @@ abbr cpltr 'copilot --resume'
 
 # Abbreviation for launching opencode
 abbr oc 'opencode'
-abbr ocw 'opencode web'
+# opencode web for local access only (127.0.0.1)
+abbr ocl 'opencode web --hostname 127.0.0.1'
+# opencode web for LAN access (0.0.0.0 allows access from other devices on the network)
+abbr ocw 'opencode web --hostname 0.0.0.0'
+
+## Abbreviation for launching t3 code
+abbr t3 'npx t3'
 
 # Abbreviation for launching codex
 abbr cdx 'codex'
