@@ -127,6 +127,7 @@ PKGS_OFFICIAL=(
 	htop      # Process viewer
 	nvtop     # GPU process viewer
 	gdu       # Disk usage analyzer
+	nethogs   # Per-process network bandwidth monitor
 
 	# === Multimedia & Applications ===
 	pavucontrol # Audio volume control

@@ -1,0 +1,22 @@
+spf() {
+    local os="${OSTYPE:-$(uname -s)}"
+    local spf_last_dir=""
+
+    case "$os" in
+        linux*|Linux)
+            spf_last_dir="${XDG_STATE_HOME:-$HOME/.local/state}/superfile/lastdir"
+            ;;
+        darwin*|Darwin)
+            spf_last_dir="$HOME/Library/Application Support/superfile/lastdir"
+            ;;
+    esac
+
+    command spf "$@"
+
+    [[ -n "$spf_last_dir" && -f "$spf_last_dir" ]] || return
+
+    source "$spf_last_dir"
+    rm -f -- "$spf_last_dir" >/dev/null 2>&1
+}
+
+spf "$@"

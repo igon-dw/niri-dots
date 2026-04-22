@@ -1,0 +1,190 @@
+#!/usr/bin/env bash
+
+set -u
+
+usage() {
+  cat <<'EOF'
+Usage:
+  pkglog install arch <package>...
+  pkglog remove  arch <package>...
+  pkglog install flatpak <package>...
+  pkglog remove  flatpak <package>...
+
+Environment:
+  PKGLOG_FILE  Override log file path
+EOF
+}
+
+die() {
+  printf '%s\n' "$*" >&2
+  exit 1
+}
+
+ensure_log_file() {
+  local log_dir
+  log_dir="$(dirname "$PKGLOG_FILE")"
+  mkdir -p "$log_dir" || die "Failed to create log directory: $log_dir"
+
+  if [[ ! -f "$PKGLOG_FILE" ]]; then
+    printf 'ts\ttx_id\thost\taction\tecosystem\tbackend\tpackage\tbefore\tafter\tresult\texit_code\n' >"$PKGLOG_FILE" ||
+      die "Failed to create log file: $PKGLOG_FILE"
+  fi
+}
+
+detect_arch_backend() {
+  if command -v paru >/dev/null 2>&1; then
+    printf 'paru\n'
+  elif command -v yay >/dev/null 2>&1; then
+    printf 'yay\n'
+  else
+    die "Neither paru nor yay is installed."
+  fi
+}
+
+package_state() {
+  local ecosystem="$1"
+  local package="$2"
+
+  case "$ecosystem" in
+    arch)
+      pacman -Qq -- "$package" >/dev/null 2>&1 && printf 'present\n' || printf 'absent\n'
+      ;;
+    flatpak)
+      flatpak info -- "$package" >/dev/null 2>&1 && printf 'present\n' || printf 'absent\n'
+      ;;
+    *)
+      die "Unknown ecosystem: $ecosystem"
+      ;;
+  esac
+}
+
+result_from_states() {
+  local action="$1"
+  local before="$2"
+  local after="$3"
+
+  case "$action:$before:$after" in
+    install:absent:present)
+      printf 'installed\n'
+      ;;
+    install:present:present)
+      printf 'already_installed\n'
+      ;;
+    install:absent:absent)
+      printf 'failed\n'
+      ;;
+    remove:present:absent)
+      printf 'removed\n'
+      ;;
+    remove:absent:absent)
+      printf 'already_absent\n'
+      ;;
+    remove:present:present)
+      printf 'failed\n'
+      ;;
+    *)
+      printf 'unknown\n'
+      ;;
+  esac
+}
+
+run_backend() {
+  local action="$1"
+  local ecosystem="$2"
+  shift 2
+
+  case "$ecosystem:$action" in
+    arch:install)
+      "$BACKEND" -S -- "$@"
+      ;;
+    arch:remove)
+      "$BACKEND" -Rs -- "$@"
+      ;;
+    flatpak:install)
+      flatpak install flathub "$@"
+      ;;
+    flatpak:remove)
+      flatpak uninstall "$@"
+      ;;
+    *)
+      die "Unsupported operation: $action $ecosystem"
+      ;;
+  esac
+}
+
+[[ $# -ge 3 ]] || {
+  usage
+  exit 1
+}
+
+ACTION="$1"
+ECOSYSTEM="$2"
+shift 2
+PACKAGES=("$@")
+
+case "$ACTION" in
+  install|remove)
+    ;;
+  *)
+    usage
+    die "Invalid action: $ACTION"
+    ;;
+esac
+
+case "$ECOSYSTEM" in
+  arch|flatpak)
+    ;;
+  *)
+    usage
+    die "Invalid ecosystem: $ECOSYSTEM"
+    ;;
+esac
+
+PKGLOG_FILE="${PKGLOG_FILE:-$HOME/.local/state/pkglog/events.tsv}"
+HOST_NAME="${HOSTNAME:-$(hostname 2>/dev/null || printf 'unknown-host')}"
+TIMESTAMP="$(date --iso-8601=seconds)"
+TX_ID="$(date +%Y%m%dT%H%M%S)-$$"
+
+if [[ "$ECOSYSTEM" == "arch" ]]; then
+  command -v pacman >/dev/null 2>&1 || die "pacman is required for ecosystem 'arch'."
+  BACKEND="$(detect_arch_backend)"
+else
+  command -v flatpak >/dev/null 2>&1 || die "flatpak is required for ecosystem 'flatpak'."
+  BACKEND="flatpak"
+fi
+
+ensure_log_file
+
+declare -a BEFORE_STATES AFTER_STATES RESULTS
+
+for package in "${PACKAGES[@]}"; do
+  BEFORE_STATES+=("$(package_state "$ECOSYSTEM" "$package")")
+done
+
+run_backend "$ACTION" "$ECOSYSTEM" "${PACKAGES[@]}"
+EXIT_CODE=$?
+
+for package in "${PACKAGES[@]}"; do
+  AFTER_STATES+=("$(package_state "$ECOSYSTEM" "$package")")
+done
+
+for i in "${!PACKAGES[@]}"; do
+  RESULTS+=("$(result_from_states "$ACTION" "${BEFORE_STATES[$i]}" "${AFTER_STATES[$i]}")")
+done
+
+for i in "${!PACKAGES[@]}"; do
+  printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
+    "$TIMESTAMP" \
+    "$TX_ID" \
+    "$HOST_NAME" \
+    "$ACTION" \
+    "$ECOSYSTEM" \
+    "$BACKEND" \
+    "${PACKAGES[$i]}" \
+    "${BEFORE_STATES[$i]}" \
+    "${AFTER_STATES[$i]}" \
+    "${RESULTS[$i]}" \
+    "$EXIT_CODE" >>"$PKGLOG_FILE"
+done
+
+exit "$EXIT_CODE"

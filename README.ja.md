@@ -8,6 +8,10 @@ Arch Linux 向けの Niri ベース Wayland デスクトップ環境を構築す
 
 このリポジトリは、Niri、Waybar、端末テーマ切り替え、Neovim、Fish、壁紙変更、ウィンドウ切り替え、MIME ベースのファイル起動といった日常運用向けワークフローをまとめて管理できるようにしています。
 
+シェルまわりの補助資料:
+
+- `zsh` のキーバインド整理: [ZSH_KEYBINDINGS.ja.md](ZSH_KEYBINDINGS.ja.md)
+
 ---
 
 ## 概要
@@ -19,6 +23,7 @@ Arch Linux 向けの Niri ベース Wayland デスクトップ環境を構築す
 - **Kitty / Ghostty**: それぞれ別ワークフローで管理するターミナル設定
 - **Fuzzel**: Niri 補助スクリプトやセレクタで利用するランチャー
 - **Fish + Starship**: 対話シェル設定、abbreviation、プロンプト
+- **Zsh + Starship**: Sheldon、zoxide、fzf、abbreviation を使った代替シェル設定
 - **Neovim**: 現行の保守対象である `nvim`。Snacks と Agentic を中心に構成
 - **補助設定**: `fastfetch`、`lazygit`、`mako`、MIME 関連、ローカルコマンド
 - **初期セットアップ用スクリプト**: パッケージ導入、Docker 設定、GNOME/libadwaita 関連設定
@@ -65,6 +70,7 @@ niri-dots/
 |     `- scripts_for_ghostty/
 |- fuzzel/
 |- fish/
+|- zsh/
 |- starship/
 |- nvim/
 |- fastfetch/
@@ -95,7 +101,10 @@ cd niri-dots
 bash scripts/install-packages.sh
 
 # 必要な設定だけ Stow で配置します。
+# fish と zsh は用途に応じてどちらか（または両方）を選んでください
 stow niri waybar kitty ghostty fuzzel fish starship fastfetch lazygit mako misc
+# または
+# stow niri waybar kitty ghostty fuzzel zsh starship fastfetch lazygit mako misc
 
 # Neovim を使う場合
 stow nvim
@@ -167,7 +176,10 @@ INSTALL_JAPANESE=1 bash scripts/install-packages.sh
 推奨構成:
 
 ```bash
+# fish と zsh は用途に応じてどちらか（または両方）を選んでください
 stow niri waybar kitty ghostty fuzzel fish starship fastfetch lazygit mako misc
+# または
+# stow niri waybar kitty ghostty fuzzel zsh starship fastfetch lazygit mako misc
 ```
 
 Neovim を加える場合:
@@ -184,6 +196,7 @@ stow waybar
 stow kitty
 stow ghostty
 stow fish
+stow zsh
 stow misc
 ```
 
@@ -334,6 +347,22 @@ Fish 設定は `fish/.config/fish/config.fish` にあり、主に以下を含み
 
 Starship 設定は `starship/.config/starship.toml` です。
 
+### Zsh
+
+Zsh 設定は `zsh/.config/zsh/` にあり、主に以下を含みます。
+
+- `.zshenv` で `ZDOTDIR` を `~/.config/zsh` に設定
+- `.zshrc` で `zshrc.d/` 配下のファイルを一括読み込み
+- `00-base.zsh`: PATH、履歴設定、補完、Emacs キーバインド、`autocd`
+- `10-tools.zsh`: Sheldon、Starship、Zoxide、fnm、fzf の連携
+- `20-abbr.zsh`: `eza`、`lazygit`、`opencode`、動画エンコード補助などの `abbr` 略語
+- `functions/jnal`: 年/四半期別で整理する日記管理ヘルパー
+- `functions/spf`: 終了後に最終ディレクトリを反映する `superfile` ラッパー
+- `zsh/.config/sheldon/plugins.toml`: Sheldon プラグイン定義（zsh-autosuggestions、zsh-syntax-highlighting、fzf-tab、zsh-completions、zsh-abbr）
+- `zsh/.local/bin/pkglog`: パッケージのインストール/削除を TSV に記録するロガー
+
+ローカル上書きは `zsh/.config/zsh/options.zsh` で追加できます。
+
 ### Neovim
 
 現行構成:
@@ -398,10 +427,10 @@ Starship 設定は `starship/.config/starship.toml` です。
 直接実行する場合:
 
 ```bash
-$HOME/Projects/f3-launcher/bin/f3-opener
+$HOME/projects/f3-launcher/bin/f3-opener
 ```
 
-Niri のバインドは、Kitty / Ghostty の両方とも `$HOME/Projects/f3-launcher/bin/f3-opener` を呼び出します。
+Niri のバインドは、Kitty / Ghostty の両方とも `$HOME/projects/f3-launcher/bin/f3-opener` を呼び出します。
 
 ### Fuzzy window picker
 

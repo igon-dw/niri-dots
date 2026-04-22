@@ -1,0 +1,360 @@
+# jnal - Daily journal management tool
+# Organized by year and quarter with template support
+
+# --- Helper: get quarter from month ---
+_jnal_get_quarter() {
+    local month=$((10#$1))
+    if (( month >= 1 && month <= 3 )); then
+        echo Q1
+    elif (( month >= 4 && month <= 6 )); then
+        echo Q2
+    elif (( month >= 7 && month <= 9 )); then
+        echo Q3
+    else
+        echo Q4
+    fi
+}
+
+# --- Helper: ensure directory exists ---
+_jnal_ensure_dir() {
+    local dir="$1"
+    if [[ ! -d "$dir" ]]; then
+        echo "Directory does not exist: $dir"
+        printf "Create it? (y/N): "
+        read -r answer
+        if [[ $answer == [yY] ]]; then
+            mkdir -p "$dir"
+            if [[ $? -ne 0 ]]; then
+                echo "Error: Failed to create directory. Aborting." >&2
+                return 1
+            fi
+            echo "Directory created."
+        else
+            echo "Cancelled."
+            return 1
+        fi
+    fi
+    return 0
+}
+
+# --- Helper: configure template file ---
+_jnal_configure_template() {
+    local prompt_text="$1"
+    local state_dir="$2"
+    local template_config="$3"
+
+    echo "$prompt_text"
+    echo ""
+    echo "Enter the path to your journal template file."
+    echo "Example: ~/Documents/journal_template.md"
+    echo ""
+    echo "Leave empty to use no template (header only)."
+    echo ""
+    read "template_input?Template file (optional): "
+
+    if [[ -z "$template_input" ]]; then
+        mkdir -p "$state_dir"
+        echo "" > "$template_config"
+        echo ""
+        echo "Configuration saved: No template (header only)"
+        return 0
+    fi
+
+    local new_template="${template_input/#\~/$HOME}"
+
+    if [[ ! -f "$new_template" ]]; then
+        echo ""
+        echo "Warning: File does not exist: $new_template"
+        printf "Save this path anyway? (y/N): "
+        read -r answer
+        if [[ $answer != [yY] ]]; then
+            echo "Cancelled."
+            return 1
+        fi
+    fi
+
+    mkdir -p "$state_dir"
+    echo "$new_template" > "$template_config"
+    echo ""
+    echo "Configuration saved to: $template_config"
+    echo "Template file: $new_template"
+
+    return 0
+}
+
+# --- Helper: configure base directory ---
+_jnal_configure_base_dir() {
+    local prompt_text="$1"
+    local state_dir="$2"
+    local config_file="$3"
+
+    echo "$prompt_text"
+    echo ""
+    echo "Enter the base directory for your journals."
+    echo "Example: ~/Documents/Journals"
+    echo ""
+    read "base_dir_input?Base directory: "
+
+    if [[ -z "$base_dir_input" ]]; then
+        echo "Cancelled."
+        return 1
+    fi
+
+    local new_base_dir="${base_dir_input/#\~/$HOME}"
+
+    if [[ ! -d "$new_base_dir" ]]; then
+        echo ""
+        echo "Directory does not exist: $new_base_dir"
+        printf "Create it? (y/N): "
+        read -r answer
+        if [[ $answer == [yY] ]]; then
+            mkdir -p "$new_base_dir"
+            if [[ $? -ne 0 ]]; then
+                echo "Error: Failed to create directory." >&2
+                return 1
+            fi
+            echo "Directory created."
+        else
+            echo "Cancelled."
+            return 1
+        fi
+    fi
+
+    mkdir -p "$state_dir"
+    echo "$new_base_dir" > "$config_file"
+    echo ""
+    echo "Configuration saved to: $config_file"
+    echo "Base directory: $new_base_dir"
+
+    return 0
+}
+
+# --- Main function ---
+jnal() {
+    # --- Configuration paths ---
+    local state_dir="$HOME/.local/state/jnal"
+    local config_file="$state_dir/base_dir"
+    local template_config="$state_dir/template"
+
+    # Check EDITOR is set
+    if [[ -z "${EDITOR:-}" ]]; then
+        echo "Error: \$EDITOR environment variable is not set." >&2
+        echo "Set it in your .zshrc: export EDITOR=<your-editor>" >&2
+        return 1
+    fi
+    local editor_cmd="$EDITOR"
+
+    # --- Parse option ---
+    local action="navigate"
+    if [[ $# -gt 0 ]]; then
+        case "$1" in
+            -t|--today)
+                action="today"
+                ;;
+            -s|--stats)
+                action="stats"
+                ;;
+            -h|--help)
+                action="help"
+                ;;
+            --config)
+                action="config"
+                ;;
+            --set-template)
+                action="set_template"
+                ;;
+            --show-config)
+                action="show_config"
+                ;;
+            *)
+                echo "Error: Unknown option '$1'" >&2
+                echo "Use 'jnal --help' for usage information." >&2
+                return 1
+                ;;
+        esac
+    fi
+
+    # --- Action: help ---
+    if [[ "$action" == "help" ]]; then
+        echo "Usage: jnal [OPTION]"
+        echo ""
+        echo "Manage daily journal entries organized by year and quarter."
+        echo ""
+        echo "Options:"
+        echo "  (none)           Navigate to current quarter directory"
+        echo "  -t, --today      Create/open today's journal entry"
+        echo "  -s, --stats      Show journal statistics by quarter and month"
+        echo "  -h, --help       Show this help message"
+        echo ""
+        echo "Configuration:"
+        echo "  --config         Change base directory interactively"
+        echo "  --set-template   Change template file interactively"
+        echo "  --show-config    Display current configuration"
+        echo ""
+        echo "Environment Variables:"
+        echo "  EDITOR           Editor to use (required)"
+        echo ""
+        echo "Files:"
+        echo "  ~/.local/state/jnal/base_dir    Base directory configuration"
+        echo "  ~/.local/state/jnal/template    Template file configuration"
+        return 0
+    fi
+
+    # --- Action: config ---
+    if [[ "$action" == "config" ]]; then
+        _jnal_configure_base_dir "jnal: Change configuration" "$state_dir" "$config_file"
+        return $?
+    fi
+
+    # --- Action: set-template ---
+    if [[ "$action" == "set_template" ]]; then
+        _jnal_configure_template "jnal: Set template file" "$state_dir" "$template_config"
+        return $?
+    fi
+
+    # --- Load base directory ---
+    local base_dir=""
+    if [[ -f "$config_file" ]]; then
+        base_dir="$(cat "$config_file")"
+    fi
+
+    # --- Load template file ---
+    local template_file=""
+    if [[ -f "$template_config" ]]; then
+        template_file="$(cat "$template_config")"
+    fi
+
+    # --- Action: show-config ---
+    if [[ "$action" == "show_config" ]]; then
+        echo "=== jnal Configuration ==="
+        echo ""
+
+        echo "Base Directory:"
+        if [[ -n "$base_dir" ]]; then
+            echo "  Path:   $base_dir"
+            echo "  Config: $config_file"
+            if [[ -d "$base_dir" ]]; then
+                echo "  Status: ✓ Directory exists"
+            else
+                echo "  Status: ✗ Directory does not exist"
+            fi
+        else
+            echo "  Status: Not configured"
+            echo "  Run 'jnal --config' to set up."
+        fi
+
+        echo ""
+
+        echo "Template File:"
+        if [[ -n "$template_file" ]]; then
+            echo "  Path:   $template_file"
+            echo "  Config: $template_config"
+            if [[ -f "$template_file" ]]; then
+                echo "  Status: ✓ File exists"
+            else
+                echo "  Status: ✗ File does not exist"
+            fi
+        else
+            echo "  Status: Not configured (header only)"
+            echo "  Run 'jnal --set-template' to set up."
+        fi
+
+        return 0
+    fi
+
+    # --- First-time setup ---
+    if [[ -z "$base_dir" ]]; then
+        _jnal_configure_base_dir "jnal: First-time setup" "$state_dir" "$config_file"
+        if [[ $? -ne 0 ]]; then
+            return 1
+        fi
+
+        if [[ -f "$config_file" ]]; then
+            base_dir="$(cat "$config_file")"
+        else
+            echo "Error: Configuration file was not created." >&2
+            return 1
+        fi
+    fi
+
+    if [[ ! -d "$base_dir" ]]; then
+        echo "Error: Configured base directory does not exist: $base_dir" >&2
+        echo "Run 'jnal --config' to reconfigure." >&2
+        return 1
+    fi
+
+    # --- Action: stats ---
+    if [[ "$action" == "stats" ]]; then
+        echo "=== Journal Statistics ==="
+        echo ""
+
+        echo "Entries by Quarter:"
+        local quarter_dir quarter_name count
+        for quarter_dir in $(find "$base_dir" -maxdepth 1 -type d -name "*_Q[1-4]" | sort -r); do
+            count=$(find "$quarter_dir" -name "*_diary.md" -type f 2>/dev/null | wc -l)
+            quarter_name=$(basename "$quarter_dir")
+            printf "  %-10s: %3d entries\n" "$quarter_name" "$count"
+        done
+
+        echo ""
+        echo "Entries by Month (last 12 months):"
+
+        local i month_date month_name
+        for i in {0..11}; do
+            month_date=$(date -d "$i months ago" +%Y%m)
+            month_name=$(date -d "$i months ago" +"%b %Y")
+            count=$(find "$base_dir" -name "${month_date}*_diary.md" -type f 2>/dev/null | wc -l)
+            printf "  %-10s: %3d entries\n" "$month_name" "$count"
+        done
+
+        return 0
+    fi
+
+    # --- Resolve target directory ---
+    local year month date_stamp quarter target_dir
+    year=$(date +%Y)
+    month=$(date +%m)
+    date_stamp=$(date +%Y%m%d)
+    quarter=$(_jnal_get_quarter "$month")
+    target_dir="$base_dir/${year}_${quarter}"
+
+    _jnal_ensure_dir "$target_dir"
+    if [[ $? -ne 0 ]]; then
+        return 1
+    fi
+
+    # --- Action: today ---
+    if [[ "$action" == "today" ]]; then
+        local file_path="$target_dir/${date_stamp}_diary.md"
+
+        if [[ ! -f "$file_path" ]]; then
+            echo "# $date_stamp" > "$file_path"
+            echo "" >> "$file_path"
+
+            if [[ -n "$template_file" && -f "$template_file" ]]; then
+                cat "$template_file" >> "$file_path"
+                echo "Created file with header + template: $file_path"
+            else
+                echo "Created file with header only: $file_path"
+            fi
+        else
+            echo "File already exists: $file_path"
+        fi
+
+        cd "$target_dir"
+
+        echo "Opening $file_path with $editor_cmd..."
+        $editor_cmd "$file_path"
+        if [[ $? -ne 0 ]]; then
+            echo "Error: Failed to open editor." >&2
+            return 1
+        fi
+
+        return 0
+    fi
+
+    # --- Action: navigate (default) ---
+    cd "$target_dir"
+}
+
+jnal "$@"

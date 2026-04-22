@@ -21,6 +21,7 @@ Main pieces included in this repository:
 - **Kitty / Ghostty**: terminal configurations with separate theme switching workflows
 - **Fuzzel**: launcher used by Niri scripts and interactive selectors
 - **Fish + Starship**: interactive shell setup, abbreviations, and prompt
+- **Zsh + Starship**: alternative shell setup with Sheldon, zoxide, fzf, and abbreviations
 - **Neovim**: current config in `nvim`, built around Snacks, Agentic, and the actively maintained setup
 - **Utility configs**: `fastfetch`, `lazygit`, `mako`, MIME associations, and local helper scripts
 - **Bootstrap scripts**: package installation, Docker setup, and GNOME/libadwaita-related settings
@@ -67,6 +68,7 @@ niri-dots/
 |     `- scripts_for_ghostty/
 |- fuzzel/
 |- fish/
+|- zsh/
 |- starship/
 |- nvim/
 |- fastfetch/
@@ -97,7 +99,10 @@ cd niri-dots
 bash scripts/install-packages.sh
 
 # Deploy the configs you want.
+# Choose either fish or zsh (or both if you know what you're doing)
 stow niri waybar kitty ghostty fuzzel fish starship fastfetch lazygit mako misc
+# or
+# stow niri waybar kitty ghostty fuzzel zsh starship fastfetch lazygit mako misc
 
 # Optional Neovim setup
 stow nvim
@@ -169,7 +174,10 @@ Important details:
 Recommended deployment:
 
 ```bash
+# Choose either fish or zsh (or both if you know what you're doing)
 stow niri waybar kitty ghostty fuzzel fish starship fastfetch lazygit mako misc
+# or
+# stow niri waybar kitty ghostty fuzzel zsh starship fastfetch lazygit mako misc
 ```
 
 Add Neovim as needed:
@@ -186,6 +194,7 @@ stow waybar
 stow kitty
 stow ghostty
 stow fish
+stow zsh
 stow misc
 ```
 
@@ -336,6 +345,22 @@ Fish config lives in `fish/.config/fish/config.fish` and includes:
 
 Starship config is in `starship/.config/starship.toml`.
 
+### Zsh
+
+Zsh config lives in `zsh/.config/zsh/` and includes:
+
+- `.zshenv` sets `ZDOTDIR` to `~/.config/zsh`
+- `.zshrc` loads all files from `zshrc.d/`
+- `00-base.zsh`: PATH, history options, completion, Emacs keybindings, and `autocd`
+- `10-tools.zsh`: integrations for Sheldon, Starship, Zoxide, fnm, and fzf
+- `20-abbr.zsh`: `abbr` abbreviations for `eza`, `lazygit`, `opencode`, video encoding, and more
+- `functions/jnal`: daily journal helper organized by year and quarter
+- `functions/spf`: `superfile` wrapper that sources the last directory
+- `zsh/.config/sheldon/plugins.toml`: Sheldon plugin definitions (zsh-autosuggestions, zsh-syntax-highlighting, fzf-tab, zsh-completions, zsh-abbr)
+- `zsh/.local/bin/pkglog`: package install/remove logger that writes to a TSV file
+
+You can also add local overrides via `zsh/.config/zsh/options.zsh`.
+
 ### Neovim
 
 Current setup:
@@ -400,10 +425,10 @@ What it does:
 Run it directly:
 
 ```bash
-$HOME/Projects/f3-launcher/bin/f3-opener
+$HOME/projects/f3-launcher/bin/f3-opener
 ```
 
-Niri binds this action to `$HOME/Projects/f3-launcher/bin/f3-opener` in both Kitty and Ghostty profiles.
+Niri binds this action to `$HOME/projects/f3-launcher/bin/f3-opener` in both Kitty and Ghostty profiles.
 
 ### Fuzzy window picker
 

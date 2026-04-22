@@ -1,9 +1,9 @@
 # Ghostty Configuration
 
 # Font settings
-font-family = JetBrainsMono Nerd Font Mono
-# font-family = UDEV Gothic NF
-font-size = 13
+font-family = Ubuntu Mono Nerd Font Mono
+font-size = 14
+adjust-cell-height = 3
 font-style = Regular
 font-style-bold = Bold
 font-style-italic = Italic
