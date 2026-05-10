@@ -178,6 +178,7 @@ PKGS_AUR=(
 	tty-clock              # Terminal clock (AUR)
 	frogmouth              # Markdown Browser (AUR)
 	appimagelauncher       # AppImage launcher (AUR)
+	tenacity               # Audio editor (Audacity fork)
 )
 
 # Flatpak packages

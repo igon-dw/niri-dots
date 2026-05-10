@@ -15,6 +15,7 @@ _abbr_add() {
 }
 
 _abbr_add ls 'eza -a --icons'
+_abbr_add ls1 'eza -a --icons -1'
 _abbr_add ll 'eza -al --icons'
 _abbr_add lt2 'eza -a --tree --level=2 --icons --ignore-glob=".git|node_modules"'
 _abbr_add lt3 'eza -a --tree --level=3 --icons --ignore-glob=".git|node_modules"'
@@ -27,11 +28,11 @@ fi
 
 _abbr_add lzg 'lazygit'
 _abbr_add cvim 'NVIM_APPNAME=cvim nvim'
-_abbr_add cplt 'copilot'
-_abbr_add cpltr 'copilot --resume'
 _abbr_add oc 'opencode'
 _abbr_add ocw 'opencode web'
 _abbr_add ttc 'tty-clock -sc -C 6 -t'
 _abbr_add ffclip 'ffmpeg -hide_banner -y -hwaccel vaapi -hwaccel_device /dev/dri/renderD128 -ss 00:00:00 -to 00:01:00 -i input.mp4 -vf "format=nv12,hwupload" -c:v av1_vaapi -qr 18 -c:a aac -b:a 192k output_clip.mp4'
+
+_abbr_add shfmt 'shfmt -i 2'
 
 unset -f _abbr_add

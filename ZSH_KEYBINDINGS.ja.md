@@ -76,14 +76,14 @@
 
 主な登録内容:
 
-- `ls`, `ll`, `lt2`, `lt3`, `lt4`, `lt5`
+- `ls`, `ls1`, `ll`, `lt2`, `lt3`, `lt4`, `lt5`
 - `cdf`
 - `lzg`
 - `cvim`
-- `cplt`, `cpltr`
 - `oc`, `ocw`
 - `ttc`
 - `ffclip`
+- `shfmt`
 
 ### `setopt autocd`
 

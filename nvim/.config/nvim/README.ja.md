@@ -167,6 +167,7 @@ nvim/.config/nvim/
 - Python formatter は `isort` + `black` の順で設定
 - KDL formatter は `kdlfmt` を参照
 - JavaScript / TypeScript は `prettierd` を優先
+- Markdown formatter は `markdownlint` を参照
 - Python lint は `flake8` を参照
 - Dockerfile lint は `hadolint` を参照
 
@@ -342,7 +343,7 @@ Copilot は `Tab` を奪わず、Alt 系に寄せています。
 | TypeScript / JavaScript | `ts_ls` | `prettierd` or `prettier` | - | - |
 | Go | `gopls` | LSP fallback | - | `delve` |
 | YAML | `yamlls` | `prettier` | - | - |
-| Markdown | `marksman` | `prettier` or `markdownlint` | `markdownlint` | - |
+| Markdown | `marksman` | `markdownlint` | `markdownlint` | - |
 | Dockerfile | `dockerls` | - | `hadolint` | - |
 | KDL | - | `kdlfmt` | - | - |
 

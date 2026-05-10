@@ -19,4 +19,10 @@
     "workbench.colorTheme": "Catppuccin Mocha",
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
+    "xlsxViewer.md.stickyToolbar": true,
+    "xlsxViewer.md.wordWrap": true,
+    "xlsxViewer.md.syncScroll": true,
+    "xlsxViewer.md.previewPosition": "right",
+    "xlsxViewer.md.showOutline": false,
+    "xlsxViewer.md.showLineNumbers": true,
 }

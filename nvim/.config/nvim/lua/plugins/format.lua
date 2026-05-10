@@ -39,7 +39,7 @@ return {
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
       typescript = { 'prettierd', 'prettier', stop_after_first = true },
       yaml = { 'prettier' },
-      markdown = { 'prettier', 'markdownlint', stop_after_first = true },
+      markdown = { 'markdownlint' },
       kdl = { 'kdlfmt' },
       bash = { 'shfmt' },
       sh = { 'shfmt' },

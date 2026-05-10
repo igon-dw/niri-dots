@@ -1,4 +1,4 @@
-spawn-at-startup "bash" "-lc" "$HOME/.config/niri/scripts_for_niri/start-waybar.sh"
+spawn-at-startup "bash" "-lc" "sleep 1; waybar"
 spawn-at-startup "bash" "-lc" "$HOME/.config/waybar/scripts_for_waybar/niri-taskbar-watcher.sh"
 spawn-at-startup "fcitx5" "-d"
 spawn-at-startup "awww-daemon"
@@ -215,10 +215,10 @@ binds {
         focus-column-left
     }
     Mod+Down {
-        focus-window-down
+        focus-window-or-workspace-down
     }
     Mod+Up {
-        focus-window-up
+        focus-window-or-workspace-up
     }
     Mod+Right {
         focus-column-right
@@ -238,10 +238,10 @@ binds {
         move-column-right
     }
     Mod+Ctrl+Down {
-        move-window-down
+        move-window-down-or-to-workspace-down
     }
     Mod+Ctrl+Up {
-        move-window-up
+        move-window-up-or-to-workspace-up
     }
     Mod+Ctrl+H {
         move-column-left
@@ -477,7 +477,6 @@ binds {
     // Wallpaper binding
     Mod+Shift+W hotkey-overlay-title="Change the Wallpaper" {
         // spawn-sh "~/.config/niri/scripts_for_niri/wallpaper_selector.sh"
-        // spawn "kitty" "--class" "kitty-floating" "-e" "bash" "-c" "$HOME/.config/niri/scripts_for_niri/wallpaper_selector_tui.sh"
         spawn "ghostty" "--title=ghostty-floating" "-e" "bash" "-c" "$HOME/.config/niri/scripts_for_niri/wallpaper_selector_tui.sh"
     }
     // Fuzzy Window Switcher binding

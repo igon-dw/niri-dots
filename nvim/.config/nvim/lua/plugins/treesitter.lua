@@ -2,6 +2,7 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     branch = 'main',
+    lazy = false,
     build = ':TSUpdate',
     init = function()
       local ensure_installed = {
@@ -24,7 +25,8 @@ return {
         'toml',
         'dockerfile',
       }
-      local already_installed = require('nvim-treesitter.config').get_installed()
+      -- Use the new API on the 'main' branch.
+      local already_installed = require('nvim-treesitter').get_installed()
       local parsers_to_install = vim
         .iter(ensure_installed)
         :filter(function(parser)
@@ -52,8 +54,6 @@ return {
     config = function(_, opts)
       require('nvim-treesitter').setup(opts)
     end,
-    opts = {
-      auto_install = true,
-    },
+    opts = {},
   },
 }
